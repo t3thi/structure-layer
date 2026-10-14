@@ -48,6 +48,12 @@ ddev demo                    # rebuild https://structure-layer.ddev.site/
   2 en → 1, 3 en-GB → 2,1). Data: CSV, `__DIR__`-relative paths.
 - Core's `Tests/` are not shipped in the split packages; copy needed
   fixtures into `Tests/Functional/Fixtures/`.
+- Phase tests live in `Tests/Functional/<Area>/` with their own
+  `Fixtures/`. Hand-crafted data must mirror `l10n_mode=exclude` fields on
+  translations (the frontend reads overlaid rows).
+- Test-only extensions: `Tests/Functional/Fixtures/Extensions/`, loaded by
+  absolute path in `$testExtensionsToLoad`; their classes are mapped in
+  root `autoload-dev`.
 
 ## Commits
 

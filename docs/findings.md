@@ -244,3 +244,121 @@ events.
 - §2.3 / Phase 0: "fixture extension" → fixture site YAML + CSV were
   enough. A fixture extension is only needed once the extension needs
   TypoScript or PAGEVIEW templates.
+
+---
+
+## Phase 1: Chain-driven frontend output (2026-10-14)
+
+### Deliverables
+
+- Core patch `patches/cms-core-site-language-effective-fallback-type.patch`
+  (`SiteLanguage::__construct`, as decided in S5): for every language
+  `> 0`, `0` and the language itself are stripped from `fallbacks`, and
+  `fallbackType` becomes `free` (no chain) or `fallback` (chain). The
+  configured `fallbackType` is ignored; `toArray()['fallbacks']` is aligned.
+- Event listeners (all sites, no switch):
+  - `EnforceRecordOutputPolicy` (`AfterRecordLanguageOverlayEvent`, all
+    tables except `pages`):
+    - MIXED result still in language 0 → `null` (no shadow is ever output);
+    - result from a chain language while a translation in the requested
+      language exists (deleted/workspace restrictions only) → `null`;
+    - no overlay attempted (free mode) and the row is a shadow → resolved
+      along `[requested, ...chain]` to the translation row itself (its own
+      uid, like every other free-mode row), or `null`.
+  - `EnforcePageOutputPolicy` (`BeforePageLanguageOverlayEvent`, only for
+    languages with a chain): page ids whose requested-language translation
+    exists but is not visible are dropped from the overlay lookup. The
+    shadow then stays untranslated → 404, menu item omitted
+    (`l18n_cfg` bit 1 on the shadow), language menu entry unavailable.
+  - `AddHrefLangXDefault` (`ModifyHrefLangTagsEvent`, after EXT:seo), see
+    below.
+  - Shared lookup `Classes/Frontend/TranslationLookup`.
+- Tests (`Tests/Functional/Frontend/`, data `Fixtures/ChainOutput.csv`):
+  `ChainDrivenOutputTest` (content, pages, menus, language menu,
+  shortcuts, categories, `t3://record`), `ExtbaseOutputTest` (fixture
+  extension `Tests/Functional/Fixtures/Extensions/structure_layer_extbase_test`,
+  `tt_content` model, plugin rendered in a real frontend request),
+  `HrefLangTest` (EXT:seo). 59 new tests. Without the listeners, 14 fail;
+  without the patch, the overlay types are wrong on every language.
+- Site fixture `structure-site-legacy-fallback-types`: `fallbackType`
+  `fallback`/`strict`/`free` and `0` in `fallbacks`. Every content and page
+  test runs on both sites with identical expectations: legacy values make
+  no difference.
+- New dev dependencies: `typo3/cms-extbase` (was transitive),
+  `typo3/cms-seo` (hreflang).
+
+### Results (gate: met)
+
+| Case | de (no chain) | en (chain 1) | en-GB (chain 2,1) |
+|---|---|---|---|
+| Overlay type | `off` | `mixed` | `mixed` |
+| Element translated everywhere | own | own | own |
+| en disabled, de exists | de | **nothing** | de (chain continues past disabled en) |
+| en only | – | en | en |
+| `-1` element | ✓ | ✓ | ✓ |
+| en-GB disabled | de | en | **nothing** |
+| Hidden in all languages | – | – | – |
+| Shortcut (RECORDS) to a shadow | resolved to de | en / nothing if en disabled | en-GB / de |
+| Extbase `findAll()` | same as CONTENT | same as CONTENT | same as CONTENT |
+| Extbase `findByUid(shadow)` | de translation | en / `null` if disabled | chain |
+| Disabled page translation | 404 | 404, no fallback | chain continues |
+| Missing page translation | 404 | page fallback | page fallback |
+| Menus | follow the same rules | ✓ | ✓ |
+| `/_structure/…` | 404 | | |
+
+Deleting the disabled en translation makes the de fallback reappear
+(no stored "absent" state, 2026-10-09 Topic 6).
+
+### Findings
+
+- **Hand-crafted data must mirror `l10n_mode=exclude`.** Frontend rootlines
+  and page records are overlaid, so `exclude` fields come from the
+  *translation*. A `TSconfig` set only on the shadow page is invisible in
+  the frontend (here: no `TCEMAIN.linkHandler` → `t3://record` unlinked).
+  DataHandler copies these fields; fixtures and the migration (I) must too.
+- **No shadow reaches the output**: under MIXED only via the listener
+  (Core keeps the language-0 row when the chain has nothing), under OFF
+  only because CONTENT never selects language 0, plus the listener for
+  uid-based fetches.
+- **Gaps (characterized by tests, not fixed):**
+  - *Category relations in no-chain languages:* the MM table stores the
+    shadow category uid. A language-restricted `CONTENT` query on
+    `sys_category` (the common TypoScript pattern, e.g. JsonRenderer)
+    finds nothing in free mode. The same query with `languageField = 0`
+    fetches the shadow, and the listener resolves it. This is today's
+    free-mode limitation, and it now affects the primary language. Either
+    integrators drop the language restriction for relation queries, or Core
+    resolves relations through the structure layer.
+  - *`t3://record` in no-chain languages:* `DatabaseRecordLinkBuilder`
+    checks for a translation only when `doOverlays()`. A link to a record
+    without a translation in the requested language is still built (dead
+    link). `BeforeDatabaseRecordLinkResolvedEvent` can supply a record but
+    cannot veto. Patch candidate: also check in free mode.
+  - *Extbase `count()` with a chain:* SQL counts language-0/-1 rows (6),
+    the listener drops rows afterwards (4 rendered). Limits and pagination
+    have the same issue, as do TypoScript `CONTENT` with `max`/`begin`.
+    Without a chain, the counts are correct (the requested language is
+    selected directly).
+- **hreflang `x-default`:** EXT:seo sets it only if the page exists in the
+  first site language. That is almost always true with a real default
+  language, but not with the structure layer (a page may lack its primary
+  language). `AddHrefLangXDefault` falls back to the first available
+  language. Upstream candidate, independent of the PoC.
+- **Cost (SCALE-1, counted from the code; to be measured in Phase 6):**
+  - MIXED: +1 `COUNT` query per record that comes from a chain language
+    (none for records in the requested language);
+  - free mode: +1–2 queries per shadow fetched by uid;
+  - pages with a chain: +1–2 queries per `getPagesOverlay()` call (menus
+    call it per level; not runtime-cached yet).
+- **Not covered by events:** workspace overlays in the listeners
+  (live records only, Phase 6). Page-level fallback still switches
+  `contentId` for the whole page (Phase 0 finding, accepted).
+- `composer reinstall` does not work for `dev-main` packages (removes the
+  package, then fails). `patches/README.md` was corrected.
+
+### Patch list after Phase 1
+
+1. ✅ `SiteLanguage::__construct` (effective `fallbackType`, no `0` in chains).
+2. Open, unchanged from Phase 0: `Site::getPrimaryLanguage()` and its
+   callers, `PageLinkBuilder:221`, sorting (C).
+3. New candidate: `DatabaseRecordLinkBuilder` translation check in free mode.

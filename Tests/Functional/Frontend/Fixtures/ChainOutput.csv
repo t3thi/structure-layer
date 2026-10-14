@@ -1,0 +1,59 @@
+"pages"
+,"uid","pid","sorting","deleted","hidden","doktype","is_siteroot","sys_language_uid","l10n_parent","l10n_source","l18n_cfg","title","slug","TSconfig"
+,1,0,256,0,0,1,1,0,0,0,1,"","/","TCEMAIN.linkHandler.content.configuration.table = tt_content"
+,2,0,256,0,0,1,1,1,1,0,0,"Startseite","/","TCEMAIN.linkHandler.content.configuration.table = tt_content"
+,3,0,256,0,0,1,1,2,1,2,0,"Home","/","TCEMAIN.linkHandler.content.configuration.table = tt_content"
+,4,0,256,0,0,1,1,3,1,3,0,"Home (UK)","/","TCEMAIN.linkHandler.content.configuration.table = tt_content"
+,10,1,256,0,0,1,0,0,0,0,1,"","/about",""
+,11,1,256,0,0,1,0,1,10,0,0,"Über uns","/ueber-uns",""
+,12,1,256,0,0,1,0,2,10,11,0,"About us","/about-us",""
+,20,1,512,0,0,1,0,0,0,0,1,"","/contact",""
+,21,1,512,0,0,1,0,1,20,0,0,"Kontakt","/kontakt",""
+,22,1,512,0,1,1,0,2,20,21,0,"Contact (hidden)","/contact",""
+,30,1,768,0,0,1,0,0,0,0,1,"","/imprint",""
+,31,1,768,0,1,1,0,1,30,0,0,"Impressum (hidden)","/impressum",""
+,32,1,768,0,0,1,0,2,30,0,0,"Imprint","/imprint",""
+,40,1,1024,0,0,1,0,0,0,0,1,"","/hidden",""
+,41,1,1024,0,1,1,0,1,40,0,0,"Versteckt (hidden)","/versteckt",""
+,42,1,1024,0,1,1,0,2,40,41,0,"Hidden (hidden)","/hidden",""
+,50,1,1280,0,0,1,0,0,0,0,1,"","/references",""
+,51,1,1280,0,0,1,0,1,50,0,0,"Verweise","/verweise",""
+,52,1,1280,0,0,1,0,2,50,51,0,"References","/references",""
+,53,1,1280,0,0,1,0,3,50,52,0,"References (UK)","/references",""
+"tt_content"
+,"uid","pid","sorting","deleted","hidden","sys_language_uid","l18n_parent","l10n_source","colPos","CType","header","records","categories"
+,100,1,256,0,0,0,0,0,0,"text","","",0
+,101,1,256,0,0,1,100,0,0,"text","Element 1 (de)","",1
+,102,1,256,0,0,2,100,101,0,"text","Element 1 (en)","",1
+,103,1,256,0,0,3,100,102,0,"text","Element 1 (en-GB)","",1
+,110,1,512,0,0,0,0,0,0,"text","","",0
+,111,1,512,0,0,1,110,0,0,"text","Element 2 (de)","",0
+,112,1,512,0,1,2,110,111,0,"text","Element 2 (en, hidden)","",0
+,120,1,768,0,0,0,0,0,0,"text","","",0
+,122,1,768,0,0,2,120,0,0,"text","Element 3 (en only)","",0
+,130,1,1024,0,0,-1,0,0,0,"text","Element 4 (all languages)","",0
+,140,1,1280,0,0,0,0,0,0,"text","","",0
+,141,1,1280,0,0,1,140,0,0,"text","Element 5 (de)","",0
+,142,1,1280,0,0,2,140,141,0,"text","Element 5 (en)","",0
+,143,1,1280,0,1,3,140,142,0,"text","Element 5 (en-GB, hidden)","",0
+,150,1,1536,0,0,0,0,0,0,"text","","",0
+,151,1,1536,0,1,1,150,0,0,"text","Element 6 (de, hidden in all languages)","",0
+,152,1,1536,0,1,2,150,151,0,"text","Element 6 (en, hidden in all languages)","",0
+,500,50,256,0,0,0,0,0,0,"shortcut","","tt_content_100",0
+,501,50,256,0,0,1,500,0,0,"shortcut","Shortcut to element 1 (de)","tt_content_100",0
+,502,50,256,0,0,2,500,501,0,"shortcut","Shortcut to element 1 (en)","tt_content_100",0
+,503,50,256,0,0,3,500,502,0,"shortcut","Shortcut to element 1 (en-GB)","tt_content_100",0
+,510,50,512,0,0,0,0,0,0,"shortcut","","tt_content_110",0
+,511,50,512,0,0,1,510,0,0,"shortcut","Shortcut to element 2 (de)","tt_content_110",0
+,512,50,512,0,0,2,510,511,0,"shortcut","Shortcut to element 2 (en)","tt_content_110",0
+,513,50,512,0,0,3,510,512,0,"shortcut","Shortcut to element 2 (en-GB)","tt_content_110",0
+"sys_category"
+,"uid","pid","sorting","deleted","hidden","sys_language_uid","l10n_parent","parent","title"
+,1000,1,256,0,0,0,0,0,""
+,1001,1,256,0,0,1,1000,0,"Kategorie"
+,1002,1,256,0,0,2,1000,0,"Category"
+"sys_category_record_mm"
+,"uid_local","uid_foreign","tablenames","fieldname","sorting","sorting_foreign"
+,1000,101,"tt_content","categories",0,1
+,1000,102,"tt_content","categories",0,1
+,1000,103,"tt_content","categories",0,1

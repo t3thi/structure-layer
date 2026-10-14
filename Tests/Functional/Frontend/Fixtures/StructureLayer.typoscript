@@ -1,0 +1,73 @@
+# Additions to JsonRenderer.typoscript (include it first).
+
+# Shortcut CType: render the referenced records like fluid_styled_content does (RECORDS, source = records).
+page.10.20.renderObj.20 = RECORDS
+page.10.20.renderObj.20 {
+	if.value = shortcut
+	if.equals.field = CType
+	source.field = records
+	tables = tt_content
+	conf.tt_content < lib.watcherDataObject
+	conf.tt_content.1.watcher.dataWrap = {register:watcher}|.records/tt_content:{field:uid}
+}
+
+# Categories without a language restriction on sys_category: the relation points to the shadow
+# category, the overlay listener resolves it. JsonRenderer's renderObj.10 restricts by language.
+page.10.20.renderObj.30 < page.10.20.renderObj.10
+page.10.20.renderObj.30.select.languageField = 0
+page.10.20.renderObj.30.renderObj.1.watcher.dataWrap = {register:watcher}|.categoriesUnrestricted/sys_category:{field:uid}
+
+# t3://record?identifier=content links to the shadow uid, rendered on the references page
+config.recordLinks.content {
+	typolink {
+		parameter = 50
+		additionalParams.data = field:uid
+		additionalParams.wrap = &record=|
+	}
+}
+
+page.99999.stdWrap.postUserFunc.values {
+	# "unlinked" if the record link cannot be built
+	recordLinks.children {
+		element2.cObject = TEXT
+		element2.cObject {
+			value = unlinked
+			typolink.parameter = t3://record?identifier=content&uid=110
+			typolink.returnLast = url
+		}
+		element3 < .element2
+		element3.cObject.typolink.parameter = t3://record?identifier=content&uid=120
+	}
+
+	# Main menu below the root page, comma-separated page titles.
+	menu.cObject = HMENU
+	menu.cObject {
+		special = directory
+		special.value = 1
+		1 = TMENU
+		1.NO {
+			doNotLinkIt = 1
+			stdWrap.field = title
+			allWrap = |,
+		}
+	}
+	# Language menu: "<languageId>:<available|unavailable>," per site language.
+	languageMenu.cObject = HMENU
+	languageMenu.cObject {
+		special = language
+		special.value = 1,2,3
+		1 = TMENU
+		1.NO {
+			doNotLinkIt = 1
+			stdWrap.cObject = TEXT
+			stdWrap.cObject.dataWrap = {field:_REQUESTED_OVERLAY_LANGUAGE}:available
+			allWrap = |,
+		}
+		1.ACT < .1.NO
+		1.ACT = 1
+		1.USERDEF1 < .1.NO
+		1.USERDEF1 = 1
+		1.USERDEF1.stdWrap.cObject.dataWrap = {field:_REQUESTED_OVERLAY_LANGUAGE}:unavailable
+		1.USERDEF2 < .1.USERDEF1
+	}
+}

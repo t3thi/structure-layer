@@ -25,12 +25,12 @@ abstract class AbstractStructureLayerTestCase extends FunctionalTestCase
     }
 
     /**
-     * @return array{status: int, scope: array<string, mixed>, records: array<string, array<string, mixed>>}
+     * @return array{status: int, scope: array<string, mixed>, records: array<string, array<string, mixed>>, structure: array<string, mixed>}
      */
     protected function renderFrontend(string $url): array
     {
         $response = $this->executeFrontendSubRequest(new InternalRequest($url));
-        $result = ['status' => $response->getStatusCode(), 'scope' => [], 'records' => []];
+        $result = ['status' => $response->getStatusCode(), 'scope' => [], 'records' => [], 'structure' => []];
         if ($result['status'] !== 200) {
             return $result;
         }
@@ -41,13 +41,18 @@ abstract class AbstractStructureLayerTestCase extends FunctionalTestCase
             'languageId' => $content->getScopePath('languageInfo/id'),
             'overlayType' => $content->getScopePath('languageInfo/overlayType'),
             'fallbackChain' => $content->getScopePath('languageInfo/fallbackChain'),
+            // Only filled by Frontend/Fixtures/StructureLayer.typoscript
+            'menu' => $content->getScopePath('menu'),
+            'languageMenu' => $content->getScopePath('languageMenu'),
+            'recordLinks' => $content->getScopePath('recordLinks'),
         ];
         $result['records'] = $content->getSection('Default')->getRecords();
+        $result['structure'] = $content->getSection('Default')->getStructure();
         return $result;
     }
 
     /**
-     * @param array{status: int, scope: array<string, mixed>, records: array<string, array<string, mixed>>} $renderResult
+     * @param array{status: int, scope: array<string, mixed>, records: array<string, array<string, mixed>>, structure: array<string, mixed>} $renderResult
      * @return list<string>
      */
     protected function renderedContentHeaders(array $renderResult): array

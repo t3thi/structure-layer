@@ -1,0 +1,22 @@
+--- a/Classes/Site/Entity/SiteLanguage.php	2026-10-14 16:02:18
++++ b/Classes/Site/Entity/SiteLanguage.php	2026-10-14 16:02:18
+@@ -150,6 +150,19 @@
+             }
+             $this->fallbackLanguageIds = array_map(intval(...), $fallbackLanguageIds);
+         }
++        if ($languageId > 0) {
++            // Language 0 is the hidden structure layer: it is never part of a fallback chain,
++            // and the chain alone decides the output. The configured fallbackType is ignored:
++            // no chain renders only the requested language, a chain falls back per record.
++            $this->fallbackLanguageIds = array_values(array_filter(
++                $this->fallbackLanguageIds,
++                static fn(int $fallbackLanguageId): bool => $fallbackLanguageId > 0 && $fallbackLanguageId !== $languageId
++            ));
++            $this->fallbackType = $this->fallbackLanguageIds === [] ? 'free' : 'fallback';
++            if (isset($this->configuration['fallbacks'])) {
++                $this->configuration['fallbacks'] = implode(',', $this->fallbackLanguageIds);
++            }
++        }
+         if (isset($configuration['enabled'])) {
+             $this->enabled = (bool)$configuration['enabled'];
+         }

@@ -1,0 +1,4 @@
+config.disableAllHeaderCode = 0
+page = PAGE
+page.10 = TEXT
+page.10.value = content

@@ -1,0 +1,18 @@
+{
+	"name": "t3thi/structure-layer-extbase-test",
+	"type": "typo3-cms-extension",
+	"description": "Test fixture: Extbase queries on tt_content for the structure layer PoC.",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"typo3/cms-extbase": "*"
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "structure_layer_extbase_test",
+			"version": "0.1.0-dev",
+			"Package": {
+				"providesPackages": {}
+			}
+		}
+	}
+}

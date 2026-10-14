@@ -23,7 +23,8 @@ The PoC needs a few changes in TYPO3 Core where no extension point exists
   }
   ```
 
-- Re-apply after editing: `ddev composer reinstall typo3/cms-core`
-  (or remove `.Build/vendor/typo3/cms-core` and run `ddev setup`).
+- Re-apply after editing: remove `.Build/vendor/typo3/cms-<package>` and run
+  `ddev setup`. `composer reinstall` does not work for `dev-main` packages: it
+  removes the package and then fails with "Package is not installed".
 - `composer.lock` is not versioned; `dev-main` moves, so a patch may stop
   applying. `composer-exit-on-patch-failure` makes that loud.

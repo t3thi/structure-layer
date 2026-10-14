@@ -1,0 +1,39 @@
+# Same as structure-site, but with legacy fallbackType values and "0" in fallbacks.
+# The structure layer ignores fallbackType and strips 0 from every chain, so the output must be identical.
+rootPageId: 1
+base: 'https://structure.localhost/'
+languages:
+  -
+    languageId: 0
+    title: Structure
+    enabled: false
+    base: /_structure/
+    locale: en_US.UTF-8
+    flag: global
+  -
+    languageId: 1
+    title: Deutsch
+    navigationTitle: Deutsch
+    base: /
+    locale: de_DE.UTF-8
+    flag: de
+    fallbackType: fallback
+    fallbacks: '0'
+  -
+    languageId: 2
+    title: English
+    navigationTitle: English
+    base: /en/
+    locale: en_US.UTF-8
+    flag: us
+    fallbackType: strict
+    fallbacks: '1,0'
+  -
+    languageId: 3
+    title: 'English (UK)'
+    navigationTitle: 'English (UK)'
+    base: /en-gb/
+    locale: en_GB.UTF-8
+    flag: gb
+    fallbackType: free
+    fallbacks: '2,1'
