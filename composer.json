@@ -66,7 +66,9 @@
 		"composer-exit-on-patch-failure": true,
 		"patches": {
 			"typo3/cms-core": {
-				"Effective fallbackType from fallbacks, never fall back to 0": "patches/cms-core-site-language-effective-fallback-type.patch"
+				"Effective fallbackType from fallbacks, never fall back to 0": "patches/cms-core-site-language-effective-fallback-type.patch",
+				"Localize from a translation: detect existing translations, keep the page parent": "patches/cms-core-datahandler-localize-from-translation.patch",
+				"Sort number: ignore records sharing the previous record's sorting": "patches/cms-core-datahandler-sort-number-ties.patch"
 			}
 		}
 	}

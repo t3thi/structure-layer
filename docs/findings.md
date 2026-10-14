@@ -362,3 +362,141 @@ Deleting the disabled en translation makes the de fallback reappear
 2. Open, unchanged from Phase 0: `Site::getPrimaryLanguage()` and its
    callers, `PageLinkBuilder:221`, sorting (C).
 3. New candidate: `DatabaseRecordLinkBuilder` translation check in free mode.
+
+---
+
+## Phase 2: DataHandler behavior (2026-10-14)
+
+### Deliverables
+
+- `Classes/DataHandling/DataHandlerHook` (datamap + cmdmap hook, registered in
+  `ext_localconf.php`). It acts only in the **outermost** DataHandler: nested
+  instances are DataHandler's own copy/localize runs, which already carry
+  complete rows.
+  - **B, creation.** A NEW record in a language `> 0` without a parent gets
+    a NEW shadow (`<id>shadow`) in front of it. Structural fields move to
+    the shadow, and pages get `l18n_cfg = 1` and a "custom" `l10n_state`.
+    A NEW record in **language 0** (page tree, structure column) becomes a
+    shadow (keeps the NEW id) plus a translation in the primary language
+    (`<id>translation`).
+  - **§3.3, structural edits.** Structural fields (= `l10n_mode=exclude`)
+    submitted for a translation are written to the shadow;
+    DataMapProcessor pushes them to all languages.
+  - **H, hide in all languages.** `hidden` written on a *shadow* means "in
+    all languages": it is written on every translation, and the shadow
+    stays visible. For pages, `starttime`/`endtime` are handled the same
+    way. This is the DataHandler API the meeting asked for; the Layout
+    module button (Phase 3) only has to send `hidden` for the shadow uid.
+  - **D, move and copy.** A move or copy of a translation becomes a move or
+    copy of its shadow, relative to the target's shadow. A
+    `sys_language_uid` in the paste `update` is dropped (also for `-1`
+    records).
+  - **E, delete and restore.**
+    - Deleting the last translation deletes the shadow (I4).
+    - Restoring a translation restores its shadow.
+    - Restoring a shadow restores the translations deleted *together with
+      it* (same `tstamp`); translations deleted earlier stay deleted.
+      Decision for E: restore, not block.
+  - **C, sorting alignment.** After every outermost run, the translations on
+    the touched pages get the `sorting` of their shadow (direct `UPDATE`,
+    like DataHandler's own resorting).
+  - **Copy repair.** `copyRecord()` applies `hideAtCopy` and `prependAtCopy`
+    to the first copied record, i.e. the shadow. The hook moves "hidden" to
+    the copied translations and drops the label prefix.
+- TCA overrides: `tt_content.fe_group`, `pages.doktype` and `pages.fe_group`
+  get `l10n_mode = exclude`.
+- `structure-layer:check [site]` (`Classes/Integrity/InvariantChecker`,
+  `Classes/Command/CheckCommand`). It checks I1 (shadow label empty), I2, I3,
+  I4, I5 (hidden; time window for pages), C (sorting drift), and A (language
+  0 disabled with its own base, no `0` in `fallbacks`; `fallbackType` as a
+  notice).
+- Core patches (both test-first, both red before):
+  - `cms-core-datahandler-localize-from-translation.patch`:
+    - duplicate detection by the source's `l10n_parent` (I3);
+    - page localize from a translation keeps `l10n_parent`.
+  - `cms-core-datahandler-sort-number-ties.patch`: `getSortNumber()` looks
+    for the next *greater* sorting value.
+- Tests: `Tests/Functional/DataHandling/` (42 tests, data
+  `Fixtures/StructureData.csv`). Every scenario ends with the invariant
+  check. Plain PHP assertions instead of CSV result files: the scenarios
+  assert relations (order, parents, languages), not absolute `sorting`
+  values.
+
+### Scenario results (gate: met, check clean after every scenario)
+
+| # | Scenario | Result |
+|---|---|---|
+| 1 | Create in language 2 only (content, page) | shadow + connected record; `l10n_source = 0`; shadow visible even if the translation is hidden |
+| 1b | Create in language 0 (page tree, structure column) | shadow + translation in the primary language (de) |
+| 2 | Insert after a translation (same or other language), top of page | shadow at the right position; **no other row renumbered** |
+| 3 | Translate en → de / en → en-GB / page en → en-GB | parent = shadow, source = the translation; duplicate rejected (logged) |
+| 4 | Edit `colPos`, `CType`, `fe_group`, `doktype` from a translation | written to the shadow, synchronized to all languages; payload untouched |
+| 5 | Synchronizable page fields | per language; survive structural edits and translate |
+| 6 | Move translation (same page, other language target, other page, drag & drop with language change, `-1`) | always all languages; language never changes |
+| 7 | Delete last / one of two translations | shadow deleted / kept |
+| 8 | Delete shadow; restore in both directions | cascade; restore as described above |
+| 9 | Copy shadow, copy translation, copy page | all languages copied, invariants hold |
+| 10 | Inline file reference of content created in language 2 | language 2, no shadow, attached to the translation (characterization) |
+| 11 | Hide/show in all languages; hide one language | every translation / only one; shadow never hidden |
+| 12 | Sorting equals shadow sorting | after create, insert, move, localize, copy (check rule C) |
+
+### Findings
+
+- **Write amplification (SCALE-1).** Phase 0 measured a page-wide renumbering
+  on every "insert after". With the tie patch, an insert changes no existing
+  row. Alignment C costs one `SELECT` per touched page and one `UPDATE` per
+  shadow on it (most match 0 rows). This is O(shadows per page) statements
+  per operation, to be measured in Phase 6.
+- **Core bug candidates, independent of the PoC (Forge):**
+  - Translating from a non-default translation into a language that
+    already has the element creates a duplicate.
+    `LocalizationRepository::getRecordTranslation()` matches
+    `l10n_source = uid OR (l10n_source = 0 AND l10n_parent = uid)`, so a
+    record with another source is missed.
+  - Localizing a *page* from a page translation creates an **unconnected**
+    page (`l10n_parent = 0`): `localizePage()` builds the page from
+    `$overrideValues` only, and for non-default sources those lack the
+    parent.
+- **Page translate copies little.** `localizePage()` copies only
+  `prefixLangTitle` fields (title with "[Translate to …:]"), not e.g.
+  `nav_hide`. Translating a page from German therefore does not take over
+  German page properties. With an empty shadow there is no other source.
+  To decide in Phase 3 (translation wizard) whether that is acceptable.
+- **`l10n_state` is mandatory for page translations.** Without it,
+  DataMapProcessor treats synchronizable fields as "parent":
+  - an update of the shadow blanks them on every translation;
+  - an update of the translation itself silently drops the submitted value.
+  The hook marks all synchronizable fields "custom" on create, translate,
+  and before any shadow or translation update. The migration (Phase 4)
+  must do it for all existing page translations.
+- **`tt_content.starttime/endtime` are `exclude` in Core.** They live on
+  the shadow and are shared by all languages. Plan I5 ("time window stays
+  open") therefore holds only for pages; for content a shared time window
+  is consistent. The check enforces I5's time window for pages only.
+- **I4 for pages is drastic.** Deleting the last page translation deletes
+  the shadow page, and with it the whole subtree (subject to recursive
+  delete permissions; untested with subpages). Open for Phase 5
+  (permissions).
+- **Restore heuristic.** "Deleted together" is identified by an equal
+  `tstamp`. A real implementation should use the history correlation id.
+- **Copy semantics.** Copying a translation copies the element in all
+  languages, consistent with move (decision 2). The "(copy 1)" label prefix
+  is lost: Core applies it to the first copied record only, and that is now
+  the empty shadow.
+- **Primary language for language-0 creation** = first enabled site
+  language, until the Editing Language exists (Phase 3b). For a new root
+  page (no site yet) the record stays as created → I4 violation, reported
+  by the check.
+- **Test pitfall:** `Connection::select()` applies the default restrictions
+  (hidden, time window). DataHandler tests must read with
+  `removeAll()` restrictions, or hidden rows look deleted.
+
+### Patch list after Phase 2
+
+1. ✅ `SiteLanguage::__construct` (Phase 1).
+2. ✅ `DataHandler::localize()` from translations (duplicates, page parent).
+   Upstream candidate.
+3. ✅ `DataHandler::getSortNumber()` ties. Upstream candidate (ties are rare
+   in Core, but the change only avoids unnecessary resorting).
+4. Open: `Site::getPrimaryLanguage()` + callers, `PageLinkBuilder:221`,
+   `DatabaseRecordLinkBuilder` free-mode check.

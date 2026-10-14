@@ -6,3 +6,14 @@ services:
 
   T3thi\StructureLayer\:
     resource: '../Classes/*'
+
+  # Instantiated by GeneralUtility::makeInstance() (DataHandler hooks), so they must be public.
+  T3thi\StructureLayer\DataHandling\DataHandlerHook:
+    public: true
+
+  # Used directly in functional tests.
+  T3thi\StructureLayer\Integrity\InvariantChecker:
+    public: true
+
+  T3thi\StructureLayer\Command\CheckCommand:
+    public: true

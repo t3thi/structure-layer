@@ -1,0 +1,35 @@
+--- a/Classes/DataHandling/DataHandler.php	2026-10-14 16:36:07
++++ b/Classes/DataHandling/DataHandler.php	2026-10-14 16:36:07
+@@ -8053,14 +8053,16 @@
+                                 'pid',
+                                 $queryBuilder->createNamedParameter($row['pid'], Connection::PARAM_INT)
+                             ),
+-                            $queryBuilder->expr()->gte(
++                            // Only a greater value is a gap to insert into. Records sharing the sorting value of the
++                            // previous record (e.g. translations aligned to their parent) must not force a resorting.
++                            $queryBuilder->expr()->gt(
+                                 $sortColumn,
+                                 $queryBuilder->createNamedParameter($row[$sortColumn], Connection::PARAM_INT)
+                             )
+                         )
+                         ->orderBy($sortColumn, 'ASC')
+                         ->addOrderBy('uid', 'DESC')
+-                        ->setMaxResults(2);
++                        ->setMaxResults(1);
+ 
+                 if ($considerWorkspaces) {
+                     $queryBuilder->andWhere(
+@@ -8071,11 +8073,9 @@
+                     );
+                 }
+ 
+-                $subResults = $queryBuilder->executeQuery()->fetchAllAssociative();
++                $subrow = $queryBuilder->executeQuery()->fetchAssociative();
+                 // Fetches the next record in order to calculate the in-between sortNumber
+-                if (count($subResults) === 2) {
+-                    // There was a record afterward, fetch that
+-                    $subrow = array_pop($subResults);
++                if (is_array($subrow)) {
+                     // The sortNumber is found in between these values
+                     $sortNumber = $row[$sortColumn] + floor(($subrow[$sortColumn] - $row[$sortColumn]) / 2);
+                     // The sortNumber happened NOT to be between the two surrounding numbers, so we'll have to resort the list

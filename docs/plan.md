@@ -1,6 +1,6 @@
 # PoC: Default Language as a Hidden Structural Layer
 
-**Status:** Implementation plan, 2026-10-14. Phases 0 and 1 done (`docs/findings.md`).
+**Status:** Implementation plan, 2026-10-14. Phases 0–2 done (`docs/findings.md`).
 **Base:** `typo3/cms-*` `dev-main` (TYPO3 v15 development line). Code
 analysis was done against the Core monorepo at `0a835c80f63`.
 **Sources** (in the Core monorepo checkout `~/Code/typo3-cms-15`):
