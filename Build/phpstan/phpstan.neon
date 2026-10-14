@@ -1,0 +1,11 @@
+# PHPUnit rules are wired in by phpstan/extension-installer.
+parameters:
+    level: 8
+    paths:
+        - ../../Classes
+        - ../../Tests
+    excludePaths:
+        # Phase 0 spikes are throw-away experiments, kept only as evidence for docs/findings.md.
+        - ../../Tests/Functional/Spike
+    bootstrapFiles:
+        - ../../.Build/vendor/autoload.php

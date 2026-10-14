@@ -1,0 +1,10 @@
+#!/bin/bash
+## Description: Run the functional tests (SQLite); extra args go to PHPUnit
+## Usage: test [phpunit args]
+## Example: "ddev test", "ddev test --filter ShadowInjection", "ddev test Tests/Functional/Spike"
+
+set -e
+cd /var/www/html
+# SQLite is by far the fastest backend and needs no credentials; switch DBMS only for SQL specifics.
+export typo3DatabaseDriver="${typo3DatabaseDriver:-pdo_sqlite}"
+php -d memory_limit=1G .Build/bin/phpunit -c Build/phpunit/FunctionalTests.xml "$@"

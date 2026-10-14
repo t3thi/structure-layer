@@ -1,0 +1,66 @@
+{
+	"name": "t3thi/structure-layer",
+	"type": "typo3-cms-extension",
+	"description": "PoC: TYPO3 default language as a hidden structural layer (Translation Handling Initiative). Not for production.",
+	"license": "GPL-2.0-or-later",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"require": {
+		"php": "^8.5",
+		"typo3/cms-core": "dev-main",
+		"typo3/cms-backend": "dev-main",
+		"typo3/cms-frontend": "dev-main"
+	},
+	"require-dev": {
+		"cweagans/composer-patches": "^1.7",
+		"typo3/testing-framework": "dev-main",
+		"phpunit/phpunit": "^11.5",
+		"friendsofphp/php-cs-fixer": "^3.51",
+		"phpstan/phpstan": "^2.1",
+		"phpstan/extension-installer": "^1.4",
+		"phpstan/phpstan-phpunit": "^2.0",
+		"typo3/cms-install": "dev-main",
+		"typo3/cms-setup": "dev-main",
+		"typo3/cms-fluid-styled-content": "dev-main",
+		"typo3/cms-tstemplate": "dev-main",
+		"typo3/cms-lowlevel": "dev-main",
+		"typo3/cms-info": "dev-main",
+		"typo3/cms-belog": "dev-main",
+		"typo3/cms-beuser": "dev-main",
+		"typo3/cms-filelist": "dev-main",
+		"typo3/cms-recycler": "dev-main",
+		"typo3/coding-standards": "^0.9.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"T3thi\\StructureLayer\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"T3thi\\StructureLayer\\Tests\\": "Tests/"
+		}
+	},
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin",
+		"allow-plugins": {
+			"cweagans/composer-patches": true,
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true,
+			"phpstan/extension-installer": true
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "structure_layer",
+			"version": "0.1.0-dev",
+			"web-dir": ".Build/public",
+			"Package": {
+				"providesPackages": {}
+			}
+		},
+		"composer-exit-on-patch-failure": true,
+		"patches": {}
+	}
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+## Description: (Re)build the browsable demo instance at https://structure-layer.ddev.site/
+## Usage: demo
+## Example: "ddev demo"
+
+set -e
+cd /var/www/html
+[ -f .Build/bin/typo3 ] || composer install --no-interaction
+bash Build/Scripts/setup-demo-instance.sh

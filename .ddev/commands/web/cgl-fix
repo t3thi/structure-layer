@@ -1,0 +1,8 @@
+#!/bin/bash
+## Description: Fix coding style with PHP-CS-Fixer
+## Usage: cgl-fix
+## Example: "ddev cgl-fix"
+
+set -e
+cd /var/www/html
+.Build/bin/php-cs-fixer fix --config .php-cs-fixer.dist.php
