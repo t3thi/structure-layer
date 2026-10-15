@@ -1,0 +1,22 @@
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}
+<f:comment>
+    Structure layer override of EXT:backend Templates/PageLayout/PageLayout (plan §4 H, 3b):
+    the single-language view of a page that does not exist in the Editing Language shows an
+    empty state instead of an (empty) grid that would allow content without a page translation.
+</f:comment>
+<f:if condition="{context.drawingConfiguration.languageComparisonMode}">
+    <f:then>
+        <f:render partial="PageLayout/LanguageColumns" arguments="{_all}" />
+    </f:then>
+    <f:else>
+        <f:variable name="editingLanguageId" value="{context.drawingConfiguration.primaryLanguageId}" />
+        <f:if condition="{editingLanguageId} && !{context.languageInformation.existingTranslations.{editingLanguageId}}">
+            <f:then>
+                <f:render partial="StructureLayer/MissingPage" arguments="{_all}" />
+            </f:then>
+            <f:else>
+                <f:render partial="PageLayout/Grid" arguments="{_all}" />
+            </f:else>
+        </f:if>
+    </f:else>
+</f:if>

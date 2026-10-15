@@ -1,0 +1,14 @@
+--- a/Classes/View/BackendLayout/Grid/GridColumnItem.php	2026-10-14 17:22:35
++++ b/Classes/View/BackendLayout/Grid/GridColumnItem.php	2026-10-14 17:22:35
+@@ -303,8 +303,9 @@
+     {
+         $pageRecord = $this->context->getPageRecord();
+         $typeColumn = $this->getTypeColumn();
+-        return (int)($this->getRow()[$this->schema->getCapability(TcaSchemaCapability::Language)->getTranslationOriginPointerField()->getName()] ?? 0) === 0
+-            && (
++        // Structure layer: connected translations are draggable as well, a move always moves the
++        // element in all languages (DataHandler moves the localization parent).
++        return (
+                 $this->getBackendUser()->isAdmin()
+                 || (
+                     (

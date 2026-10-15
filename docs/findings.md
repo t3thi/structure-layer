@@ -500,3 +500,130 @@ Deleting the disabled en translation makes the de fallback reappear
    in Core, but the change only avoids unnecessary resorting).
 4. Open: `Site::getPrimaryLanguage()` + callers, `PageLinkBuilder:221`,
    `DatabaseRecordLinkBuilder` free-mode check.
+
+---
+
+## Phase 3: Layout module (2026-10-15)
+
+### Deliverables
+
+- **Page TSconfig** (`Configuration/page.tsconfig`, all pages):
+  - `mod.web_layout.allowInconsistentLanguageHandling = 1`: new-content buttons in every
+    language column, no "inconsistent" warnings;
+  - `mod.web_layout.localization.enableCopy = 0`: "copy" creates unconnected records (I2);
+  - `mod.web_layout.structureLayer.showStructureColumn = 0|1`: structure column hidden (3b,
+    default) or visible (3a);
+  - backend template overrides (`Resources/Private/TemplateOverrides/Backend`).
+- **Template overrides** (EXT:backend, via `templates.typo3/cms-backend`):
+  - `Partials/PageLayout/LanguageColumns`: rows always driven by the shadows; no
+    free/mixed branch and no language mode badge; a `-1` record is one row spanning all
+    visible columns; without the structure column, empty cells show a placeholder with the
+    resolved label of the element.
+  - `Templates/PageLayout/PageLayout`: single-language view of a page missing in the Editing
+    Language → empty state "not available in …", links to the existing languages, "Translate
+    page" (Core wizard).
+  - `Partials/PageLayout/RecordDefault/Header`: "hide / show in all languages" next to Core's
+    per-language toggle, derived badge "Hidden in all languages".
+- **Editing Language** (3b): `Backend/EditingLanguage` (BE user `uc`, per site; default =
+  primary language) and the middleware `Backend/Middleware/EditingLanguageInitialization`
+  (after Core's `page-context`, `web_layout` only). It rewrites the `PageContext`:
+  - language 0 is never selected and removed from the docheader language selector;
+  - an explicit selection sets the Editing Language (Core's single-select selector *is* the
+    Editing Language selector);
+  - single-language view = the Editing Language, also on pages without it (→ empty state);
+  - comparison view = Editing Language first, then the other selected languages.
+- **Shadow labels**: `Backend/ShadowLabelResolver` (preferred language, then site-language
+  order), used by the `PageContentPreviewRenderingEvent` listener `RenderShadowPreview`
+  (compact structure cell: flag + label of a translation). Phase 4 reuses it for the page tree.
+- **Hide / show in all languages**: `Backend/AllLanguagesVisibility`, ViewHelper
+  `sl:allLanguagesVisibility`, page toggle via `ModifyPageLayoutContentEvent`
+  (`AddPageVisibilityToggle`). The toggle sends `hidden` for the shadow; the Phase 2 hook
+  writes it on every translation.
+- **Sites module**: `fallbackType` read-only with an explanation; `fallbacks` no longer offers
+  the structure layer (`Backend/SiteConfiguration/FallbackLanguageItems`).
+- **Core patches** (`cms-backend`, test-first, all red before):
+  - `cms-backend-drag-and-drop-translations.patch`: `GridColumnItem::isDragAndDropAllowed()`
+    allows connected translations (a move always moves the shadow, Phase 2).
+  - `cms-backend-localization-repository-structural-identity.patch` (upstream candidates):
+    - `createTranslationParentConstraint()`: a record with `l10n_parent = X` is a translation of
+      X whatever its `l10n_source` (Core required `l10n_source = 0`);
+    - `getRecordsToCopyDatabaseResult()`: the wizard does not offer source records whose parent
+      already has a record in the target language (content written directly has
+      `l10n_source = 0` and was offered again).
+  - `cms-backend-localization-wizard-sources.patch`:
+    - `LocalizationController::getSources()`: language 0 is never a source;
+    - `ManualLocalizationHandler`: a page is translated from the *source language's* page
+      translation (Core always localized the default-language page, i.e. the empty shadow).
+      Upstream candidate on its own: the chosen source language was ignored for pages.
+- **Demo**: `ddev demo` writes the structure-layer site configuration and runs
+  `structure-layer:demo` (DataHandler seeding: gate start state, plus a German-only subpage).
+- Tests: `Tests/Functional/Backend/` (25 tests, data `Fixtures/PageModule.csv`). The module is
+  rendered through `PageLayoutController::mainAction()` behind the extension middleware, like a
+  real request. 148 tests in total, PHPStan level 8 and CGL clean.
+
+### Gate result: met
+
+`GateWalkthroughTest` runs the walkthrough with the DataHandler requests the module sends
+and checks the comparison view, the flash queue and `structure-layer:check` after each step:
+
+| Step | Result |
+|---|---|
+| German page, 5 elements, all translated to English | 5 rows, de \| en |
+| English-only element after element 2 (en column, "new content after") | own row between 2 and 3, de cell shows a placeholder |
+| Hide element 4 in English only | en record hidden, de untouched |
+| Reorder: drag en element 5 behind element 1 | all languages moved; order 1, 5, 2, (en only), 3, 4 |
+| Translate the English-only element to German | de record in the same row, `l10n_source` = en record |
+
+No Mixed/Free badge, no inconsistency warning and no flash message appear in any step.
+Checked manually in the DDEV instance (Playwright): comparison view, both toggles
+(round trip), the missing-page empty state and the translation wizard (page translated
+from German, check clean). **Not checked in the browser:** the drag & drop JavaScript; its
+DataHandler request is covered by the Phase 2 move tests and the walkthrough.
+
+### Findings
+
+- **Rows were already shadow-driven.** Core's comparison view builds rows from
+  `languageColumns.0`, so the template only had to drop the free/mixed branches, the badges
+  and (3b) the structure cells. Everything else is Core rendering. Core's language mode
+  ("connected") is now correct by construction.
+- **Extension points that were enough:** page TSconfig, backend template overrides,
+  `PageContentPreviewRenderingEvent`, `ModifyPageLayoutContentEvent`, a PSR-15 middleware,
+  site-configuration TCA overrides. **Missing:** an event in `PageContextFactory` to define the
+  initial/default language. The middleware rebuilds the whole `PageContext` instead; it works
+  because `PageContext` and `PageLanguageInformation` are public value objects.
+- **"Default language" is baked into the module in many places.** Things the middleware cannot
+  reach and that remain visible:
+  - the selector label counts the structure layer ("Languages (3)" for two selected languages,
+    "Languages (1)" for one) – `LanguageSelectorBuilder` assumes 0 is always shown;
+  - docheader "Edit page properties" and the page title on a page missing in the Editing
+    Language point to the shadow (empty title);
+  - breadcrumb and page tree show the shadow's empty title ("[No title]", Phase 4);
+  - `-1` records: Core puts them into language 0 in comparison mode and into the selected
+    language in single-language mode. Both work, but only because the structure grid is
+    still built while hidden.
+- **Two lookups in `LocalizationRepository` ignored structural identity.** With translations
+  of translations (`l10n_source` ≠ parent) Core did not see existing translations: the wizard
+  offered already translated elements and the Phase 2 duplicate check missed them. These are
+  real Core bugs for any installation that translates from a non-default language.
+- **The translation wizard skips steps.** With one possible source and one mode, it jumps
+  straight to the confirmation. On the structure layer this is the common case.
+- **Runtime-cache pitfall in tests.** `ContentFetcher` and page TSconfig are cached per
+  request in `cache.runtime`; several module renders in one test must flush it, or the second
+  render reuses the first one's records.
+- **UX gaps (not fixed):** the long "Hidden in all languages" badge widens the record header
+  and pushes the second column out of the viewport; there is no per-element "translate"
+  action in the comparison view (Core only has the page-level wizard).
+- **Cost (SCALE-1, counted from the code):** per rendered shadow, 1 query for the label; per
+  rendered translation, 1 query for the all-languages state.
+
+### Patch list after Phase 3
+
+1. ✅ `SiteLanguage::__construct` (Phase 1).
+2. ✅ `DataHandler::localize()` from translations (Phase 2).
+3. ✅ `DataHandler::getSortNumber()` ties (Phase 2).
+4. ✅ `GridColumnItem::isDragAndDropAllowed()`.
+5. ✅ `LocalizationRepository` structural identity. Upstream candidate.
+6. ✅ Translation wizard: no language 0 source, pages from the source language.
+   The page part is an upstream candidate.
+7. Open: `Site::getPrimaryLanguage()` + callers, `PageLinkBuilder:221`,
+   `DatabaseRecordLinkBuilder` free-mode check; candidate: an event in `PageContextFactory`.

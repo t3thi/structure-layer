@@ -1,0 +1,40 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+<f:variable name="editingLanguage" value="{context.languageInformation.availableLanguages.{editingLanguageId}}" />
+<div class="structure-layer-missing-page callout callout-info">
+    <div class="callout-icon">
+        <core:icon identifier="{editingLanguage.flagIdentifier}" />
+    </div>
+    <div class="callout-content">
+        <h2 class="callout-title">
+            <f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:missingPage.title" arguments="{0: editingLanguage.title}" />
+        </h2>
+        <div class="callout-body">
+            <f:if condition="{context.languageInformation.existingTranslations}">
+                <p>
+                    <f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:missingPage.availableIn" />
+                    <f:for each="{context.languageInformation.existingTranslations}" as="translation" key="languageId" iteration="iterator">
+                        <f:variable name="language" value="{context.languageInformation.availableLanguages.{languageId}}" />
+                        <a href="{f:be.uri(route: 'web_layout', parameters: {id: context.pageId, languages: {0: languageId}})}"><core:icon identifier="{language.flagIdentifier}" /> {language.title}</a>{f:if(condition: iterator.isLast, else: ', ')}
+                    </f:for>
+                </p>
+            </f:if>
+            <f:if condition="{allowEditContent}">
+                <typo3-backend-localization-button
+                    class="btn btn-default btn-sm"
+                    title="{f:translate(key: 'LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:missingPage.translate')}"
+                    record-type="pages"
+                    record-uid="{context.pageId}"
+                    target-language="{editingLanguageId}"
+                >
+                    <core:icon identifier="actions-localize" />
+                    <f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:missingPage.translate" />
+                </typo3-backend-localization-button>
+            </f:if>
+        </div>
+    </div>
+</div>
+</html>

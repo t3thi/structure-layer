@@ -1,0 +1,50 @@
+--- a/Classes/Controller/Wizard/LocalizationController.php	2026-10-14 17:27:16
++++ b/Classes/Controller/Wizard/LocalizationController.php	2026-10-14 17:27:16
+@@ -315,7 +315,8 @@
+         // Find all existing translations of the record
+         $record = BackendUtility::getRecord($recordType, $recordUid);
+         if ($record) {
+-            $existingLanguageUids = [0]; // Always include default language
++            // Structure layer: language 0 holds empty shadows, it is never a source of translations
++            $existingLanguageUids = [];
+ 
+             // Check each system language to see if a translation exists
+             foreach (array_keys($systemLanguages) as $languageUid) {
+--- a/Classes/Localization/ManualLocalizationHandler.php	2026-10-14 17:27:16
++++ b/Classes/Localization/ManualLocalizationHandler.php	2026-10-14 17:27:16
+@@ -76,7 +76,7 @@
+     {
+         // Handle pages with optional content selection
+         if ($instructions->mainRecordType === 'pages') {
+-            return $this->processPageLocalization($instructions->mode, $instructions->recordUid, $instructions->targetLanguageId, $instructions->additionalData);
++            return $this->processPageLocalization($instructions->mode, $instructions->recordUid, $instructions->targetLanguageId, $instructions->additionalData, $instructions->sourceLanguageId);
+         }
+ 
+         // Handle single record localization for other record types
+@@ -157,7 +157,8 @@
+         LocalizationMode $mode,
+         int $pageUid,
+         int $targetLanguage,
+-        array $additionalData
++        array $additionalData,
++        int $sourceLanguage = 0
+     ): LocalizationResult {
+         // Get selected content elements from additionalData
+         $selectedContent = $additionalData['selectedRecordUids'] ?? [];
+@@ -170,8 +171,15 @@
+             // Page translation doesn't exist - create it
+             // Always use 'localize' command for pages (even for copy mode)
+             // as we need to create a proper page translation/overlay
++            // The page is translated from the source language's page translation, if there is one,
++            // like the content elements (DataHandler keeps the page as localization parent).
++            $sourcePageUid = $pageUid;
++            if ($sourceLanguage > 0) {
++                $sourcePageTranslation = $this->localizationRepository->getPageTranslations($pageUid, [$sourceLanguage], $this->getBackendUser()->workspace);
++                $sourcePageUid = isset($sourcePageTranslation[$sourceLanguage]) ? $sourcePageTranslation[$sourceLanguage]->getUid() : $pageUid;
++            }
+             $cmd['pages'] = [
+-                $pageUid => [
++                $sourcePageUid => [
+                     'localize' => $targetLanguage,
+                 ],
+             ];

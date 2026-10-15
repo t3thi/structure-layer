@@ -1,0 +1,65 @@
+--- a/Classes/Domain/Repository/Localization/LocalizationRepository.php	2026-10-14 17:27:16
++++ b/Classes/Domain/Repository/Localization/LocalizationRepository.php	2026-10-14 17:27:16
+@@ -69,7 +69,7 @@
+             ->add(new WorkspaceRestriction($workspaceId));
+ 
+         $originalUidsStatement = $queryBuilder
+-            ->select('l10n_source')
++            ->select('l10n_source', 'l18n_parent')
+             ->from('tt_content')
+             ->where(
+                 $queryBuilder->expr()->eq(
+@@ -83,8 +83,14 @@
+             )
+             ->executeQuery();
+ 
+-        while ($origUid = $originalUidsStatement->fetchOne()) {
+-            $originalUids[] = (int)$origUid;
++        $existingParentUids = [];
++        while ($row = $originalUidsStatement->fetchAssociative()) {
++            if ((int)$row['l10n_source'] > 0) {
++                $originalUids[] = (int)$row['l10n_source'];
++            }
++            if ((int)$row['l18n_parent'] > 0) {
++                $existingParentUids[] = (int)$row['l18n_parent'];
++            }
+         }
+ 
+         $queryBuilder
+@@ -111,6 +117,17 @@
+                     )
+                 );
+         }
++        if ($existingParentUids !== []) {
++            // A source record whose localization parent already has a record in the destination language
++            // is translated, whatever that record's l10n_source is (e.g. 0 for content written directly).
++            $queryBuilder
++                ->andWhere(
++                    $queryBuilder->expr()->notIn(
++                        'l18n_parent',
++                        $queryBuilder->createNamedParameter($existingParentUids, Connection::PARAM_INT_ARRAY)
++                    )
++                );
++        }
+ 
+         return $queryBuilder->executeQuery();
+     }
+@@ -406,15 +423,11 @@
+         }
+         $translationSourceFieldName = $languageCapability->getTranslationSourceField()->getName();
+ 
++        // A record with this localization parent is a translation of it, whatever its source: a translation
++        // of a translation (l10n_source = another translation) is a translation of the same parent.
+         return $queryBuilder->expr()->or(
+             $queryBuilder->expr()->eq($translationSourceFieldName, $uidParameter),
+-            $queryBuilder->expr()->and(
+-                $queryBuilder->expr()->eq(
+-                    $translationSourceFieldName,
+-                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
+-                ),
+-                $translationOriginPointerConstraint
+-            )
++            $translationOriginPointerConstraint
+         );
+     }
+ 

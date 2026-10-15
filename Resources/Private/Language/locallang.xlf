@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="EXT:structure_layer/Resources/Private/Language/locallang.xlf" date="2026-10-14T00:00:00Z" product-name="structure_layer">
+    <header/>
+    <body>
+      <trans-unit id="structureColumn.description" resname="structureColumn.description">
+        <source>Shared structure of all languages</source>
+      </trans-unit>
+      <trans-unit id="siteLanguage.fallbackType.description" resname="siteLanguage.fallbackType.description">
+        <source>Ignored by the structure layer: without fallback languages only this language is rendered, with fallback languages missing content falls back along the chain.</source>
+      </trans-unit>
+      <trans-unit id="missingPage.title" resname="missingPage.title">
+        <source>This page is not available in %s</source>
+      </trans-unit>
+      <trans-unit id="missingPage.availableIn" resname="missingPage.availableIn">
+        <source>Available in other languages:</source>
+      </trans-unit>
+      <trans-unit id="missingPage.translate" resname="missingPage.translate">
+        <source>Translate page</source>
+      </trans-unit>
+      <trans-unit id="allLanguages.hide" resname="allLanguages.hide">
+        <source>Hide in all languages</source>
+      </trans-unit>
+      <trans-unit id="allLanguages.show" resname="allLanguages.show">
+        <source>Show in all languages</source>
+      </trans-unit>
+      <trans-unit id="allLanguages.hiddenEverywhere" resname="allLanguages.hiddenEverywhere">
+        <source>Hidden in all languages</source>
+      </trans-unit>
+      <trans-unit id="allLanguages.page.hide" resname="allLanguages.page.hide">
+        <source>Hide page in all languages</source>
+      </trans-unit>
+      <trans-unit id="allLanguages.page.show" resname="allLanguages.page.show">
+        <source>Show page in all languages</source>
+      </trans-unit>
+      <trans-unit id="allLanguages.page.hiddenEverywhere" resname="allLanguages.page.hiddenEverywhere">
+        <source>This page is hidden in all languages</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

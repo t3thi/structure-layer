@@ -51,6 +51,9 @@ ddev demo                    # rebuild https://structure-layer.ddev.site/
 - Phase tests live in `Tests/Functional/<Area>/` with their own
   `Fixtures/`. Hand-crafted data must mirror `l10n_mode=exclude` fields on
   translations (the frontend reads overlaid rows).
+- Layout module tests extend `Tests/Functional/Backend/AbstractPageModuleTestCase`: it
+  renders `PageLayoutController::mainAction()` behind the extension middleware and flushes
+  `cache.runtime` per render (Core caches content records and page TSconfig per request).
 - Test-only extensions: `Tests/Functional/Fixtures/Extensions/`, loaded by
   absolute path in `$testExtensionsToLoad`; their classes are mapped in
   root `autoload-dev`.
