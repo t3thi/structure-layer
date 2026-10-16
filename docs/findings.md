@@ -867,3 +867,148 @@ operations are rejected as a whole (without the permission) or applied to all la
 8. Open: `Site::getPrimaryLanguage()` + callers, `PageLinkBuilder:221`, `DatabaseRecordLinkBuilder`
    free-mode check; candidates: an event in `PageContextFactory`, a drop event in `drag-drop.js`,
    a structure-aware language check in `checkRecordEditAccess()`.
+
+---
+
+## Phase 6: Characterization of the hard edges (2026-10-16)
+
+Document-only phase: no new behavior. Everything below is pinned by characterization tests, so a
+later change shows up as a red test.
+
+### Deliverables
+
+- `Tests/Functional/Workspaces/WorkspaceCharacterizationTest` (5 tests, WS-1), with `typo3/cms-workspaces`
+  as a dev dependency, pinned to the split commit matching the installed Core (`e06b34f`).
+- `Tests/Functional/DataHandling/AllLanguagesRecordTest` (3 tests) and one more frontend test in
+  `ChainDrivenOutputTest`: `-1` records.
+- `Tests/Functional/DataHandling/DiffSourceCharacterizationTest`: `l10n_diffsource`.
+- `Tests/Functional/Measurements/` (SCALE-1): `QueryCounter`, a Doctrine driver middleware
+  registered only in the test instance, and `MeasurementTest` (16 measurements, written to
+  `var/measurements/*.json`).
+- Core suites with `patches/` applied: a scratch clone of the monorepo (not the working checkout),
+  at `ccd5d954ccd`, the monorepo commit of the installed split packages. All 7 patches apply with
+  `git apply --directory=typo3/sysext/<ext>`.
+- 220 tests in total, PHPStan level 8 and CGL clean.
+
+### Workspaces (WS-1)
+
+| Operation in workspace 1 | Result |
+|---|---|
+| Create in a language | shadow and record created as new versions; publishing makes both live, check clean |
+| Move a translation | move versions of the shadow and every translation; publish: all languages moved |
+| Hide in all languages | versions of every translation with `hidden = 1`, shadow untouched |
+| Delete the last translation | **breaks**: only the translation gets a delete version. The hook looks for *live* translations; the live record still exists, so the shadow is not "last". After publishing: I4 violation |
+| Discard a new translation | **breaks**: the new shadow version stays; publishing the workspace makes an empty shadow live (I4) |
+| Sorting alignment (C) | **drifts in the workspace**: C only updates live rows. A no-chain language orders by the translation's own sorting, so the preview can show another order than the published result. Publishing realigns (the hook runs on the publish command) |
+
+The structure layer itself is workspace-compatible: shadows are versioned records like any
+other. What is missing is workspace-awareness in the hook (translation lookups, discard,
+alignment). That is implementation work, not a model problem. Not tested: workspace preview
+in the frontend, staging, "publish only this language" (would leave the shadow behind or
+publish it alone).
+
+### `-1` records
+
+- Copy to another page: one record, language `-1`, no shadow, check clean.
+- Cut/paste into a language column: Core's paste sends that column's `sys_language_uid`; the
+  hook drops it, the record stays `-1` (the 2026-08-21 regression does not occur).
+- Workspace edit: one version, no copies per language; publish fine.
+- Frontend: a shortcut (RECORDS) to a `-1` record renders it in every language, with and without
+  a chain.
+- Already covered before: rendering (Phase 1), moves (Phase 2), one row spanning all columns in
+  the Layout module (Phase 3), untouched by the migration (Phase 4).
+
+### `l10n_diffsource` (2026-08-14: "expose rather than silently preserve")
+
+DataHandler fills `l10n_diffsource` with the values of the `l10n_parent` record whenever a
+translation is saved. FormEngine compares that snapshot with the current parent to show "the
+default language changed". With the structure layer the parent is the empty shadow: the snapshot
+is always empty, and a change of the record actually translated from (`l10n_source`) is **never
+shown**. Classic Core has the same blind spot for translations of translations: the snapshot is
+taken from the default record, not from `l10n_source`. The structure layer makes it the normal
+case. A fix would snapshot `l10n_source` instead (one place in `DataHandler::fillInFieldArray()`
+and `DatabaseLanguageRows`), plus a decision on what to show when the source is deleted.
+
+### Measurements (SCALE-1)
+
+SQL statements per frontend request (`ChainOutput.csv`, warm caches, second request). "Extension" =
+statements issued while extension code was on the stack (listeners, `TranslationLookup`):
+
+| Request | Statements | of which extension |
+|---|---|---|
+| de, no chain, page with 6 elements | 53 | 5 |
+| en, chain `1`, same page | 95 | 37 |
+| en-GB, chain `2,1`, same page | 101 | 39 |
+| de, no chain, subpage | 38 | 3 |
+| en, chain `1`, subpage | 57 | 18 |
+
+Without a chain the cost is negligible: the requested language is selected directly. With a chain,
+the overlay listener's "does a disabled translation exist in the requested language" lookup and the
+page policy (menus, rootline) add **32–39 % of all statements**. Nothing is cached per request yet.
+A runtime cache per (table, shadow, language) or a batched lookup per result set would remove most
+of it.
+
+DataHandler, per operation (`StructureData.csv`, admin; statements including sys_log/sys_history/refindex):
+
+| Operation | Statements | of which extension | Writes | of which extension |
+|---|---|---|---|---|
+| Create in en (shadow + record) | 52 | 7 | 13 | 4 |
+| Insert after a translation | 46 | 8 | 13 | 4 |
+| Edit payload of a translation | 39 | 6 | 7 | 3 |
+| Edit `colPos` from a translation | 88 | 8 | 14 | 3 |
+| Hide in all languages | 72 | 8 | 11 | 3 |
+| Move a translation (all languages) | 41 | 9 | 12 | 3 |
+| Translate de → en | 46 | 9 | 7 | 3 |
+| Delete one of two translations | 35 | 8 | 6 | 3 |
+| Delete the last translation (+ shadow) | 49 | 24 | 8 | 5 |
+| Copy a translation (all languages) | 116 | 22 | 21 | 8 |
+
+The extension's own share is small (6–9 statements, mostly the sorting alignment and lookups),
+except when it starts a nested DataHandler run (delete of the shadow, copy repair). The larger cost
+is structural: a "content" change writes two records instead of one (create), and an "all languages"
+change touches every translation (colPos, hide, move: DataMapProcessor and the move cascade).
+
+Migration (TranslationHandling data set, 3 sites, 7 languages, 300 → 514 content rows): 3,913
+statements (950 writes) for the whole data set. Reference index: **228 → 457 rows** (+100 %); a full
+`updateIndex()` afterwards finds nothing to add.
+
+### Core tests with the patches applied (breaking scope)
+
+Suites: unit (all, 12,237 tests) and functional `core/DataScenarios`, `core/DataHandling`, `core/Site`,
+`frontend`, `backend`, `extbase/Persistence` (7,340 tests), SQLite. **257 test methods fail** (267
+with data sets) in 52 classes. Without the patches, all 52 classes (1,717 tests) pass on the same
+commit, so every failure is caused by a patch. List: `docs/core-test-failures.md`.
+
+| Methods | Cause | Verdict |
+|---|---|---|
+| 156 | `cms-core-site-language-effective-fallback-type`: `0` is no longer a fallback, `fallbackType` is derived from `fallbacks`. Untranslated pages give 404, overlay types and fallback chains differ (LocalizedSiteContentRendering, SlugSiteRequest, LocalizedPageRendering scenarios, Extbase TranslatedSiteContent, DataScenarios frontend assertions, backend SiteUrlResolver) | intended: the behavioral break of chain-driven output |
+| 76 | `cms-core-datahandler-sort-number-ties`: only `sorting` values differ. Core's expectations encode the renumbering the patch avoids | intended; expectations would be rewritten if upstreamed |
+| 21 | Workspace preview crash, exposed by the fallback patch: `PreviewSimulator` → `PageRepository::checkIfPageIsHidden()` passes `false` to `getWorkspaceVersionOfRecord()` when the page does not exist in the requested language | **latent Core bug** (missing null check), upstream candidate |
+| 2 + 2 | Translation wizard sources (no language 0) and the `SiteLanguage` unit test (expects `0` in chains) | intended |
+
+Verified by leaving out single patches: without the sort-ties patch, a sorting-only class passes. Without
+the fallback patch, LocalizedSiteContentRendering, a DataScenarios workspace class (preview crash) and
+Extbase TranslatedSiteContent pass. The other four patches (localize from a translation, page translation
+with a NEW parent, drag & drop, LocalizationRepository structural identity) **break no Core test** in
+these suites. That supports upstreaming them on their own.
+
+Not run: the remaining functional suites (install, form, …) and acceptance tests. The patches touch
+DataHandler, `SiteLanguage` and the backend wizard, so those suites are the most exposed ones;
+the full run is left for a later decision.
+
+### Findings
+
+- **The breaking scope is concentrated.** 98.7 % of the Core tests run are unaffected (257 of 19,577 fail). The break is the
+  output policy itself: every test that expects "fall back to the default language" or
+  `fallbackType` semantics. That is the decision the initiative takes, not a side effect.
+- **Workspaces need work in the extension, not in the model.** The two I4 breaks come from
+  live-only lookups in the hook. A real implementation must resolve translations, alignment and
+  discard per workspace. Core's own DataScenarios workspace tests fail only through frontend
+  expectations and the preview crash.
+- **Query cost is the main runtime cost**, and it only applies to languages with a chain: about a third
+  of the statements of such a request come from the output policy. It is uncached by design in the PoC.
+- **Write amplification is moderate per operation** (one extra record on create, the existing
+  cascades elsewhere). The reference index doubles with the migration, because every former
+  default record now exists twice (shadow + translation).
+- **`l10n_diffsource` needs a decision**: compare against `l10n_source`, or drop the diff view for
+  translations of translations. Today it silently compares against an empty record.

@@ -202,6 +202,27 @@ final class ChainDrivenOutputTest extends AbstractStructureLayerTestCase
     }
 
     /**
+     * Phase 6: a shortcut to a "-1" record renders it in every language, with and without a chain.
+     */
+    #[Test]
+    public function shortcutToAnAllLanguagesRecordRendersInEveryLanguage(): void
+    {
+        $this->installSiteConfiguration();
+        $connection = $this->getConnectionPool()->getConnectionForTable('tt_content');
+        $connection->insert('tt_content', ['uid' => 520, 'pid' => 50, 'sorting' => 768, 'sys_language_uid' => 0, 'CType' => 'shortcut', 'records' => 'tt_content_130']);
+        foreach ([1 => 'de', 2 => 'en', 3 => 'en-GB'] as $languageId => $label) {
+            $connection->insert('tt_content', ['uid' => 520 + $languageId, 'pid' => 50, 'sorting' => 768, 'sys_language_uid' => $languageId, 'l18n_parent' => 520, 'CType' => 'shortcut', 'header' => 'Shortcut to element 4 (' . $label . ')', 'records' => 'tt_content_130']);
+        }
+
+        foreach (['/verweise' => 'de', '/en/references' => 'en', '/en-gb/references' => 'en-GB'] as $path => $label) {
+            $headers = $this->renderedContentHeaders($this->renderFrontend(self::BASE . $path));
+            $position = array_search('Shortcut to element 4 (' . $label . ')', $headers, true);
+            self::assertIsInt($position, $path);
+            self::assertSame('Element 4 (all languages)', $headers[$position + 1] ?? null, $path);
+        }
+    }
+
+    /**
      * @return array<string, list<mixed>>
      */
     public static function categoryDataProvider(): array

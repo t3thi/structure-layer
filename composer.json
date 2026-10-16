@@ -31,7 +31,8 @@
 		"typo3/cms-recycler": "dev-main",
 		"typo3/coding-standards": "^0.9.0",
 		"typo3/cms-extbase": "dev-main",
-		"typo3/cms-seo": "dev-main"
+		"typo3/cms-seo": "dev-main",
+		"typo3/cms-workspaces": "dev-main#e06b34ff38d2c2d7954d90596db1669d1cb8debc"
 	},
 	"autoload": {
 		"psr-4": {
