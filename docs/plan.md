@@ -1,6 +1,6 @@
 # PoC: Default Language as a Hidden Structural Layer
 
-**Status:** Implementation plan, 2026-10-14. Phases 0–3 done (`docs/findings.md`).
+**Status:** Implementation plan, 2026-10-14. Phases 0–4 done (`docs/findings.md`).
 **Base:** `typo3/cms-*` `dev-main` (TYPO3 v15 development line). Code
 analysis was done against the Core monorepo at `0a835c80f63`.
 **Sources** (in the Core monorepo checkout `~/Code/typo3-cms-15`):
@@ -517,6 +517,10 @@ pointers stay valid.**
    - Languages with `fallbackType: strict` or `free` lose their (inactive)
      `fallbacks` list. It is moved to a per-language `inactiveFallbacks` key and
      reported (§4 G compatibility note).
+     *Corrected in Phase 4 (baseline):* strict keeps its chain without `0`
+     (records do fall back there, never to the default record); fallback gets
+     N appended (it always ended with the default record); only free loses
+     its chain. See `docs/findings.md`, Phase 4.
    - `fallbackType` itself is left in place, ignored.
 2. For every language-0 record of the site's tables (pages first, then
    content, then other localizable tables): create a language-`N`

@@ -1,0 +1,14 @@
+# Additions to JsonRenderer.typoscript (include it first): the menu below the site root page.
+page.99999.stdWrap.postUserFunc.values {
+	menu.cObject = HMENU
+	menu.cObject {
+		special = directory
+		special.value.data = leveluid:0
+		1 = TMENU
+		1.NO {
+			doNotLinkIt = 1
+			stdWrap.field = title
+			allWrap = |,
+		}
+	}
+}

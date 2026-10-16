@@ -1,0 +1,40 @@
+{
+	"name": "t3thi/structure-layer-baseline",
+	"description": "Records the classic frontend output of the migration data sets on an unpatched Core, without EXT:structure_layer. Run with `ddev baseline`.",
+	"license": "GPL-2.0-or-later",
+	"type": "project",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"require": {
+		"php": "^8.5",
+		"typo3/cms-core": "dev-main",
+		"typo3/cms-backend": "dev-main",
+		"typo3/cms-extbase": "dev-main",
+		"typo3/cms-fluid": "dev-main",
+		"typo3/cms-frontend": "dev-main",
+		"typo3/cms-install": "dev-main"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^11.5",
+		"typo3/testing-framework": "dev-main"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"T3thi\\StructureLayer\\Baseline\\": "Tests/",
+			"T3thi\\StructureLayer\\Tests\\": "../../Tests/"
+		}
+	},
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin",
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"web-dir": ".Build/public"
+		}
+	}
+}

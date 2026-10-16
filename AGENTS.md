@@ -22,6 +22,7 @@ ddev test --filter Name      # extra args go to PHPUnit
 ddev lint                    # PHPStan level 8 + PHP-CS-Fixer dry-run
 ddev cgl-fix                 # apply coding style
 ddev demo                    # rebuild https://structure-layer.ddev.site/
+ddev baseline                # re-record migration "before" output (unpatched Core, Build/baseline/)
 ```
 
 ## Working mode
@@ -54,6 +55,9 @@ ddev demo                    # rebuild https://structure-layer.ddev.site/
 - Layout module tests extend `Tests/Functional/Backend/AbstractPageModuleTestCase`: it
   renders `PageLayoutController::mainAction()` behind the extension middleware and flushes
   `cache.runtime` per render (Core caches content records and page TSconfig per request).
+- Migration tests (`Tests/Functional/Migration/`) compare against
+  `Fixtures/Baseline/*.json`, recorded by `ddev baseline` on an unpatched Core.
+  Re-record after changing a data set or after `composer update`.
 - Test-only extensions: `Tests/Functional/Fixtures/Extensions/`, loaded by
   absolute path in `$testExtensionsToLoad`; their classes are mapped in
   root `autoload-dev`.

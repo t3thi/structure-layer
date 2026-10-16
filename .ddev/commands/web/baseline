@@ -1,0 +1,21 @@
+#!/bin/bash
+## Description: Record the classic ("before") frontend output of the migration data sets on an unpatched Core
+## Usage: baseline [phpunit args]
+## Example: "ddev baseline"
+
+set -e
+cd /var/www/html/Build/baseline
+# Same Core commits as the main install (.Build/), but without patches and without EXT:structure_layer.
+pins=$(php -r '
+    $installed = json_decode(file_get_contents("/var/www/html/.Build/vendor/composer/installed.json"), true);
+    foreach ($installed["packages"] as $package) {
+        if (preg_match("#^typo3/(cms-[a-z-]+|testing-framework)$#", $package["name"]) && $package["version"] === "dev-main") {
+            echo $package["name"], ":dev-main#", $package["source"]["reference"], " ";
+        }
+    }')
+cp composer.json composer.json.orig
+trap 'mv composer.json.orig composer.json' EXIT
+composer require --no-interaction --no-update $pins >/dev/null
+composer update --no-interaction --no-progress
+export typo3DatabaseDriver="${typo3DatabaseDriver:-pdo_sqlite}"
+php -d memory_limit=1G .Build/bin/phpunit -c phpunit.xml "$@"

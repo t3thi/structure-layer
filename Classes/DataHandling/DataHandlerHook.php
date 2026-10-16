@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace T3thi\StructureLayer\DataHandling;
 
+use T3thi\StructureLayer\Backend\EditingLanguage;
+use T3thi\StructureLayer\Backend\ShadowLabelResolver;
 use T3thi\StructureLayer\StructureLayer;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Connection;
@@ -29,6 +31,8 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  *      a new record in language 0 becomes shadow + translation in the primary language.
  * - §3.3: structural fields (l10n_mode=exclude) submitted for a translation are written to its shadow.
  * - H: "hidden" (pages: also the time window) written on a shadow is written on every translation.
+ * - I1: a label written on a shadow (page tree inline edit) is written on the translation the
+ *      backend shows for it: the Editing Language, otherwise the first available translation.
  * - §3.3: page translations keep their synchronizable fields ("custom" l10n_state).
  *
  * Cmdmap (outermost only):
@@ -52,6 +56,8 @@ final class DataHandlerHook
         private readonly SiteFinder $siteFinder,
         private readonly ConnectionPool $connectionPool,
         private readonly TcaSchemaFactory $tcaSchemaFactory,
+        private readonly EditingLanguage $editingLanguage,
+        private readonly ShadowLabelResolver $shadowLabelResolver,
     ) {}
 
     public function processDatamap_beforeStart(DataHandler $dataHandler): void
@@ -64,7 +70,7 @@ final class DataHandlerHook
             if (!isset($datamap[$table])) {
                 continue;
             }
-            $datamap[$table] = $this->rewriteTableDatamap($table, $datamap[$table]);
+            $datamap[$table] = $this->rewriteTableDatamap($table, $datamap[$table], $dataHandler);
         }
         $dataHandler->datamap = $datamap;
     }
@@ -185,7 +191,7 @@ final class DataHandlerHook
      * @param array<int|string, mixed> $records
      * @return array<int|string, mixed>
      */
-    private function rewriteTableDatamap(string $table, array $records): array
+    private function rewriteTableDatamap(string $table, array $records, DataHandler $dataHandler): array
     {
         $languageCapability = $this->getLanguageCapability($table);
         $languageField = $languageCapability->getLanguageField()->getName();
@@ -199,7 +205,7 @@ final class DataHandlerHook
                 continue;
             }
             if (MathUtility::canBeInterpretedAsInteger($id)) {
-                $this->rewriteUpdate($table, (int)$id, $fields, $rewritten);
+                $this->rewriteUpdate($table, (int)$id, $fields, $rewritten, $dataHandler);
                 continue;
             }
             $languageId = (int)($fields[$languageField] ?? 0);
@@ -246,12 +252,12 @@ final class DataHandlerHook
      * @param array<string, mixed> $fields
      * @param array<int|string, mixed> $rewritten
      */
-    private function rewriteUpdate(string $table, int $uid, array $fields, array &$rewritten): void
+    private function rewriteUpdate(string $table, int $uid, array $fields, array &$rewritten, DataHandler $dataHandler): void
     {
         $languageCapability = $this->getLanguageCapability($table);
         $languageField = $languageCapability->getLanguageField()->getName();
         $parentField = $languageCapability->getTranslationOriginPointerField()->getName();
-        $record = BackendUtility::getRecord($table, $uid, $languageField . ',' . $parentField);
+        $record = BackendUtility::getRecord($table, $uid, 'pid,' . $languageField . ',' . $parentField);
         if ($record === null) {
             $rewritten[$uid] = $fields;
             return;
@@ -281,6 +287,16 @@ final class DataHandlerHook
         }
 
         if ($languageId === 0) {
+            // A shadow carries no label (I1): it belongs to the translation the backend shows for the shadow
+            $labelFields = array_intersect_key($fields, array_flip($this->getLabelFieldNames($table)));
+            $labelTranslationUid = $labelFields !== [] ? $this->resolveLabelTranslationUid($table, $uid, $table === 'pages' ? $uid : (int)$record['pid'], $dataHandler) : null;
+            if ($labelTranslationUid !== null) {
+                $rewritten[$labelTranslationUid] = array_replace($labelFields, is_array($rewritten[$labelTranslationUid] ?? null) ? $rewritten[$labelTranslationUid] : []);
+                $fields = array_diff_key($fields, $labelFields);
+                if ($table === 'pages') {
+                    $this->markSynchronizableFieldsCustom($table, $labelTranslationUid);
+                }
+            }
             // Visibility on a shadow means "in all languages" (I5: the shadow itself is never hidden)
             $visibilityFields = array_intersect_key($fields, array_flip($this->getAllLanguagesVisibilityFieldNames($table)));
             if ($visibilityFields !== []) {
@@ -461,6 +477,30 @@ final class DataHandlerHook
             static fn(FieldTypeInterface $field): bool => $field->getTranslationBehaviour() === FieldTranslationBehaviour::Excluded
         )));
         return array_map(strval(...), $fieldNames);
+    }
+
+    /**
+     * Label fields of a record; for pages also nav_title (the page tree edits it with showNavTitle).
+     *
+     * @return list<string>
+     */
+    private function getLabelFieldNames(string $table): array
+    {
+        $fieldNames = $this->tcaSchemaFactory->get($table)->getCapability(TcaSchemaCapability::Label)->getAllLabelFieldNames();
+        if ($table === 'pages') {
+            $fieldNames[] = 'nav_title';
+        }
+        return array_values(array_unique(array_map(strval(...), $fieldNames)));
+    }
+
+    private function resolveLabelTranslationUid(string $table, int $shadowUid, int $pageId, DataHandler $dataHandler): ?int
+    {
+        $editingLanguageId = null;
+        try {
+            $editingLanguageId = $this->editingLanguage->get($dataHandler->BE_USER, $this->siteFinder->getSiteByPageId($pageId));
+        } catch (SiteNotFoundException) {
+        }
+        return $this->shadowLabelResolver->resolve($table, $shadowUid, $pageId, $editingLanguageId, (int)$dataHandler->BE_USER->workspace)['uid'] ?? null;
     }
 
     /**

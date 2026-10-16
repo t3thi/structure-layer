@@ -1,0 +1,98 @@
+{
+    "website English page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "Home",
+        "content": [
+            "A (en)",
+            "C (en)",
+            "D (en only)",
+            "E (all languages)"
+        ],
+        "menu": "Default only,Hidden in Danish,"
+    },
+    "website English page 10": {
+        "status": 404
+    },
+    "website English page 20": {
+        "status": 404
+    },
+    "website English page 30": {
+        "status": 200,
+        "page": 30,
+        "title": "Default only",
+        "content": [],
+        "menu": "Default only,Hidden in Danish,"
+    },
+    "website English page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "Hidden in Danish",
+        "content": [],
+        "menu": "Default only,Hidden in Danish,"
+    },
+    "website Dansk page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "Hjem",
+        "content": [
+            "B (da)",
+            "F (da, Free Mode)",
+            "A (da, own sorting)",
+            "E (all languages)",
+            "G (da, copied from A)"
+        ],
+        "menu": "Default only,Hidden in Danish,"
+    },
+    "website Dansk page 10": {
+        "status": 404
+    },
+    "website Dansk page 20": {
+        "status": 404
+    },
+    "website Dansk page 30": {
+        "status": 200,
+        "page": 30,
+        "title": "Default only",
+        "content": [],
+        "menu": "Default only,Hidden in Danish,"
+    },
+    "website Dansk page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "Hidden in Danish",
+        "content": [],
+        "menu": "Default only,Hidden in Danish,"
+    },
+    "website Deutsch page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "Startseite",
+        "content": [
+            "A (de)",
+            "B (de)",
+            "E (all languages)"
+        ],
+        "menu": "Default only,Versteckt auf Daenisch,"
+    },
+    "website Deutsch page 10": {
+        "status": 404
+    },
+    "website Deutsch page 20": {
+        "status": 404
+    },
+    "website Deutsch page 30": {
+        "status": 200,
+        "page": 30,
+        "title": "Default only",
+        "content": [],
+        "menu": "Default only,Versteckt auf Daenisch,"
+    },
+    "website Deutsch page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "Versteckt auf Daenisch",
+        "content": [],
+        "menu": "Default only,Versteckt auf Daenisch,"
+    }
+}

@@ -1,0 +1,472 @@
+pages
+,uid,pid,sorting,deleted,hidden,doktype,is_siteroot,sys_language_uid,l10n_parent,l10n_source,l10n_state,l18n_cfg,title,slug,TSconfig
+,1,0,256,0,0,1,1,0,0,0,,0,"TYPO3 Translation Handling - FALLBACK",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,2,1,256,0,0,254,0,0,0,0,,0,"records storage",/records-storage,
+,3,1,128,0,0,1,0,0,0,0,,0,free,/free,
+,4,1,64,0,0,1,0,0,0,0,,0,connected,/connected,
+,5,1,32,0,0,1,0,0,0,0,,0,mixed,/mixed,
+,6,0,256,0,0,1,1,1,1,1,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FALLBACK",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,7,0,256,0,0,1,1,2,1,1,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FALLBACK",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,8,0,256,0,0,1,1,3,1,1,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FALLBACK",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,9,0,256,0,0,1,1,4,1,1,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FALLBACK",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,10,0,256,0,0,1,1,5,1,1,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FALLBACK",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,11,0,256,0,0,1,1,6,1,1,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FALLBACK",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,12,1,256,0,0,254,0,1,2,2,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,13,1,256,0,0,254,0,2,2,2,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,14,1,256,0,0,254,0,3,2,2,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,15,1,256,0,0,254,0,4,2,2,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,16,1,256,0,0,254,0,5,2,2,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,17,1,256,0,0,254,0,6,2,2,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,18,1,128,0,0,1,0,1,3,3,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,19,1,128,0,0,1,0,2,3,3,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,20,1,128,0,0,1,0,3,3,3,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,21,1,128,0,0,1,0,4,3,3,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,22,1,128,0,0,1,0,5,3,3,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,23,1,128,0,0,1,0,6,3,3,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,24,1,64,0,0,1,0,1,4,4,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,25,1,64,0,0,1,0,2,4,4,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,26,1,64,0,0,1,0,3,4,4,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,27,1,64,0,0,1,0,4,4,4,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,28,1,64,0,0,1,0,5,4,4,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,29,1,64,0,0,1,0,6,4,4,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,30,1,32,0,0,1,0,1,5,5,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,31,1,32,0,0,1,0,2,5,5,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,32,1,32,0,0,1,0,3,5,5,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,33,1,32,0,0,1,0,4,5,5,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,34,1,32,0,0,1,0,5,5,5,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,35,1,32,0,0,1,0,6,5,5,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,36,0,128,0,0,1,1,0,0,0,,0,"TYPO3 Translation Handling - STRICT",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,37,36,256,0,0,254,0,0,0,0,,0,"records storage",/records-storage,
+,38,36,128,0,0,1,0,0,0,0,,0,free,/free,
+,39,36,64,0,0,1,0,0,0,0,,0,connected,/connected,
+,40,36,32,0,0,1,0,0,0,0,,0,mixed,/mixed,
+,41,0,128,0,0,1,1,1,36,36,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - STRICT",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,42,0,128,0,0,1,1,2,36,36,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - STRICT",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,43,0,128,0,0,1,1,3,36,36,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - STRICT",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,44,0,128,0,0,1,1,4,36,36,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - STRICT",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,45,0,128,0,0,1,1,5,36,36,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - STRICT",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,46,0,128,0,0,1,1,6,36,36,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - STRICT",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,47,36,256,0,0,254,0,1,37,37,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,48,36,256,0,0,254,0,2,37,37,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,49,36,256,0,0,254,0,3,37,37,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,50,36,256,0,0,254,0,4,37,37,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,51,36,256,0,0,254,0,5,37,37,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,52,36,256,0,0,254,0,6,37,37,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,53,36,128,0,0,1,0,1,38,38,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,54,36,128,0,0,1,0,2,38,38,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,55,36,128,0,0,1,0,3,38,38,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,56,36,128,0,0,1,0,4,38,38,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,57,36,128,0,0,1,0,5,38,38,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,58,36,128,0,0,1,0,6,38,38,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,59,36,64,0,0,1,0,1,39,39,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,60,36,64,0,0,1,0,2,39,39,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,61,36,64,0,0,1,0,3,39,39,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,62,36,64,0,0,1,0,4,39,39,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,63,36,64,0,0,1,0,5,39,39,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,64,36,64,0,0,1,0,6,39,39,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,65,36,32,0,0,1,0,1,40,40,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,66,36,32,0,0,1,0,2,40,40,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,67,36,32,0,0,1,0,3,40,40,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,68,36,32,0,0,1,0,4,40,40,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,69,36,32,0,0,1,0,5,40,40,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,70,36,32,0,0,1,0,6,40,40,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,71,0,64,0,0,1,1,0,0,0,,0,"TYPO3 Translation Handling - FREE",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,72,71,256,0,0,254,0,0,0,0,,0,"records storage",/records-storage,
+,73,71,128,0,0,1,0,0,0,0,,0,free,/free,
+,74,71,64,0,0,1,0,0,0,0,,0,connected,/connected,
+,75,71,32,0,0,1,0,0,0,0,,0,mixed,/mixed,
+,76,0,64,0,0,1,1,1,71,71,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FREE",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,77,0,64,0,0,1,1,2,71,71,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FREE",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,78,0,64,0,0,1,1,3,71,71,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FREE",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,79,0,64,0,0,1,1,4,71,71,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FREE",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,80,0,64,0,0,1,1,5,71,71,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FREE",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,81,0,64,0,0,1,1,6,71,71,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"TYPO3 Translation Handling - FREE",/,"TCEMAIN.translateToMessage = %s
+TCEMAIN.table.pages.disablePrependAtCopy = 1
+TCEMAIN.table.pages.disableHideAtCopy = 1
+TCEMAIN.table.tt_content.disableHideAtCopy = 1"
+,82,71,256,0,0,254,0,1,72,72,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,83,71,256,0,0,254,0,2,72,72,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,84,71,256,0,0,254,0,3,72,72,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,85,71,256,0,0,254,0,4,72,72,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,86,71,256,0,0,254,0,5,72,72,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,87,71,256,0,0,254,0,6,72,72,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,"records storage",/records-storage,
+,88,71,128,0,0,1,0,1,73,73,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,89,71,128,0,0,1,0,2,73,73,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,90,71,128,0,0,1,0,3,73,73,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,91,71,128,0,0,1,0,4,73,73,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,92,71,128,0,0,1,0,5,73,73,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,93,71,128,0,0,1,0,6,73,73,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,free,/free,
+,94,71,64,0,0,1,0,1,74,74,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,95,71,64,0,0,1,0,2,74,74,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,96,71,64,0,0,1,0,3,74,74,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,97,71,64,0,0,1,0,4,74,74,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,98,71,64,0,0,1,0,5,74,74,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,99,71,64,0,0,1,0,6,74,74,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,connected,/connected,
+,100,71,32,0,0,1,0,1,75,75,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,101,71,32,0,0,1,0,2,75,75,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,102,71,32,0,0,1,0,3,75,75,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,103,71,32,0,0,1,0,4,75,75,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,104,71,32,0,0,1,0,5,75,75,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+,105,71,32,0,0,1,0,6,75,75,"{""nav_hide"":""parent"",""link"":""parent"",""lastUpdated"":""parent"",""newUntil"":""parent"",""no_search"":""parent"",""shortcut"":""parent"",""shortcut_mode"":""parent"",""content_from_pid"":""parent"",""author"":""parent"",""author_email"":""parent"",""media"":""parent"",""starttime"":""parent"",""endtime"":""parent""}",0,mixed,/mixed,
+tt_content
+,uid,pid,sorting,deleted,hidden,sys_language_uid,l18n_parent,l10n_source,l10n_state,colPos,CType,header,header_layout
+,1,1,256,0,0,0,0,0,,0,textmedia,Intro,3
+,2,3,1280,0,0,0,0,0,,0,text,2,3
+,3,3,1152,0,0,0,0,0,,0,text,3,3
+,4,3,1088,0,0,0,0,0,,0,text,4,3
+,5,3,1056,0,0,0,0,0,,0,text,5,3
+,6,3,528,0,0,0,0,0,,0,textmedia,6,3
+,7,3,8,0,0,0,0,0,,0,textmedia,7,3
+,8,4,1280,0,0,0,0,0,,0,text,8,3
+,9,4,1152,0,0,0,0,0,,0,text,9,3
+,10,4,1088,0,0,0,0,0,,0,text,10,3
+,11,4,1056,0,0,0,0,0,,0,text,11,3
+,12,4,528,0,0,0,0,0,,0,textmedia,12,3
+,13,4,8,0,0,0,0,0,,0,textmedia,13,3
+,14,5,1280,0,0,0,0,0,,0,text,14,3
+,15,5,1152,0,0,0,0,0,,0,text,15,3
+,16,5,1088,0,0,0,0,0,,0,text,16,3
+,17,5,1056,0,0,0,0,0,,0,text,17,3
+,18,5,528,0,0,0,0,0,,0,textmedia,18,3
+,19,5,8,0,0,0,0,0,,0,textmedia,19,3
+,20,1,512,0,0,1,1,1,,0,textmedia,"[Purple (> Pink)] Intro",3
+,21,1,384,0,0,2,1,1,,0,textmedia,"[Indigo (> Purple > Pink)] Intro",3
+,22,1,320,0,0,3,1,1,,0,textmedia,"[Yellow (> Teal > Green > Pink)] Intro",3
+,23,1,288,0,0,4,1,1,,0,textmedia,"[Teal] Intro",3
+,24,1,272,0,0,5,1,1,,0,textmedia,"[Green (> Teal)] Intro",3
+,25,1,264,0,0,6,1,1,,0,textmedia,"[Cyan (> Teal > Green)] Intro",3
+,26,3,1536,0,0,1,0,2,,0,text,"[Purple (> Pink)] 2",3
+,27,3,1120,0,0,1,0,4,,0,text,"[Purple (> Pink)] 4",3
+,28,3,1072,0,0,1,0,5,,0,text,"[Purple (> Pink)] 5",3
+,29,3,524,0,0,1,0,7,,0,textmedia,"[Purple (> Pink)] 7",3
+,30,3,1408,0,0,2,0,2,,0,text,"[Indigo (> Purple > Pink)] 2",3
+,31,3,1104,0,0,2,0,4,,0,text,"[Indigo (> Purple > Pink)] 4",3
+,32,3,1064,0,0,2,0,5,,0,text,"[Indigo (> Purple > Pink)] 5",3
+,33,3,1048,0,0,2,0,6,,0,textmedia,"[Indigo (> Purple > Pink)] 6",3
+,34,3,522,0,0,2,0,7,,0,textmedia,"[Indigo (> Purple > Pink)] 7",3
+,35,3,1344,0,0,3,0,2,,0,text,"[Yellow (> Teal > Green > Pink)] 2",3
+,36,3,1096,0,0,3,0,4,,0,text,"[Yellow (> Teal > Green > Pink)] 4",3
+,37,3,1060,0,0,3,0,5,,0,text,"[Yellow (> Teal > Green > Pink)] 5",3
+,38,3,1044,0,0,3,0,6,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 6",3
+,39,3,521,0,0,3,0,7,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 7",3
+,40,3,1312,0,0,4,0,2,,0,text,"[Teal] 2",3
+,41,3,1058,0,0,4,0,5,,0,text,"[Teal] 5",3
+,42,3,1042,0,0,4,0,6,,0,textmedia,"[Teal] 6",3
+,43,3,1296,0,0,5,0,2,,0,text,"[Green (> Teal)] 2",3
+,44,3,1041,0,0,5,0,6,,0,textmedia,"[Green (> Teal)] 6",3
+,45,3,264,0,0,5,0,7,,0,textmedia,"[Green (> Teal)] 7",3
+,46,3,1288,0,0,6,0,2,,0,text,"[Cyan (> Teal > Green)] 2",3
+,47,3,1092,0,0,6,0,4,,0,text,"[Cyan (> Teal > Green)] 4",3
+,48,3,1057,0,0,6,0,5,,0,text,"[Cyan (> Teal > Green)] 5",3
+,49,3,784,0,0,6,0,6,,0,textmedia,"[Cyan (> Teal > Green)] 6",3
+,50,3,136,0,0,6,0,7,,0,textmedia,"[Cyan (> Teal > Green)] 7",3
+,51,4,1536,0,0,1,8,8,,0,text,"[Purple (> Pink)] 8",3
+,52,4,1120,0,0,1,10,10,,0,text,"[Purple (> Pink)] 10",3
+,53,4,1072,0,0,1,11,11,,0,text,"[Purple (> Pink)] 11",3
+,54,4,524,0,0,1,13,13,,0,textmedia,"[Purple (> Pink)] 13",3
+,55,4,1408,0,0,2,8,8,,0,text,"[Indigo (> Purple > Pink)] 8",3
+,56,4,1104,0,0,2,10,10,,0,text,"[Indigo (> Purple > Pink)] 10",3
+,57,4,1064,0,0,2,11,11,,0,text,"[Indigo (> Purple > Pink)] 11",3
+,58,4,1048,0,0,2,12,12,,0,textmedia,"[Indigo (> Purple > Pink)] 12",3
+,59,4,522,0,0,2,13,13,,0,textmedia,"[Indigo (> Purple > Pink)] 13",3
+,60,4,1344,0,0,3,8,8,,0,text,"[Yellow (> Teal > Green > Pink)] 8",3
+,61,4,1096,0,0,3,10,10,,0,text,"[Yellow (> Teal > Green > Pink)] 10",3
+,62,4,1060,0,0,3,11,11,,0,text,"[Yellow (> Teal > Green > Pink)] 11",3
+,63,4,1044,0,0,3,12,12,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 12",3
+,64,4,521,0,0,3,13,13,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 13",3
+,65,4,1312,0,0,4,8,8,,0,text,"[Teal] 8",3
+,66,4,1058,0,0,4,11,11,,0,text,"[Teal] 11",3
+,67,4,1042,0,0,4,12,12,,0,textmedia,"[Teal] 12",3
+,68,4,1296,0,0,5,8,8,,0,text,"[Green (> Teal)] 8",3
+,69,4,1041,0,0,5,12,12,,0,textmedia,"[Green (> Teal)] 12",3
+,70,4,264,0,0,5,13,13,,0,textmedia,"[Green (> Teal)] 13",3
+,71,4,1288,0,0,6,8,8,,0,text,"[Cyan (> Teal > Green)] 8",3
+,72,4,1092,0,0,6,10,10,,0,text,"[Cyan (> Teal > Green)] 10",3
+,73,4,1057,0,0,6,11,11,,0,text,"[Cyan (> Teal > Green)] 11",3
+,74,4,784,0,0,6,12,12,,0,textmedia,"[Cyan (> Teal > Green)] 12",3
+,75,4,136,0,0,6,13,13,,0,textmedia,"[Cyan (> Teal > Green)] 13",3
+,76,5,1536,0,0,1,14,14,,0,text,"[Purple (> Pink)] 14",3
+,77,5,1120,0,0,1,16,16,,0,text,"[Purple (> Pink)] 16",3
+,78,5,1072,0,0,1,0,17,,0,text,"[Purple (> Pink)] 17",3
+,79,5,524,0,0,1,0,19,,0,textmedia,"[Purple (> Pink)] 19",3
+,80,5,1408,0,0,2,14,14,,0,text,"[Indigo (> Purple > Pink)] 14",3
+,81,5,1104,0,0,2,16,16,,0,text,"[Indigo (> Purple > Pink)] 16",3
+,82,5,1064,0,0,2,0,17,,0,text,"[Indigo (> Purple > Pink)] 17",3
+,83,5,1048,0,0,2,18,18,,0,textmedia,"[Indigo (> Purple > Pink)] 18",3
+,84,5,522,0,0,2,0,19,,0,textmedia,"[Indigo (> Purple > Pink)] 19",3
+,85,5,1344,0,0,3,14,14,,0,text,"[Yellow (> Teal > Green > Pink)] 14",3
+,86,5,1096,0,0,3,16,16,,0,text,"[Yellow (> Teal > Green > Pink)] 16",3
+,87,5,1060,0,0,3,0,17,,0,text,"[Yellow (> Teal > Green > Pink)] 17",3
+,88,5,1044,0,0,3,18,18,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 18",3
+,89,5,521,0,0,3,0,19,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 19",3
+,90,5,1312,0,0,4,14,14,,0,text,"[Teal] 14",3
+,91,5,1058,0,0,4,0,17,,0,text,"[Teal] 17",3
+,92,5,1042,0,0,4,18,18,,0,textmedia,"[Teal] 18",3
+,93,5,1296,0,0,5,14,14,,0,text,"[Green (> Teal)] 14",3
+,94,5,1041,0,0,5,18,18,,0,textmedia,"[Green (> Teal)] 18",3
+,95,5,264,0,0,5,0,19,,0,textmedia,"[Green (> Teal)] 19",3
+,96,5,1288,0,0,6,14,14,,0,text,"[Cyan (> Teal > Green)] 14",3
+,97,5,1092,0,0,6,16,16,,0,text,"[Cyan (> Teal > Green)] 16",3
+,98,5,1057,0,0,6,0,17,,0,text,"[Cyan (> Teal > Green)] 17",3
+,99,5,784,0,0,6,18,18,,0,textmedia,"[Cyan (> Teal > Green)] 18",3
+,100,5,136,0,0,6,0,19,,0,textmedia,"[Cyan (> Teal > Green)] 19",3
+,101,36,256,0,0,0,0,0,,0,textmedia,Intro,3
+,102,38,1280,0,0,0,0,0,,0,text,102,3
+,103,38,1152,0,0,0,0,0,,0,text,103,3
+,104,38,1088,0,0,0,0,0,,0,text,104,3
+,105,38,1056,0,0,0,0,0,,0,text,105,3
+,106,38,528,0,0,0,0,0,,0,textmedia,106,3
+,107,38,8,0,0,0,0,0,,0,textmedia,107,3
+,108,39,1280,0,0,0,0,0,,0,text,108,3
+,109,39,1152,0,0,0,0,0,,0,text,109,3
+,110,39,1088,0,0,0,0,0,,0,text,110,3
+,111,39,1056,0,0,0,0,0,,0,text,111,3
+,112,39,528,0,0,0,0,0,,0,textmedia,112,3
+,113,39,8,0,0,0,0,0,,0,textmedia,113,3
+,114,40,1280,0,0,0,0,0,,0,text,114,3
+,115,40,1152,0,0,0,0,0,,0,text,115,3
+,116,40,1088,0,0,0,0,0,,0,text,116,3
+,117,40,1056,0,0,0,0,0,,0,text,117,3
+,118,40,528,0,0,0,0,0,,0,textmedia,118,3
+,119,40,8,0,0,0,0,0,,0,textmedia,119,3
+,120,36,512,0,0,1,101,101,,0,textmedia,"[Purple (> Pink)] Intro",3
+,121,36,384,0,0,2,101,101,,0,textmedia,"[Indigo (> Purple > Pink)] Intro",3
+,122,36,320,0,0,3,101,101,,0,textmedia,"[Yellow (> Teal > Green > Pink)] Intro",3
+,123,36,288,0,0,4,101,101,,0,textmedia,"[Teal] Intro",3
+,124,36,272,0,0,5,101,101,,0,textmedia,"[Green (> Teal)] Intro",3
+,125,36,264,0,0,6,101,101,,0,textmedia,"[Cyan (> Teal > Green)] Intro",3
+,126,38,1536,0,0,1,0,102,,0,text,"[Purple (> Pink)] 102",3
+,127,38,1120,0,0,1,0,104,,0,text,"[Purple (> Pink)] 104",3
+,128,38,1072,0,0,1,0,105,,0,text,"[Purple (> Pink)] 105",3
+,129,38,524,0,0,1,0,107,,0,textmedia,"[Purple (> Pink)] 107",3
+,130,38,1408,0,0,2,0,102,,0,text,"[Indigo (> Purple > Pink)] 102",3
+,131,38,1104,0,0,2,0,104,,0,text,"[Indigo (> Purple > Pink)] 104",3
+,132,38,1064,0,0,2,0,105,,0,text,"[Indigo (> Purple > Pink)] 105",3
+,133,38,1048,0,0,2,0,106,,0,textmedia,"[Indigo (> Purple > Pink)] 106",3
+,134,38,522,0,0,2,0,107,,0,textmedia,"[Indigo (> Purple > Pink)] 107",3
+,135,38,1344,0,0,3,0,102,,0,text,"[Yellow (> Teal > Green > Pink)] 102",3
+,136,38,1096,0,0,3,0,104,,0,text,"[Yellow (> Teal > Green > Pink)] 104",3
+,137,38,1060,0,0,3,0,105,,0,text,"[Yellow (> Teal > Green > Pink)] 105",3
+,138,38,1044,0,0,3,0,106,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 106",3
+,139,38,521,0,0,3,0,107,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 107",3
+,140,38,1312,0,0,4,0,102,,0,text,"[Teal] 102",3
+,141,38,1058,0,0,4,0,105,,0,text,"[Teal] 105",3
+,142,38,1042,0,0,4,0,106,,0,textmedia,"[Teal] 106",3
+,143,38,1296,0,0,5,0,102,,0,text,"[Green (> Teal)] 102",3
+,144,38,1041,0,0,5,0,106,,0,textmedia,"[Green (> Teal)] 106",3
+,145,38,264,0,0,5,0,107,,0,textmedia,"[Green (> Teal)] 107",3
+,146,38,1288,0,0,6,0,102,,0,text,"[Cyan (> Teal > Green)] 102",3
+,147,38,1092,0,0,6,0,104,,0,text,"[Cyan (> Teal > Green)] 104",3
+,148,38,1057,0,0,6,0,105,,0,text,"[Cyan (> Teal > Green)] 105",3
+,149,38,784,0,0,6,0,106,,0,textmedia,"[Cyan (> Teal > Green)] 106",3
+,150,38,136,0,0,6,0,107,,0,textmedia,"[Cyan (> Teal > Green)] 107",3
+,151,39,1536,0,0,1,108,108,,0,text,"[Purple (> Pink)] 108",3
+,152,39,1120,0,0,1,110,110,,0,text,"[Purple (> Pink)] 110",3
+,153,39,1072,0,0,1,111,111,,0,text,"[Purple (> Pink)] 111",3
+,154,39,524,0,0,1,113,113,,0,textmedia,"[Purple (> Pink)] 113",3
+,155,39,1408,0,0,2,108,108,,0,text,"[Indigo (> Purple > Pink)] 108",3
+,156,39,1104,0,0,2,110,110,,0,text,"[Indigo (> Purple > Pink)] 110",3
+,157,39,1064,0,0,2,111,111,,0,text,"[Indigo (> Purple > Pink)] 111",3
+,158,39,1048,0,0,2,112,112,,0,textmedia,"[Indigo (> Purple > Pink)] 112",3
+,159,39,522,0,0,2,113,113,,0,textmedia,"[Indigo (> Purple > Pink)] 113",3
+,160,39,1344,0,0,3,108,108,,0,text,"[Yellow (> Teal > Green > Pink)] 108",3
+,161,39,1096,0,0,3,110,110,,0,text,"[Yellow (> Teal > Green > Pink)] 110",3
+,162,39,1060,0,0,3,111,111,,0,text,"[Yellow (> Teal > Green > Pink)] 111",3
+,163,39,1044,0,0,3,112,112,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 112",3
+,164,39,521,0,0,3,113,113,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 113",3
+,165,39,1312,0,0,4,108,108,,0,text,"[Teal] 108",3
+,166,39,1058,0,0,4,111,111,,0,text,"[Teal] 111",3
+,167,39,1042,0,0,4,112,112,,0,textmedia,"[Teal] 112",3
+,168,39,1296,0,0,5,108,108,,0,text,"[Green (> Teal)] 108",3
+,169,39,1041,0,0,5,112,112,,0,textmedia,"[Green (> Teal)] 112",3
+,170,39,264,0,0,5,113,113,,0,textmedia,"[Green (> Teal)] 113",3
+,171,39,1288,0,0,6,108,108,,0,text,"[Cyan (> Teal > Green)] 108",3
+,172,39,1092,0,0,6,110,110,,0,text,"[Cyan (> Teal > Green)] 110",3
+,173,39,1057,0,0,6,111,111,,0,text,"[Cyan (> Teal > Green)] 111",3
+,174,39,784,0,0,6,112,112,,0,textmedia,"[Cyan (> Teal > Green)] 112",3
+,175,39,136,0,0,6,113,113,,0,textmedia,"[Cyan (> Teal > Green)] 113",3
+,176,40,1536,0,0,1,114,114,,0,text,"[Purple (> Pink)] 114",3
+,177,40,1120,0,0,1,116,116,,0,text,"[Purple (> Pink)] 116",3
+,178,40,1072,0,0,1,0,117,,0,text,"[Purple (> Pink)] 117",3
+,179,40,524,0,0,1,0,119,,0,textmedia,"[Purple (> Pink)] 119",3
+,180,40,1408,0,0,2,114,114,,0,text,"[Indigo (> Purple > Pink)] 114",3
+,181,40,1104,0,0,2,116,116,,0,text,"[Indigo (> Purple > Pink)] 116",3
+,182,40,1064,0,0,2,0,117,,0,text,"[Indigo (> Purple > Pink)] 117",3
+,183,40,1048,0,0,2,118,118,,0,textmedia,"[Indigo (> Purple > Pink)] 118",3
+,184,40,522,0,0,2,0,119,,0,textmedia,"[Indigo (> Purple > Pink)] 119",3
+,185,40,1344,0,0,3,114,114,,0,text,"[Yellow (> Teal > Green > Pink)] 114",3
+,186,40,1096,0,0,3,116,116,,0,text,"[Yellow (> Teal > Green > Pink)] 116",3
+,187,40,1060,0,0,3,0,117,,0,text,"[Yellow (> Teal > Green > Pink)] 117",3
+,188,40,1044,0,0,3,118,118,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 118",3
+,189,40,521,0,0,3,0,119,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 119",3
+,190,40,1312,0,0,4,114,114,,0,text,"[Teal] 114",3
+,191,40,1058,0,0,4,0,117,,0,text,"[Teal] 117",3
+,192,40,1042,0,0,4,118,118,,0,textmedia,"[Teal] 118",3
+,193,40,1296,0,0,5,114,114,,0,text,"[Green (> Teal)] 114",3
+,194,40,1041,0,0,5,118,118,,0,textmedia,"[Green (> Teal)] 118",3
+,195,40,264,0,0,5,0,119,,0,textmedia,"[Green (> Teal)] 119",3
+,196,40,1288,0,0,6,114,114,,0,text,"[Cyan (> Teal > Green)] 114",3
+,197,40,1092,0,0,6,116,116,,0,text,"[Cyan (> Teal > Green)] 116",3
+,198,40,1057,0,0,6,0,117,,0,text,"[Cyan (> Teal > Green)] 117",3
+,199,40,784,0,0,6,118,118,,0,textmedia,"[Cyan (> Teal > Green)] 118",3
+,200,40,136,0,0,6,0,119,,0,textmedia,"[Cyan (> Teal > Green)] 119",3
+,201,71,256,0,0,0,0,0,,0,textmedia,Intro,3
+,202,73,1280,0,0,0,0,0,,0,text,202,3
+,203,73,1152,0,0,0,0,0,,0,text,203,3
+,204,73,1088,0,0,0,0,0,,0,text,204,3
+,205,73,1056,0,0,0,0,0,,0,text,205,3
+,206,73,528,0,0,0,0,0,,0,textmedia,206,3
+,207,73,8,0,0,0,0,0,,0,textmedia,207,3
+,208,74,1280,0,0,0,0,0,,0,text,208,3
+,209,74,1152,0,0,0,0,0,,0,text,209,3
+,210,74,1088,0,0,0,0,0,,0,text,210,3
+,211,74,1056,0,0,0,0,0,,0,text,211,3
+,212,74,528,0,0,0,0,0,,0,textmedia,212,3
+,213,74,8,0,0,0,0,0,,0,textmedia,213,3
+,214,75,1280,0,0,0,0,0,,0,text,214,3
+,215,75,1152,0,0,0,0,0,,0,text,215,3
+,216,75,1088,0,0,0,0,0,,0,text,216,3
+,217,75,1056,0,0,0,0,0,,0,text,217,3
+,218,75,528,0,0,0,0,0,,0,textmedia,218,3
+,219,75,8,0,0,0,0,0,,0,textmedia,219,3
+,220,71,512,0,0,1,201,201,,0,textmedia,"[Purple (> Pink)] Intro",3
+,221,71,384,0,0,2,201,201,,0,textmedia,"[Indigo (> Purple > Pink)] Intro",3
+,222,71,320,0,0,3,201,201,,0,textmedia,"[Yellow (> Teal > Green > Pink)] Intro",3
+,223,71,288,0,0,4,201,201,,0,textmedia,"[Teal] Intro",3
+,224,71,272,0,0,5,201,201,,0,textmedia,"[Green (> Teal)] Intro",3
+,225,71,264,0,0,6,201,201,,0,textmedia,"[Cyan (> Teal > Green)] Intro",3
+,226,73,1536,0,0,1,0,202,,0,text,"[Purple (> Pink)] 202",3
+,227,73,1120,0,0,1,0,204,,0,text,"[Purple (> Pink)] 204",3
+,228,73,1072,0,0,1,0,205,,0,text,"[Purple (> Pink)] 205",3
+,229,73,524,0,0,1,0,207,,0,textmedia,"[Purple (> Pink)] 207",3
+,230,73,1408,0,0,2,0,202,,0,text,"[Indigo (> Purple > Pink)] 202",3
+,231,73,1104,0,0,2,0,204,,0,text,"[Indigo (> Purple > Pink)] 204",3
+,232,73,1064,0,0,2,0,205,,0,text,"[Indigo (> Purple > Pink)] 205",3
+,233,73,1048,0,0,2,0,206,,0,textmedia,"[Indigo (> Purple > Pink)] 206",3
+,234,73,522,0,0,2,0,207,,0,textmedia,"[Indigo (> Purple > Pink)] 207",3
+,235,73,1344,0,0,3,0,202,,0,text,"[Yellow (> Teal > Green > Pink)] 202",3
+,236,73,1096,0,0,3,0,204,,0,text,"[Yellow (> Teal > Green > Pink)] 204",3
+,237,73,1060,0,0,3,0,205,,0,text,"[Yellow (> Teal > Green > Pink)] 205",3
+,238,73,1044,0,0,3,0,206,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 206",3
+,239,73,521,0,0,3,0,207,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 207",3
+,240,73,1312,0,0,4,0,202,,0,text,"[Teal] 202",3
+,241,73,1058,0,0,4,0,205,,0,text,"[Teal] 205",3
+,242,73,1042,0,0,4,0,206,,0,textmedia,"[Teal] 206",3
+,243,73,1296,0,0,5,0,202,,0,text,"[Green (> Teal)] 202",3
+,244,73,1041,0,0,5,0,206,,0,textmedia,"[Green (> Teal)] 206",3
+,245,73,264,0,0,5,0,207,,0,textmedia,"[Green (> Teal)] 207",3
+,246,73,1288,0,0,6,0,202,,0,text,"[Cyan (> Teal > Green)] 202",3
+,247,73,1092,0,0,6,0,204,,0,text,"[Cyan (> Teal > Green)] 204",3
+,248,73,1057,0,0,6,0,205,,0,text,"[Cyan (> Teal > Green)] 205",3
+,249,73,784,0,0,6,0,206,,0,textmedia,"[Cyan (> Teal > Green)] 206",3
+,250,73,136,0,0,6,0,207,,0,textmedia,"[Cyan (> Teal > Green)] 207",3
+,251,74,1536,0,0,1,208,208,,0,text,"[Purple (> Pink)] 208",3
+,252,74,1120,0,0,1,210,210,,0,text,"[Purple (> Pink)] 210",3
+,253,74,1072,0,0,1,211,211,,0,text,"[Purple (> Pink)] 211",3
+,254,74,524,0,0,1,213,213,,0,textmedia,"[Purple (> Pink)] 213",3
+,255,74,1408,0,0,2,208,208,,0,text,"[Indigo (> Purple > Pink)] 208",3
+,256,74,1104,0,0,2,210,210,,0,text,"[Indigo (> Purple > Pink)] 210",3
+,257,74,1064,0,0,2,211,211,,0,text,"[Indigo (> Purple > Pink)] 211",3
+,258,74,1048,0,0,2,212,212,,0,textmedia,"[Indigo (> Purple > Pink)] 212",3
+,259,74,522,0,0,2,213,213,,0,textmedia,"[Indigo (> Purple > Pink)] 213",3
+,260,74,1344,0,0,3,208,208,,0,text,"[Yellow (> Teal > Green > Pink)] 208",3
+,261,74,1096,0,0,3,210,210,,0,text,"[Yellow (> Teal > Green > Pink)] 210",3
+,262,74,1060,0,0,3,211,211,,0,text,"[Yellow (> Teal > Green > Pink)] 211",3
+,263,74,1044,0,0,3,212,212,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 212",3
+,264,74,521,0,0,3,213,213,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 213",3
+,265,74,1312,0,0,4,208,208,,0,text,"[Teal] 208",3
+,266,74,1058,0,0,4,211,211,,0,text,"[Teal] 211",3
+,267,74,1042,0,0,4,212,212,,0,textmedia,"[Teal] 212",3
+,268,74,1296,0,0,5,208,208,,0,text,"[Green (> Teal)] 208",3
+,269,74,1041,0,0,5,212,212,,0,textmedia,"[Green (> Teal)] 212",3
+,270,74,264,0,0,5,213,213,,0,textmedia,"[Green (> Teal)] 213",3
+,271,74,1288,0,0,6,208,208,,0,text,"[Cyan (> Teal > Green)] 208",3
+,272,74,1092,0,0,6,210,210,,0,text,"[Cyan (> Teal > Green)] 210",3
+,273,74,1057,0,0,6,211,211,,0,text,"[Cyan (> Teal > Green)] 211",3
+,274,74,784,0,0,6,212,212,,0,textmedia,"[Cyan (> Teal > Green)] 212",3
+,275,74,136,0,0,6,213,213,,0,textmedia,"[Cyan (> Teal > Green)] 213",3
+,276,75,1536,0,0,1,214,214,,0,text,"[Purple (> Pink)] 214",3
+,277,75,1120,0,0,1,216,216,,0,text,"[Purple (> Pink)] 216",3
+,278,75,1072,0,0,1,0,217,,0,text,"[Purple (> Pink)] 217",3
+,279,75,524,0,0,1,0,219,,0,textmedia,"[Purple (> Pink)] 219",3
+,280,75,1408,0,0,2,214,214,,0,text,"[Indigo (> Purple > Pink)] 214",3
+,281,75,1104,0,0,2,216,216,,0,text,"[Indigo (> Purple > Pink)] 216",3
+,282,75,1064,0,0,2,0,217,,0,text,"[Indigo (> Purple > Pink)] 217",3
+,283,75,1048,0,0,2,218,218,,0,textmedia,"[Indigo (> Purple > Pink)] 218",3
+,284,75,522,0,0,2,0,219,,0,textmedia,"[Indigo (> Purple > Pink)] 219",3
+,285,75,1344,0,0,3,214,214,,0,text,"[Yellow (> Teal > Green > Pink)] 214",3
+,286,75,1096,0,0,3,216,216,,0,text,"[Yellow (> Teal > Green > Pink)] 216",3
+,287,75,1060,0,0,3,0,217,,0,text,"[Yellow (> Teal > Green > Pink)] 217",3
+,288,75,1044,0,0,3,218,218,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 218",3
+,289,75,521,0,0,3,0,219,,0,textmedia,"[Yellow (> Teal > Green > Pink)] 219",3
+,290,75,1312,0,0,4,214,214,,0,text,"[Teal] 214",3
+,291,75,1058,0,0,4,0,217,,0,text,"[Teal] 217",3
+,292,75,1042,0,0,4,218,218,,0,textmedia,"[Teal] 218",3
+,293,75,1296,0,0,5,214,214,,0,text,"[Green (> Teal)] 214",3
+,294,75,1041,0,0,5,218,218,,0,textmedia,"[Green (> Teal)] 218",3
+,295,75,264,0,0,5,0,219,,0,textmedia,"[Green (> Teal)] 219",3
+,296,75,1288,0,0,6,214,214,,0,text,"[Cyan (> Teal > Green)] 214",3
+,297,75,1092,0,0,6,216,216,,0,text,"[Cyan (> Teal > Green)] 216",3
+,298,75,1057,0,0,6,0,217,,0,text,"[Cyan (> Teal > Green)] 217",3
+,299,75,784,0,0,6,218,218,,0,textmedia,"[Cyan (> Teal > Green)] 218",3
+,300,75,136,0,0,6,0,219,,0,textmedia,"[Cyan (> Teal > Green)] 219",3

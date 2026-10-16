@@ -1,0 +1,1106 @@
+{
+    "translation-handling-fallback Pink (Default) page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "TYPO3 Translation Handling - FALLBACK",
+        "content": [
+            "Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Pink (Default) page 2": {
+        "status": 404
+    },
+    "translation-handling-fallback Pink (Default) page 3": {
+        "status": 200,
+        "page": 3,
+        "title": "free",
+        "content": [
+            "7",
+            "6",
+            "5",
+            "4",
+            "3",
+            "2"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Pink (Default) page 4": {
+        "status": 200,
+        "page": 4,
+        "title": "connected",
+        "content": [
+            "13",
+            "12",
+            "11",
+            "10",
+            "9",
+            "8"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Pink (Default) page 5": {
+        "status": 200,
+        "page": 5,
+        "title": "mixed",
+        "content": [
+            "19",
+            "18",
+            "17",
+            "16",
+            "15",
+            "14"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Purple (> Pink) page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "TYPO3 Translation Handling - FALLBACK",
+        "content": [
+            "[Purple (> Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Purple (> Pink) page 2": {
+        "status": 404
+    },
+    "translation-handling-fallback Purple (> Pink) page 3": {
+        "status": 200,
+        "page": 3,
+        "title": "free",
+        "content": [
+            "7",
+            "[Purple (> Pink)] 7",
+            "6",
+            "5",
+            "[Purple (> Pink)] 5",
+            "4",
+            "[Purple (> Pink)] 4",
+            "3",
+            "2",
+            "[Purple (> Pink)] 2"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Purple (> Pink) page 4": {
+        "status": 200,
+        "page": 4,
+        "title": "connected",
+        "content": [
+            "[Purple (> Pink)] 13",
+            "12",
+            "[Purple (> Pink)] 11",
+            "[Purple (> Pink)] 10",
+            "9",
+            "[Purple (> Pink)] 8"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Purple (> Pink) page 5": {
+        "status": 200,
+        "page": 5,
+        "title": "mixed",
+        "content": [
+            "19",
+            "[Purple (> Pink)] 19",
+            "18",
+            "17",
+            "[Purple (> Pink)] 17",
+            "[Purple (> Pink)] 16",
+            "15",
+            "[Purple (> Pink)] 14"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Indigo (> Purple > Pink) page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "TYPO3 Translation Handling - FALLBACK",
+        "content": [
+            "[Indigo (> Purple > Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Indigo (> Purple > Pink) page 2": {
+        "status": 404
+    },
+    "translation-handling-fallback Indigo (> Purple > Pink) page 3": {
+        "status": 200,
+        "page": 3,
+        "title": "free",
+        "content": [
+            "7",
+            "[Indigo (> Purple > Pink)] 7",
+            "6",
+            "[Indigo (> Purple > Pink)] 6",
+            "5",
+            "[Indigo (> Purple > Pink)] 5",
+            "4",
+            "[Indigo (> Purple > Pink)] 4",
+            "3",
+            "2",
+            "[Indigo (> Purple > Pink)] 2"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Indigo (> Purple > Pink) page 4": {
+        "status": 200,
+        "page": 4,
+        "title": "connected",
+        "content": [
+            "[Indigo (> Purple > Pink)] 13",
+            "[Indigo (> Purple > Pink)] 12",
+            "[Indigo (> Purple > Pink)] 11",
+            "[Indigo (> Purple > Pink)] 10",
+            "9",
+            "[Indigo (> Purple > Pink)] 8"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Indigo (> Purple > Pink) page 5": {
+        "status": 200,
+        "page": 5,
+        "title": "mixed",
+        "content": [
+            "19",
+            "[Indigo (> Purple > Pink)] 19",
+            "[Indigo (> Purple > Pink)] 18",
+            "17",
+            "[Indigo (> Purple > Pink)] 17",
+            "[Indigo (> Purple > Pink)] 16",
+            "15",
+            "[Indigo (> Purple > Pink)] 14"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Yellow (> Teal > Green > Pink) page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "TYPO3 Translation Handling - FALLBACK",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Yellow (> Teal > Green > Pink) page 2": {
+        "status": 404
+    },
+    "translation-handling-fallback Yellow (> Teal > Green > Pink) page 3": {
+        "status": 200,
+        "page": 3,
+        "title": "free",
+        "content": [
+            "7",
+            "[Yellow (> Teal > Green > Pink)] 7",
+            "6",
+            "[Yellow (> Teal > Green > Pink)] 6",
+            "5",
+            "[Yellow (> Teal > Green > Pink)] 5",
+            "4",
+            "[Yellow (> Teal > Green > Pink)] 4",
+            "3",
+            "2",
+            "[Yellow (> Teal > Green > Pink)] 2"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Yellow (> Teal > Green > Pink) page 4": {
+        "status": 200,
+        "page": 4,
+        "title": "connected",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] 13",
+            "[Yellow (> Teal > Green > Pink)] 12",
+            "[Yellow (> Teal > Green > Pink)] 11",
+            "[Yellow (> Teal > Green > Pink)] 10",
+            "9",
+            "[Yellow (> Teal > Green > Pink)] 8"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Yellow (> Teal > Green > Pink) page 5": {
+        "status": 200,
+        "page": 5,
+        "title": "mixed",
+        "content": [
+            "19",
+            "[Yellow (> Teal > Green > Pink)] 19",
+            "[Yellow (> Teal > Green > Pink)] 18",
+            "17",
+            "[Yellow (> Teal > Green > Pink)] 17",
+            "[Yellow (> Teal > Green > Pink)] 16",
+            "15",
+            "[Yellow (> Teal > Green > Pink)] 14"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Teal page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "TYPO3 Translation Handling - FALLBACK",
+        "content": [
+            "[Teal] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Teal page 2": {
+        "status": 404
+    },
+    "translation-handling-fallback Teal page 3": {
+        "status": 200,
+        "page": 3,
+        "title": "free",
+        "content": [
+            "7",
+            "6",
+            "[Teal] 6",
+            "5",
+            "[Teal] 5",
+            "4",
+            "3",
+            "2",
+            "[Teal] 2"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Teal page 4": {
+        "status": 200,
+        "page": 4,
+        "title": "connected",
+        "content": [
+            "13",
+            "[Teal] 12",
+            "[Teal] 11",
+            "10",
+            "9",
+            "[Teal] 8"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Teal page 5": {
+        "status": 200,
+        "page": 5,
+        "title": "mixed",
+        "content": [
+            "19",
+            "[Teal] 18",
+            "17",
+            "[Teal] 17",
+            "16",
+            "15",
+            "[Teal] 14"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Green (> Teal) page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "TYPO3 Translation Handling - FALLBACK",
+        "content": [
+            "[Green (> Teal)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Green (> Teal) page 2": {
+        "status": 404
+    },
+    "translation-handling-fallback Green (> Teal) page 3": {
+        "status": 200,
+        "page": 3,
+        "title": "free",
+        "content": [
+            "7",
+            "[Green (> Teal)] 7",
+            "6",
+            "[Green (> Teal)] 6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "[Green (> Teal)] 2"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Green (> Teal) page 4": {
+        "status": 200,
+        "page": 4,
+        "title": "connected",
+        "content": [
+            "[Green (> Teal)] 13",
+            "[Green (> Teal)] 12",
+            "[Teal] 11",
+            "10",
+            "9",
+            "[Green (> Teal)] 8"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Green (> Teal) page 5": {
+        "status": 200,
+        "page": 5,
+        "title": "mixed",
+        "content": [
+            "19",
+            "[Green (> Teal)] 19",
+            "[Green (> Teal)] 18",
+            "17",
+            "16",
+            "15",
+            "[Green (> Teal)] 14"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Cyan (> Teal > Green) page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "TYPO3 Translation Handling - FALLBACK",
+        "content": [
+            "[Cyan (> Teal > Green)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Cyan (> Teal > Green) page 2": {
+        "status": 404
+    },
+    "translation-handling-fallback Cyan (> Teal > Green) page 3": {
+        "status": 200,
+        "page": 3,
+        "title": "free",
+        "content": [
+            "7",
+            "[Cyan (> Teal > Green)] 7",
+            "6",
+            "[Cyan (> Teal > Green)] 6",
+            "5",
+            "[Cyan (> Teal > Green)] 5",
+            "4",
+            "[Cyan (> Teal > Green)] 4",
+            "3",
+            "2",
+            "[Cyan (> Teal > Green)] 2"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Cyan (> Teal > Green) page 4": {
+        "status": 200,
+        "page": 4,
+        "title": "connected",
+        "content": [
+            "[Cyan (> Teal > Green)] 13",
+            "[Cyan (> Teal > Green)] 12",
+            "[Cyan (> Teal > Green)] 11",
+            "[Cyan (> Teal > Green)] 10",
+            "9",
+            "[Cyan (> Teal > Green)] 8"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-fallback Cyan (> Teal > Green) page 5": {
+        "status": 200,
+        "page": 5,
+        "title": "mixed",
+        "content": [
+            "19",
+            "[Cyan (> Teal > Green)] 19",
+            "[Cyan (> Teal > Green)] 18",
+            "17",
+            "[Cyan (> Teal > Green)] 17",
+            "[Cyan (> Teal > Green)] 16",
+            "15",
+            "[Cyan (> Teal > Green)] 14"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Pink (Default) page 36": {
+        "status": 200,
+        "page": 36,
+        "title": "TYPO3 Translation Handling - STRICT",
+        "content": [
+            "Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Pink (Default) page 37": {
+        "status": 404
+    },
+    "translation-handling-strict Pink (Default) page 38": {
+        "status": 200,
+        "page": 38,
+        "title": "free",
+        "content": [
+            "107",
+            "106",
+            "105",
+            "104",
+            "103",
+            "102"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Pink (Default) page 39": {
+        "status": 200,
+        "page": 39,
+        "title": "connected",
+        "content": [
+            "113",
+            "112",
+            "111",
+            "110",
+            "109",
+            "108"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Pink (Default) page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "mixed",
+        "content": [
+            "119",
+            "118",
+            "117",
+            "116",
+            "115",
+            "114"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Purple (> Pink) page 36": {
+        "status": 200,
+        "page": 36,
+        "title": "TYPO3 Translation Handling - STRICT",
+        "content": [
+            "[Purple (> Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Purple (> Pink) page 37": {
+        "status": 404
+    },
+    "translation-handling-strict Purple (> Pink) page 38": {
+        "status": 200,
+        "page": 38,
+        "title": "free",
+        "content": [
+            "[Purple (> Pink)] 107",
+            "[Purple (> Pink)] 105",
+            "[Purple (> Pink)] 104",
+            "[Purple (> Pink)] 102"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Purple (> Pink) page 39": {
+        "status": 200,
+        "page": 39,
+        "title": "connected",
+        "content": [
+            "[Purple (> Pink)] 113",
+            "[Purple (> Pink)] 111",
+            "[Purple (> Pink)] 110",
+            "[Purple (> Pink)] 108"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Purple (> Pink) page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "mixed",
+        "content": [
+            "[Purple (> Pink)] 119",
+            "[Purple (> Pink)] 117",
+            "[Purple (> Pink)] 116",
+            "[Purple (> Pink)] 114"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Indigo (> Purple > Pink) page 36": {
+        "status": 200,
+        "page": 36,
+        "title": "TYPO3 Translation Handling - STRICT",
+        "content": [
+            "[Indigo (> Purple > Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Indigo (> Purple > Pink) page 37": {
+        "status": 404
+    },
+    "translation-handling-strict Indigo (> Purple > Pink) page 38": {
+        "status": 200,
+        "page": 38,
+        "title": "free",
+        "content": [
+            "[Indigo (> Purple > Pink)] 107",
+            "[Indigo (> Purple > Pink)] 106",
+            "[Indigo (> Purple > Pink)] 105",
+            "[Indigo (> Purple > Pink)] 104",
+            "[Indigo (> Purple > Pink)] 102"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Indigo (> Purple > Pink) page 39": {
+        "status": 200,
+        "page": 39,
+        "title": "connected",
+        "content": [
+            "[Indigo (> Purple > Pink)] 113",
+            "[Indigo (> Purple > Pink)] 112",
+            "[Indigo (> Purple > Pink)] 111",
+            "[Indigo (> Purple > Pink)] 110",
+            "[Indigo (> Purple > Pink)] 108"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Indigo (> Purple > Pink) page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "mixed",
+        "content": [
+            "[Indigo (> Purple > Pink)] 119",
+            "[Indigo (> Purple > Pink)] 118",
+            "[Indigo (> Purple > Pink)] 117",
+            "[Indigo (> Purple > Pink)] 116",
+            "[Indigo (> Purple > Pink)] 114"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Yellow (> Teal > Green > Pink) page 36": {
+        "status": 200,
+        "page": 36,
+        "title": "TYPO3 Translation Handling - STRICT",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Yellow (> Teal > Green > Pink) page 37": {
+        "status": 404
+    },
+    "translation-handling-strict Yellow (> Teal > Green > Pink) page 38": {
+        "status": 200,
+        "page": 38,
+        "title": "free",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] 107",
+            "[Yellow (> Teal > Green > Pink)] 106",
+            "[Yellow (> Teal > Green > Pink)] 105",
+            "[Yellow (> Teal > Green > Pink)] 104",
+            "[Yellow (> Teal > Green > Pink)] 102"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Yellow (> Teal > Green > Pink) page 39": {
+        "status": 200,
+        "page": 39,
+        "title": "connected",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] 113",
+            "[Yellow (> Teal > Green > Pink)] 112",
+            "[Yellow (> Teal > Green > Pink)] 111",
+            "[Yellow (> Teal > Green > Pink)] 110",
+            "[Yellow (> Teal > Green > Pink)] 108"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Yellow (> Teal > Green > Pink) page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "mixed",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] 119",
+            "[Yellow (> Teal > Green > Pink)] 118",
+            "[Yellow (> Teal > Green > Pink)] 117",
+            "[Yellow (> Teal > Green > Pink)] 116",
+            "[Yellow (> Teal > Green > Pink)] 114"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Teal page 36": {
+        "status": 200,
+        "page": 36,
+        "title": "TYPO3 Translation Handling - STRICT",
+        "content": [
+            "[Teal] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Teal page 37": {
+        "status": 404
+    },
+    "translation-handling-strict Teal page 38": {
+        "status": 200,
+        "page": 38,
+        "title": "free",
+        "content": [
+            "[Teal] 106",
+            "[Teal] 105",
+            "[Teal] 102"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Teal page 39": {
+        "status": 200,
+        "page": 39,
+        "title": "connected",
+        "content": [
+            "[Teal] 112",
+            "[Teal] 111",
+            "[Teal] 108"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Teal page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "mixed",
+        "content": [
+            "[Teal] 118",
+            "[Teal] 117",
+            "[Teal] 114"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Green (> Teal) page 36": {
+        "status": 200,
+        "page": 36,
+        "title": "TYPO3 Translation Handling - STRICT",
+        "content": [
+            "[Green (> Teal)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Green (> Teal) page 37": {
+        "status": 404
+    },
+    "translation-handling-strict Green (> Teal) page 38": {
+        "status": 200,
+        "page": 38,
+        "title": "free",
+        "content": [
+            "[Green (> Teal)] 107",
+            "[Green (> Teal)] 106",
+            "[Green (> Teal)] 102"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Green (> Teal) page 39": {
+        "status": 200,
+        "page": 39,
+        "title": "connected",
+        "content": [
+            "[Green (> Teal)] 113",
+            "[Green (> Teal)] 112",
+            "[Teal] 111",
+            "[Green (> Teal)] 108"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Green (> Teal) page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "mixed",
+        "content": [
+            "[Green (> Teal)] 119",
+            "[Green (> Teal)] 118",
+            "[Green (> Teal)] 114"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Cyan (> Teal > Green) page 36": {
+        "status": 200,
+        "page": 36,
+        "title": "TYPO3 Translation Handling - STRICT",
+        "content": [
+            "[Cyan (> Teal > Green)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Cyan (> Teal > Green) page 37": {
+        "status": 404
+    },
+    "translation-handling-strict Cyan (> Teal > Green) page 38": {
+        "status": 200,
+        "page": 38,
+        "title": "free",
+        "content": [
+            "[Cyan (> Teal > Green)] 107",
+            "[Cyan (> Teal > Green)] 106",
+            "[Cyan (> Teal > Green)] 105",
+            "[Cyan (> Teal > Green)] 104",
+            "[Cyan (> Teal > Green)] 102"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Cyan (> Teal > Green) page 39": {
+        "status": 200,
+        "page": 39,
+        "title": "connected",
+        "content": [
+            "[Cyan (> Teal > Green)] 113",
+            "[Cyan (> Teal > Green)] 112",
+            "[Cyan (> Teal > Green)] 111",
+            "[Cyan (> Teal > Green)] 110",
+            "[Cyan (> Teal > Green)] 108"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-strict Cyan (> Teal > Green) page 40": {
+        "status": 200,
+        "page": 40,
+        "title": "mixed",
+        "content": [
+            "[Cyan (> Teal > Green)] 119",
+            "[Cyan (> Teal > Green)] 118",
+            "[Cyan (> Teal > Green)] 117",
+            "[Cyan (> Teal > Green)] 116",
+            "[Cyan (> Teal > Green)] 114"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Pink (Default) page 71": {
+        "status": 200,
+        "page": 71,
+        "title": "TYPO3 Translation Handling - FREE",
+        "content": [
+            "Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Pink (Default) page 72": {
+        "status": 404
+    },
+    "translation-handling-free Pink (Default) page 73": {
+        "status": 200,
+        "page": 73,
+        "title": "free",
+        "content": [
+            "207",
+            "206",
+            "205",
+            "204",
+            "203",
+            "202"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Pink (Default) page 74": {
+        "status": 200,
+        "page": 74,
+        "title": "connected",
+        "content": [
+            "213",
+            "212",
+            "211",
+            "210",
+            "209",
+            "208"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Pink (Default) page 75": {
+        "status": 200,
+        "page": 75,
+        "title": "mixed",
+        "content": [
+            "219",
+            "218",
+            "217",
+            "216",
+            "215",
+            "214"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Purple (> Pink) page 71": {
+        "status": 200,
+        "page": 71,
+        "title": "TYPO3 Translation Handling - FREE",
+        "content": [
+            "[Purple (> Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Purple (> Pink) page 72": {
+        "status": 404
+    },
+    "translation-handling-free Purple (> Pink) page 73": {
+        "status": 200,
+        "page": 73,
+        "title": "free",
+        "content": [
+            "[Purple (> Pink)] 207",
+            "[Purple (> Pink)] 205",
+            "[Purple (> Pink)] 204",
+            "[Purple (> Pink)] 202"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Purple (> Pink) page 74": {
+        "status": 200,
+        "page": 74,
+        "title": "connected",
+        "content": [
+            "[Purple (> Pink)] 213",
+            "[Purple (> Pink)] 211",
+            "[Purple (> Pink)] 210",
+            "[Purple (> Pink)] 208"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Purple (> Pink) page 75": {
+        "status": 200,
+        "page": 75,
+        "title": "mixed",
+        "content": [
+            "[Purple (> Pink)] 219",
+            "[Purple (> Pink)] 217",
+            "[Purple (> Pink)] 216",
+            "[Purple (> Pink)] 214"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Indigo (> Purple > Pink) page 71": {
+        "status": 200,
+        "page": 71,
+        "title": "TYPO3 Translation Handling - FREE",
+        "content": [
+            "[Indigo (> Purple > Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Indigo (> Purple > Pink) page 72": {
+        "status": 404
+    },
+    "translation-handling-free Indigo (> Purple > Pink) page 73": {
+        "status": 200,
+        "page": 73,
+        "title": "free",
+        "content": [
+            "[Indigo (> Purple > Pink)] 207",
+            "[Indigo (> Purple > Pink)] 206",
+            "[Indigo (> Purple > Pink)] 205",
+            "[Indigo (> Purple > Pink)] 204",
+            "[Indigo (> Purple > Pink)] 202"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Indigo (> Purple > Pink) page 74": {
+        "status": 200,
+        "page": 74,
+        "title": "connected",
+        "content": [
+            "[Indigo (> Purple > Pink)] 213",
+            "[Indigo (> Purple > Pink)] 212",
+            "[Indigo (> Purple > Pink)] 211",
+            "[Indigo (> Purple > Pink)] 210",
+            "[Indigo (> Purple > Pink)] 208"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Indigo (> Purple > Pink) page 75": {
+        "status": 200,
+        "page": 75,
+        "title": "mixed",
+        "content": [
+            "[Indigo (> Purple > Pink)] 219",
+            "[Indigo (> Purple > Pink)] 218",
+            "[Indigo (> Purple > Pink)] 217",
+            "[Indigo (> Purple > Pink)] 216",
+            "[Indigo (> Purple > Pink)] 214"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Yellow (> Teal > Green > Pink) page 71": {
+        "status": 200,
+        "page": 71,
+        "title": "TYPO3 Translation Handling - FREE",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Yellow (> Teal > Green > Pink) page 72": {
+        "status": 404
+    },
+    "translation-handling-free Yellow (> Teal > Green > Pink) page 73": {
+        "status": 200,
+        "page": 73,
+        "title": "free",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] 207",
+            "[Yellow (> Teal > Green > Pink)] 206",
+            "[Yellow (> Teal > Green > Pink)] 205",
+            "[Yellow (> Teal > Green > Pink)] 204",
+            "[Yellow (> Teal > Green > Pink)] 202"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Yellow (> Teal > Green > Pink) page 74": {
+        "status": 200,
+        "page": 74,
+        "title": "connected",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] 213",
+            "[Yellow (> Teal > Green > Pink)] 212",
+            "[Yellow (> Teal > Green > Pink)] 211",
+            "[Yellow (> Teal > Green > Pink)] 210",
+            "[Yellow (> Teal > Green > Pink)] 208"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Yellow (> Teal > Green > Pink) page 75": {
+        "status": 200,
+        "page": 75,
+        "title": "mixed",
+        "content": [
+            "[Yellow (> Teal > Green > Pink)] 219",
+            "[Yellow (> Teal > Green > Pink)] 218",
+            "[Yellow (> Teal > Green > Pink)] 217",
+            "[Yellow (> Teal > Green > Pink)] 216",
+            "[Yellow (> Teal > Green > Pink)] 214"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Teal page 71": {
+        "status": 200,
+        "page": 71,
+        "title": "TYPO3 Translation Handling - FREE",
+        "content": [
+            "[Teal] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Teal page 72": {
+        "status": 404
+    },
+    "translation-handling-free Teal page 73": {
+        "status": 200,
+        "page": 73,
+        "title": "free",
+        "content": [
+            "[Teal] 206",
+            "[Teal] 205",
+            "[Teal] 202"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Teal page 74": {
+        "status": 200,
+        "page": 74,
+        "title": "connected",
+        "content": [
+            "[Teal] 212",
+            "[Teal] 211",
+            "[Teal] 208"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Teal page 75": {
+        "status": 200,
+        "page": 75,
+        "title": "mixed",
+        "content": [
+            "[Teal] 218",
+            "[Teal] 217",
+            "[Teal] 214"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Green (> Teal) page 71": {
+        "status": 200,
+        "page": 71,
+        "title": "TYPO3 Translation Handling - FREE",
+        "content": [
+            "[Green (> Teal)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Green (> Teal) page 72": {
+        "status": 404
+    },
+    "translation-handling-free Green (> Teal) page 73": {
+        "status": 200,
+        "page": 73,
+        "title": "free",
+        "content": [
+            "[Green (> Teal)] 207",
+            "[Green (> Teal)] 206",
+            "[Green (> Teal)] 202"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Green (> Teal) page 74": {
+        "status": 200,
+        "page": 74,
+        "title": "connected",
+        "content": [
+            "[Green (> Teal)] 213",
+            "[Green (> Teal)] 212",
+            "[Green (> Teal)] 208"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Green (> Teal) page 75": {
+        "status": 200,
+        "page": 75,
+        "title": "mixed",
+        "content": [
+            "[Green (> Teal)] 219",
+            "[Green (> Teal)] 218",
+            "[Green (> Teal)] 214"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Cyan (> Teal > Green) page 71": {
+        "status": 200,
+        "page": 71,
+        "title": "TYPO3 Translation Handling - FREE",
+        "content": [
+            "[Cyan (> Teal > Green)] Intro"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Cyan (> Teal > Green) page 72": {
+        "status": 404
+    },
+    "translation-handling-free Cyan (> Teal > Green) page 73": {
+        "status": 200,
+        "page": 73,
+        "title": "free",
+        "content": [
+            "[Cyan (> Teal > Green)] 207",
+            "[Cyan (> Teal > Green)] 206",
+            "[Cyan (> Teal > Green)] 205",
+            "[Cyan (> Teal > Green)] 204",
+            "[Cyan (> Teal > Green)] 202"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Cyan (> Teal > Green) page 74": {
+        "status": 200,
+        "page": 74,
+        "title": "connected",
+        "content": [
+            "[Cyan (> Teal > Green)] 213",
+            "[Cyan (> Teal > Green)] 212",
+            "[Cyan (> Teal > Green)] 211",
+            "[Cyan (> Teal > Green)] 210",
+            "[Cyan (> Teal > Green)] 208"
+        ],
+        "menu": "mixed,connected,free,"
+    },
+    "translation-handling-free Cyan (> Teal > Green) page 75": {
+        "status": 200,
+        "page": 75,
+        "title": "mixed",
+        "content": [
+            "[Cyan (> Teal > Green)] 219",
+            "[Cyan (> Teal > Green)] 218",
+            "[Cyan (> Teal > Green)] 217",
+            "[Cyan (> Teal > Green)] 216",
+            "[Cyan (> Teal > Green)] 214"
+        ],
+        "menu": "mixed,connected,free,"
+    }
+}

@@ -1,0 +1,249 @@
+{
+    "sites": {
+        "translation-handling-fallback": {
+            "rootPageId": 1,
+            "base": "https://fallback.translation-handling.local/",
+            "languages": [
+                {
+                    "languageId": 0,
+                    "title": "Pink (Default)",
+                    "enabled": true,
+                    "base": "/",
+                    "locale": "en_US.UTF-8",
+                    "flag": "pink"
+                },
+                {
+                    "languageId": 1,
+                    "title": "Purple (> Pink)",
+                    "enabled": true,
+                    "base": "/purple/",
+                    "locale": "es_US.UTF-8",
+                    "flag": "purple",
+                    "fallbackType": "fallback",
+                    "fallbacks": "0"
+                },
+                {
+                    "languageId": 2,
+                    "title": "Indigo (> Purple > Pink)",
+                    "enabled": true,
+                    "base": "/indigo/",
+                    "locale": "es_MX.UTF-8",
+                    "flag": "indigo",
+                    "fallbackType": "fallback",
+                    "fallbacks": "1,0"
+                },
+                {
+                    "languageId": 3,
+                    "title": "Yellow (> Teal > Green > Pink)",
+                    "enabled": true,
+                    "base": "/yellow/",
+                    "locale": "es_ES.UTF-8",
+                    "flag": "yellow",
+                    "fallbackType": "fallback",
+                    "fallbacks": "4,5,0"
+                },
+                {
+                    "languageId": 4,
+                    "title": "Teal",
+                    "enabled": true,
+                    "base": "/teal/",
+                    "locale": "de_DE.UTF-8",
+                    "flag": "teal",
+                    "fallbackType": "fallback",
+                    "fallbacks": ""
+                },
+                {
+                    "languageId": 5,
+                    "title": "Green (> Teal)",
+                    "enabled": true,
+                    "base": "/green/",
+                    "locale": "de_AT.UTF-8",
+                    "flag": "green",
+                    "fallbackType": "fallback",
+                    "fallbacks": "4"
+                },
+                {
+                    "languageId": 6,
+                    "title": "Cyan (> Teal > Green)",
+                    "enabled": true,
+                    "base": "/cyan/",
+                    "locale": "de_CH.UTF-8",
+                    "flag": "cyan",
+                    "fallbackType": "fallback",
+                    "fallbacks": "5,4"
+                }
+            ]
+        },
+        "translation-handling-strict": {
+            "rootPageId": 36,
+            "base": "https://strict.translation-handling.local/",
+            "languages": [
+                {
+                    "languageId": 0,
+                    "title": "Pink (Default)",
+                    "enabled": true,
+                    "base": "/",
+                    "locale": "en_US.UTF-8",
+                    "flag": "pink"
+                },
+                {
+                    "languageId": 1,
+                    "title": "Purple (> Pink)",
+                    "enabled": true,
+                    "base": "/purple/",
+                    "locale": "es_US.UTF-8",
+                    "flag": "purple",
+                    "fallbackType": "strict",
+                    "fallbacks": "0"
+                },
+                {
+                    "languageId": 2,
+                    "title": "Indigo (> Purple > Pink)",
+                    "enabled": true,
+                    "base": "/indigo/",
+                    "locale": "es_MX.UTF-8",
+                    "flag": "indigo",
+                    "fallbackType": "strict",
+                    "fallbacks": "1,0"
+                },
+                {
+                    "languageId": 3,
+                    "title": "Yellow (> Teal > Green > Pink)",
+                    "enabled": true,
+                    "base": "/yellow/",
+                    "locale": "es_ES.UTF-8",
+                    "flag": "yellow",
+                    "fallbackType": "strict",
+                    "fallbacks": "4,5,0"
+                },
+                {
+                    "languageId": 4,
+                    "title": "Teal",
+                    "enabled": true,
+                    "base": "/teal/",
+                    "locale": "de_DE.UTF-8",
+                    "flag": "teal",
+                    "fallbackType": "strict",
+                    "fallbacks": ""
+                },
+                {
+                    "languageId": 5,
+                    "title": "Green (> Teal)",
+                    "enabled": true,
+                    "base": "/green/",
+                    "locale": "de_AT.UTF-8",
+                    "flag": "green",
+                    "fallbackType": "strict",
+                    "fallbacks": "4"
+                },
+                {
+                    "languageId": 6,
+                    "title": "Cyan (> Teal > Green)",
+                    "enabled": true,
+                    "base": "/cyan/",
+                    "locale": "de_CH.UTF-8",
+                    "flag": "cyan",
+                    "fallbackType": "strict",
+                    "fallbacks": "5,4"
+                }
+            ]
+        },
+        "translation-handling-free": {
+            "rootPageId": 71,
+            "base": "https://free.translation-handling.local/",
+            "languages": [
+                {
+                    "languageId": 0,
+                    "title": "Pink (Default)",
+                    "enabled": true,
+                    "base": "/",
+                    "locale": "en_US.UTF-8",
+                    "flag": "pink"
+                },
+                {
+                    "languageId": 1,
+                    "title": "Purple (> Pink)",
+                    "enabled": true,
+                    "base": "/purple/",
+                    "locale": "es_US.UTF-8",
+                    "flag": "purple",
+                    "fallbackType": "free",
+                    "fallbacks": "0"
+                },
+                {
+                    "languageId": 2,
+                    "title": "Indigo (> Purple > Pink)",
+                    "enabled": true,
+                    "base": "/indigo/",
+                    "locale": "es_MX.UTF-8",
+                    "flag": "indigo",
+                    "fallbackType": "free",
+                    "fallbacks": "1,0"
+                },
+                {
+                    "languageId": 3,
+                    "title": "Yellow (> Teal > Green > Pink)",
+                    "enabled": true,
+                    "base": "/yellow/",
+                    "locale": "es_ES.UTF-8",
+                    "flag": "yellow",
+                    "fallbackType": "free",
+                    "fallbacks": "4,5,0"
+                },
+                {
+                    "languageId": 4,
+                    "title": "Teal",
+                    "enabled": true,
+                    "base": "/teal/",
+                    "locale": "de_DE.UTF-8",
+                    "flag": "teal",
+                    "fallbackType": "free",
+                    "fallbacks": ""
+                },
+                {
+                    "languageId": 5,
+                    "title": "Green (> Teal)",
+                    "enabled": true,
+                    "base": "/green/",
+                    "locale": "de_AT.UTF-8",
+                    "flag": "green",
+                    "fallbackType": "free",
+                    "fallbacks": "4"
+                },
+                {
+                    "languageId": 6,
+                    "title": "Cyan (> Teal > Green)",
+                    "enabled": true,
+                    "base": "/cyan/",
+                    "locale": "de_CH.UTF-8",
+                    "flag": "cyan",
+                    "fallbackType": "free",
+                    "fallbacks": "5,4"
+                }
+            ]
+        }
+    },
+    "pages": {
+        "translation-handling-fallback": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "translation-handling-strict": [
+            36,
+            37,
+            38,
+            39,
+            40
+        ],
+        "translation-handling-free": [
+            71,
+            72,
+            73,
+            74,
+            75
+        ]
+    }
+}

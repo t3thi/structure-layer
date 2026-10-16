@@ -1,0 +1,108 @@
+{
+    "website English page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "FunctionalTest",
+        "content": [],
+        "menu": "DataHandlerTest,"
+    },
+    "website English page 88": {
+        "status": 200,
+        "page": 88,
+        "title": "DataHandlerTest",
+        "content": [
+            "Regular Element #0"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website English page 89": {
+        "status": 200,
+        "page": 89,
+        "title": "Relations",
+        "content": [
+            "Regular Element #1",
+            "Regular Element #2",
+            "Regular Element #3"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website English page 90": {
+        "status": 200,
+        "page": 90,
+        "title": "Target",
+        "content": [
+            "Regular Element #10"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website Dansk page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "FunctionalTest",
+        "content": [],
+        "menu": "DataHandlerTest,"
+    },
+    "website Dansk page 88": {
+        "status": 200,
+        "page": 88,
+        "title": "DataHandlerTest",
+        "content": [
+            "Regular Element #0"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website Dansk page 89": {
+        "status": 200,
+        "page": 89,
+        "title": "[Translate to Dansk:] Relations",
+        "content": [
+            "[Translate to Dansk:] Regular Element #1",
+            "[Translate to Dansk:] Regular Element #3"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website Dansk page 90": {
+        "status": 200,
+        "page": 90,
+        "title": "[Translate to Dansk:] Target",
+        "content": [
+            "[Translate to Dansk:] Regular Element #10"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website Deutsch page 1": {
+        "status": 200,
+        "page": 1,
+        "title": "FunctionalTest",
+        "content": [],
+        "menu": "DataHandlerTest,"
+    },
+    "website Deutsch page 88": {
+        "status": 200,
+        "page": 88,
+        "title": "DataHandlerTest",
+        "content": [
+            "Regular Element #0"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website Deutsch page 89": {
+        "status": 200,
+        "page": 89,
+        "title": "[Translate to Deutsch:] Relations",
+        "content": [
+            "[Translate to Deutsch:] [Translate to Dansk:] Regular Element #1",
+            "[Translate to Dansk:] Regular Element #3"
+        ],
+        "menu": "DataHandlerTest,"
+    },
+    "website Deutsch page 90": {
+        "status": 200,
+        "page": 90,
+        "title": "[Translate to Deutsch:] Target",
+        "content": [
+            "[Translate to Deutsch:] [Translate to Dansk:] Regular Element #10"
+        ],
+        "menu": "DataHandlerTest,"
+    }
+}

@@ -7,3 +7,5 @@
 .php-cs-fixer.cache
 /.claude/settings.local.json
 /CLAUDE.local.md
+/Build/baseline/.Build/
+/Build/baseline/composer.lock
