@@ -20,6 +20,8 @@ use TYPO3\CMS\Core\Schema\Field\FieldTypeInterface;
 use TYPO3\CMS\Core\Schema\LanguageMarker;
 use TYPO3\CMS\Core\Schema\TcaSchemaFactory;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\SysLog\Action\Database as SystemLogDatabaseAction;
+use TYPO3\CMS\Core\SysLog\Error as SystemLogErrorClassification;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -42,6 +44,11 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  *      shadow; restoring a shadow restores the translations deleted together with it.
  *
  * C: after every outermost run, translations get the sorting of their shadow.
+ *
+ * Phase 5, permissions (StructureAuthority): a language-restricted editor's requests for languages
+ * they may not edit are dropped; structure operations (move, copy, structural fields, hide/delete/
+ * restore in all languages) need the structure permission. The outermost run may then write the
+ * structure layer (content operations) or every language (structure operations).
  */
 final class DataHandlerHook
 {
@@ -51,6 +58,9 @@ final class DataHandlerHook
     /** @var array<string, int> "table:uid" => tstamp of a deleted shadow before it is restored */
     private array $restoredShadowTimestamps = [];
 
+    /** The outermost run contains a permitted structure operation */
+    private bool $structureOperation = false;
+
     public function __construct(
         private readonly StructureLayer $structureLayer,
         private readonly SiteFinder $siteFinder,
@@ -58,6 +68,7 @@ final class DataHandlerHook
         private readonly TcaSchemaFactory $tcaSchemaFactory,
         private readonly EditingLanguage $editingLanguage,
         private readonly ShadowLabelResolver $shadowLabelResolver,
+        private readonly StructureAuthority $structureAuthority,
     ) {}
 
     public function processDatamap_beforeStart(DataHandler $dataHandler): void
@@ -65,6 +76,7 @@ final class DataHandlerHook
         if (!$dataHandler->isOuterMostInstance()) {
             return;
         }
+        $this->structureOperation = false;
         $datamap = $dataHandler->datamap;
         foreach (StructureLayer::SHADOWED_TABLES as $table) {
             if (!isset($datamap[$table])) {
@@ -73,6 +85,7 @@ final class DataHandlerHook
             $datamap[$table] = $this->rewriteTableDatamap($table, $datamap[$table], $dataHandler);
         }
         $dataHandler->datamap = $datamap;
+        $this->structureAuthority->grant($dataHandler->BE_USER, $this->structureOperation);
     }
 
     /**
@@ -92,6 +105,7 @@ final class DataHandlerHook
     {
         if ($dataHandler->isOuterMostInstance()) {
             $this->alignSorting();
+            $this->structureAuthority->withdraw($dataHandler->BE_USER);
         }
     }
 
@@ -100,14 +114,16 @@ final class DataHandlerHook
         if (!$dataHandler->isOuterMostInstance()) {
             return;
         }
+        $this->structureOperation = false;
         $cmdmap = $dataHandler->cmdmap;
         foreach (StructureLayer::SHADOWED_TABLES as $table) {
             if (!isset($cmdmap[$table])) {
                 continue;
             }
-            $cmdmap[$table] = $this->rewriteTableCmdmap($table, $cmdmap[$table]);
+            $cmdmap[$table] = $this->rewriteTableCmdmap($table, $cmdmap[$table], $dataHandler);
         }
         $dataHandler->cmdmap = $cmdmap;
+        $this->structureAuthority->grant($dataHandler->BE_USER, $this->structureOperation);
     }
 
     /**
@@ -184,6 +200,7 @@ final class DataHandlerHook
     {
         if ($dataHandler->isOuterMostInstance()) {
             $this->alignSorting();
+            $this->structureAuthority->withdraw($dataHandler->BE_USER);
         }
     }
 
@@ -209,6 +226,10 @@ final class DataHandlerHook
                 continue;
             }
             $languageId = (int)($fields[$languageField] ?? 0);
+            if ($languageId > 0 && !$this->mayEditLanguage($dataHandler, $table, $id, $languageId)) {
+                // Rejected as a whole: its shadow alone would violate I4
+                continue;
+            }
             if ($languageId === LanguageMarker::ALL_LANGUAGES || ($languageId > 0 && !empty($fields[$parentField]))) {
                 $rewritten[$id] = $fields;
                 continue;
@@ -229,7 +250,7 @@ final class DataHandlerHook
                 $translationId = $id;
                 $shadow['pid'] = $this->resolveShadowPid($table, $fields['pid'] ?? 0);
             } else {
-                $primaryLanguageId = $this->resolvePrimaryLanguageId($table, $fields['pid'] ?? 0);
+                $primaryLanguageId = $this->resolveTranslationLanguageId($table, $fields['pid'] ?? 0, $dataHandler);
                 if ($primaryLanguageId === null) {
                     $rewritten[$id] = $fields;
                     continue;
@@ -265,6 +286,9 @@ final class DataHandlerHook
         $languageId = (int)$record[$languageField];
         $shadowUid = (int)$record[$parentField];
 
+        if ($languageId > 0 && !$this->mayEditLanguage($dataHandler, $table, $uid, $languageId)) {
+            return;
+        }
         if ($languageId > 0 && $shadowUid > 0) {
             if ($table === 'pages') {
                 // Without l10n_state, DataMapProcessor treats synchronizable fields as "parent" and drops their values
@@ -278,7 +302,7 @@ final class DataHandlerHook
                     unset($fields[$fieldName]);
                 }
             }
-            if ($shadowFields !== []) {
+            if ($shadowFields !== [] && $this->mayChangeStructure($dataHandler, $table, $uid, 'change ' . implode(', ', array_keys($shadowFields)) . ' of')) {
                 $rewritten[$shadowUid] = array_replace($shadowFields, is_array($rewritten[$shadowUid] ?? null) ? $rewritten[$shadowUid] : []);
                 $this->prepareShadowUpdate($table, $shadowUid);
             }
@@ -299,13 +323,17 @@ final class DataHandlerHook
             }
             // Visibility on a shadow means "in all languages" (I5: the shadow itself is never hidden)
             $visibilityFields = array_intersect_key($fields, array_flip($this->getAllLanguagesVisibilityFieldNames($table)));
+            if ($visibilityFields !== [] && !$this->mayChangeStructure($dataHandler, $table, $uid, 'change the visibility in all languages of')) {
+                $fields = array_diff_key($fields, $visibilityFields);
+                $visibilityFields = [];
+            }
             if ($visibilityFields !== []) {
                 foreach ($this->fetchTranslationUids($table, $uid) as $translationUid) {
                     $rewritten[$translationUid] = array_replace($visibilityFields, is_array($rewritten[$translationUid] ?? null) ? $rewritten[$translationUid] : []);
                 }
                 $fields = array_diff_key($fields, $visibilityFields);
             }
-            if ($fields !== []) {
+            if ($fields !== [] && $this->mayChangeStructure($dataHandler, $table, $uid, 'change ' . implode(', ', array_keys($fields)) . ' of')) {
                 $this->prepareShadowUpdate($table, $uid);
                 $rewritten[$uid] = array_replace(is_array($rewritten[$uid] ?? null) ? $rewritten[$uid] : [], $fields);
             }
@@ -374,7 +402,7 @@ final class DataHandlerHook
      * @param array<int|string, mixed> $commands
      * @return array<int|string, mixed>
      */
-    private function rewriteTableCmdmap(string $table, array $commands): array
+    private function rewriteTableCmdmap(string $table, array $commands, DataHandler $dataHandler): array
     {
         $languageCapability = $this->getLanguageCapability($table);
         $languageField = $languageCapability->getLanguageField()->getName();
@@ -385,9 +413,23 @@ final class DataHandlerHook
                 continue;
             }
             $targetId = (int)$id;
+            $languageId = (int)(BackendUtility::getRecord($table, (int)$id, $languageField, '', false)[$languageField] ?? 0);
             foreach ($commandArray as $command => $value) {
-                if ($command !== 'move' && $command !== 'copy') {
+                if ($command === 'localize' || $command === 'copyToLanguage') {
+                    // Reading the source is enough; the target language is checked by Core
                     $rewritten[$id][$command] = $value;
+                    continue;
+                }
+                if ($languageId > 0 && !$this->mayEditLanguage($dataHandler, $table, $id, $languageId)) {
+                    continue;
+                }
+                if ($command !== 'move' && $command !== 'copy') {
+                    if ($languageId !== 0 || $this->mayChangeStructure($dataHandler, $table, (int)$id, $command . ' in all languages')) {
+                        $rewritten[$id][$command] = $value;
+                    }
+                    continue;
+                }
+                if (!$this->mayChangeStructure($dataHandler, $table, (int)$id, $command)) {
                     continue;
                 }
                 // A move or copy of a translation is a move or copy of its shadow, in all languages
@@ -432,6 +474,57 @@ final class DataHandlerHook
             return $pid;
         }
         return $this->resolveShadowTarget($table, (int)$pid);
+    }
+
+    /**
+     * A restricted editor's own request for a language they may not edit. Core would reject it, but
+     * not after a structure run's grant (StructureAuthority), so it is rejected here.
+     */
+    private function mayEditLanguage(DataHandler $dataHandler, string $table, int|string $id, int $languageId): bool
+    {
+        if ($this->structureAuthority->isRestricted($dataHandler->BE_USER) && !$dataHandler->BE_USER->checkLanguageAccess($languageId)) {
+            $dataHandler->log($table, (int)$id, SystemLogDatabaseAction::UPDATE, null, SystemLogErrorClassification::USER_ERROR, 'Attempt to modify {table}:{uid} in language {language}, which the user may not edit', null, ['table' => $table, 'uid' => $id, 'language' => $languageId]);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Structure operations change every language (plan §5, Phase 5).
+     */
+    private function mayChangeStructure(DataHandler $dataHandler, string $table, int $uid, string $operation): bool
+    {
+        if ($this->structureAuthority->hasStructurePermission($dataHandler->BE_USER)) {
+            $this->structureOperation = true;
+            return true;
+        }
+        $dataHandler->log($table, $uid, SystemLogDatabaseAction::UPDATE, null, SystemLogErrorClassification::USER_ERROR, 'Attempt to {operation} {table}:{uid} without structure permission ("' . StructureAuthority::PERMISSION . '"): it changes every language', null, ['operation' => $operation, 'table' => $table, 'uid' => $uid]);
+        return false;
+    }
+
+    /**
+     * Language of the first translation of a record created in language 0 (page tree, structure
+     * column): the Editing Language, otherwise the first language the user may edit.
+     */
+    private function resolveTranslationLanguageId(string $table, mixed $pid, DataHandler $dataHandler): ?int
+    {
+        $primaryLanguageId = $this->resolvePrimaryLanguageId($table, $pid);
+        if ($primaryLanguageId === null || !$this->structureAuthority->isRestricted($dataHandler->BE_USER)) {
+            return $primaryLanguageId;
+        }
+        $site = $this->siteFinder->getSiteByPageId($this->resolvePageId($table, (int)$pid));
+        $candidates = [$this->editingLanguage->get($dataHandler->BE_USER, $site), ...array_keys($site->getAllLanguages())];
+        foreach ($candidates as $languageId) {
+            if ($languageId !== null && $languageId > 0 && $dataHandler->BE_USER->checkLanguageAccess($languageId)) {
+                return $languageId;
+            }
+        }
+        return null;
+    }
+
+    private function resolvePageId(string $table, int $pid): int
+    {
+        return $pid < 0 ? (int)(BackendUtility::getRecord($table, abs($pid), 'pid')['pid'] ?? 0) : $pid;
     }
 
     private function resolvePrimaryLanguageId(string $table, mixed $pid): ?int

@@ -72,6 +72,31 @@ final class DemoCommand extends Command
             $previous = -$uid;
         }
 
+        // Phase 5, move disambiguation: elements that exist in one language only lie between the visible ones.
+        $dataHandler = $this->process(['pages' => ['NEWmoves' => ['pid' => 1, 'sys_language_uid' => 1, 'title' => 'Verschieben', 'hidden' => 0]]]);
+        $movesPage = (int)$dataHandler->substNEWwithIDs['NEWmoves'];
+        $movesShadow = (int)($this->connectionPool->getConnectionForTable('pages')->select(['l10n_parent'], 'pages', ['uid' => $movesPage])->fetchOne());
+        $english = $this->localize('pages', $movesPage, 2);
+        $this->process(['pages' => [$english => ['title' => 'Moving', 'hidden' => 0]]]);
+        $previous = $movesShadow;
+        // header, language it is written in, header of an English translation (null: none)
+        $elements = [['A', 1, 'A'], ['B (nur Deutsch)', 1, null], ['C (English only)', 2, null], ['D', 1, 'D']];
+        foreach ($elements as [$header, $languageId, $englishHeader]) {
+            $dataHandler = $this->process(['tt_content' => ['NEWmove' => [
+                'pid' => $previous,
+                'sys_language_uid' => $languageId,
+                'colPos' => 0,
+                'CType' => 'text',
+                'header' => $header,
+            ]]]);
+            $uid = (int)$dataHandler->substNEWwithIDs['NEWmove'];
+            if ($englishHeader !== null) {
+                $translation = $this->localize('tt_content', $uid, 2);
+                $this->process(['tt_content' => [$translation => ['header' => $englishHeader, 'hidden' => 0]]]);
+            }
+            $previous = -$uid;
+        }
+
         $violations = $this->invariantChecker->check();
         if ($violations !== []) {
             $io->listing(array_map(strval(...), $violations));

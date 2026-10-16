@@ -760,3 +760,110 @@ Every data set: `structure-layer:check` clean after the migration (fallbackType 
 ### Patch list after Phase 4
 
 Unchanged (Phase 3, 6 patches). Phase 4 needed no Core patch.
+
+---
+
+## Phase 5: Ambiguity and permissions (2026-10-16)
+
+### Deliverables
+
+- **Permissions** (characterization plus one prototype, no final model):
+  - Test-only users (`Tests/Functional/Permissions/Fixtures/RestrictedEditor.csv`): "english" with
+    `allowed_languages = 2`, and "structure" with additionally the custom permission
+    `structure_layer:structure` (a custom permission option registered in `ext_localconf.php`).
+  - `DataHandling/StructureAuthority` plus rules in the DataHandler hook:
+    - **content operations are system-managed**: for the outermost run, language 0 is added to the
+      editor's allowed languages, so the shadow writes that follow from editing their own languages
+      pass Core's checks;
+    - **structure operations need the permission**: move, copy, structural fields, "hide/delete/
+      restore in all languages", other fields on a shadow. Without it they are rejected with an
+      explicit message; the payload part of the same request is saved. With it, the run may write
+      every language;
+    - the editor's own requests for languages they may not edit are dropped beforehand, so the
+      structure grant only covers what follows from the structure operation;
+    - a record created in language 0 (page tree) gets its first translation in the Editing Language,
+      or else in the first language the editor may edit (not in the primary language).
+  - `RestrictedEditorTest` (14 tests).
+- **Move disambiguation** (Option B, 2026-05-29):
+  - `Backend/HiddenPositions` + listener `AddMoveDisambiguation` (`ModifyPageLayoutContentEvent`)
+    render a JSON map per language column and colPos: visible element (0 = top of the column) =>
+    the shadows between it and the next visible element, with label and language;
+  - `Resources/Public/JavaScript/move-disambiguation.js` (import map `Configuration/JavaScriptModules.php`)
+    intercepts a drop only if its anchor has hidden positions. A modal offers "directly after …"
+    and "after … (language)" for each hidden position, then sends the move. Unambiguous drops stay
+    Core's;
+  - `MoveDisambiguationTest` (4 tests). Checked in the DDEV instance (Playwright, simulated HTML5
+    drag & drop): demo page "Moving" (A de+en, B de only, C en only, D de+en). Dropping D behind A in
+    English asks "Directly after A" / "After B (nur Deutsch)"; choosing B gives A, D, C in English and
+    A, B, D in German.
+- Core patch `cms-core-datahandler-page-translation-new-parent.patch` (test-first, red before).
+- `structure-layer:demo` seeds the "Moving" page. 194 tests in total, PHPStan level 8 and CGL clean.
+
+### Where Core's language checks block shadow writes (editor with `allowed_languages = 2`, no prototype)
+
+| Operation | Result | Check |
+|---|---|---|
+| Create content in English | **shadow rejected, English record written unconnected (I2 violation)** | `checkRecordEditAccess()` on the NEW shadow ("Language was not allowed") |
+| Create a page (English or page tree) | rejected completely | same, plus the page translation is checked against its NEW parent (see patch below) |
+| Edit English payload, hide in English | works | – |
+| Translate de → en (source not editable) | works | `localize()` only needs read access to the source |
+| Edit `colPos` from the English record | rejected for the shadow **and** for the German translation (DataMapProcessor sync) | `checkRecordEditAccess()` |
+| Hide in all languages | shadow ok, German translation rejected: **partly applied** | same |
+| Move | rejected | `moveRecord()` on the shadow |
+| Delete the shadow directly | rejected | delete permission check on language 0 |
+| Delete / restore an English translation | works, incl. the nested shadow delete/restore | – |
+
+With the prototype, every row above has an explicit outcome: content operations work, structure
+operations are rejected as a whole (without the permission) or applied to all languages (with it).
+
+### Findings
+
+- **The structure layer turns language permissions into structure permissions.** With only
+  language checks, a language-restricted editor cannot create content at all. The system has to
+  write the shadow on their behalf, which is a new concept for Core: an operation-level authority,
+  not a per-record one. The PoC grants it by widening `allowed_languages` for one DataHandler run.
+  This works for a prototype; Core would need a real "system write" or a check that knows about
+  shadows (e.g. `checkRecordEditAccess()` treating language 0 as structure). `bypassAccessCheckForRecords`
+  no longer exists in v15 (the translation_handling extension still sets it, without effect).
+- **Partial writes are the real danger.** Without the prototype, Core applies the parts of a request
+  it allows: an unconnected record (I2), a "hide in all languages" that hides only some languages, a
+  structural edit that reaches the shadow but not all translations. A structure-aware permission
+  check must decide per *operation*, before DataHandler starts.
+- **Who owns structure** stays open (2026-05-29, 2026-08-14). The prototype shows one workable split:
+  - content editors see their language, create and delete there and never touch other languages;
+  - structure editors move/copy for everyone.
+  Consequences to discuss:
+  - a content editor cannot reorder even in their own language (no per-language order, decision 2);
+  - "hide in all languages" becomes a structure right (decision 3 had no permission gate);
+  - deleting the last translation still deletes the shadow and, for pages, the subtree (Phase 2
+    finding). The prototype treats that as a content operation; it is not restricted further.
+- **Core bug: page translation with its default page in the same datamap.** DataHandler checks a page
+  translation's permissions against its `l10n_parent` before resolving the NEW id: `'NEW1' > 0` is
+  true for strings, `getRecord('pages', 'NEW1')` is empty, so every non-admin is rejected. Admins pass
+  because the page check is skipped for them. Patch: resolve the NEW id via `substNEWwithIDs`.
+  Upstream candidate, independent of the PoC.
+- **Ambiguity is a per-column property and needs no structure column.** The map is computed from the
+  shadows (1 query per page plus 1 label query per hidden position); the decision is made in the
+  browser, before the request. Only drops whose anchor is followed by invisible positions ask; in the
+  demo that is one of the four positions in each language.
+- **Extension points that were enough:** `ModifyPageLayoutContentEvent` (footer content and
+  `PageRenderer` for the JS module), the import map, a capture listener on `window` that runs before
+  Core's capture listener on `document`. **Missing:** an event or hook in Core's drag & drop
+  (`drag-drop.js`) to veto or redirect a drop; the PoC relies on event order.
+- **Not covered:** the "new content after" buttons and paste/cut have the same ambiguity (they insert
+  after a visible element); keyboard-based moves; the comparison view uses the same map per column
+  but was only checked in single-language mode. The modal labels hidden positions with the first
+  available translation (its language in brackets).
+
+### Patch list after Phase 5
+
+1. ✅ `SiteLanguage::__construct` (Phase 1).
+2. ✅ `DataHandler::localize()` from translations (Phase 2).
+3. ✅ `DataHandler::getSortNumber()` ties (Phase 2).
+4. ✅ `GridColumnItem::isDragAndDropAllowed()` (Phase 3).
+5. ✅ `LocalizationRepository` structural identity (Phase 3).
+6. ✅ Translation wizard sources (Phase 3).
+7. ✅ **New:** page translation with a NEW parent page: permission check. Upstream candidate.
+8. Open: `Site::getPrimaryLanguage()` + callers, `PageLinkBuilder:221`, `DatabaseRecordLinkBuilder`
+   free-mode check; candidates: an event in `PageContextFactory`, a drop event in `drag-drop.js`,
+   a structure-aware language check in `checkRecordEditAccess()`.

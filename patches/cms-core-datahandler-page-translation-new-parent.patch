@@ -1,0 +1,25 @@
+--- a/Classes/DataHandling/DataHandler.php	2026-10-16 09:57:44
++++ b/Classes/DataHandling/DataHandler.php	2026-10-16 09:57:44
+@@ -773,13 +773,18 @@
+                         $languageField = $languageCapability->getLanguageField()->getName();
+                         $transOrigPointerField = $languageCapability->getTranslationOriginPointerField()->getName();
+                     }
++                    // The default language page may be created in the same datamap: resolve its NEW id
++                    $translationParentPageId = $transOrigPointerField ? ($incomingFieldArray[$transOrigPointerField] ?? null) : null;
++                    if (is_string($translationParentPageId) && isset($this->substNEWwithIDs[$translationParentPageId])) {
++                        $translationParentPageId = $this->substNEWwithIDs[$translationParentPageId];
++                    }
+                     if ($table === 'pages'
+                         && $languageField && isset($incomingFieldArray[$languageField]) && $incomingFieldArray[$languageField] > 0
+-                        && $transOrigPointerField && isset($incomingFieldArray[$transOrigPointerField]) && $incomingFieldArray[$transOrigPointerField] > 0
++                        && MathUtility::canBeInterpretedAsInteger($translationParentPageId) && (int)$translationParentPageId > 0
+                     ) {
+-                        $pageRecord = BackendUtility::getRecord('pages', $incomingFieldArray[$transOrigPointerField]) ?? [];
+-                        if (!$this->hasPermissionToInsert($table, $incomingFieldArray[$transOrigPointerField], $pageRecord, (int)$incomingFieldArray[$languageField])) {
+-                            $this->log($table, $incomingFieldArray[$transOrigPointerField], SystemLogDatabaseAction::INSERT, null, SystemLogErrorClassification::USER_ERROR, 'Attempt to insert record on pages:{pid} where table "{table}" is not allowed', null, ['pid' => $incomingFieldArray[$transOrigPointerField], 'table' => $table], $incomingFieldArray[$transOrigPointerField]);
++                        $pageRecord = BackendUtility::getRecord('pages', (int)$translationParentPageId) ?? [];
++                        if (!$this->hasPermissionToInsert($table, (int)$translationParentPageId, $pageRecord, (int)$incomingFieldArray[$languageField])) {
++                            $this->log($table, (int)$translationParentPageId, SystemLogDatabaseAction::INSERT, null, SystemLogErrorClassification::USER_ERROR, 'Attempt to insert record on pages:{pid} where table "{table}" is not allowed', null, ['pid' => (int)$translationParentPageId, 'table' => $table], (int)$translationParentPageId);
+                             continue;
+                         }
+                     } else {

@@ -39,6 +39,30 @@
       <trans-unit id="pageTree.otherLanguage" resname="pageTree.otherLanguage">
         <source>Not available in %s, title from %s</source>
       </trans-unit>
+      <trans-unit id="moveDisambiguation.title" resname="moveDisambiguation.title">
+        <source>Choose the position in all languages</source>
+      </trans-unit>
+      <trans-unit id="moveDisambiguation.intro" resname="moveDisambiguation.intro">
+        <source>Elements of other languages lie at this position. A move changes the position in all languages: where should the element go?</source>
+      </trans-unit>
+      <trans-unit id="moveDisambiguation.directlyAfter" resname="moveDisambiguation.directlyAfter">
+        <source>Directly after "%s"</source>
+      </trans-unit>
+      <trans-unit id="moveDisambiguation.top" resname="moveDisambiguation.top">
+        <source>At the top of the column</source>
+      </trans-unit>
+      <trans-unit id="moveDisambiguation.after" resname="moveDisambiguation.after">
+        <source>After "%s" (%s)</source>
+      </trans-unit>
+      <trans-unit id="moveDisambiguation.cancel" resname="moveDisambiguation.cancel">
+        <source>Cancel</source>
+      </trans-unit>
+      <trans-unit id="permission.header" resname="permission.header">
+        <source>Structure layer</source>
+      </trans-unit>
+      <trans-unit id="permission.structure" resname="permission.structure">
+        <source>Change the shared structure: move, copy, structural fields, hide or delete in all languages</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
