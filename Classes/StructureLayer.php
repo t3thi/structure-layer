@@ -19,6 +19,15 @@ final readonly class StructureLayer
     public const array SHADOWED_TABLES = ['pages', 'tt_content'];
 
     /**
+     * A site of the structure layer model: language 0 exists and is disabled.
+     */
+    public function isStructureSite(Site $site): bool
+    {
+        $languages = $site->getAllLanguages();
+        return isset($languages[0]) && !$languages[0]->isEnabled();
+    }
+
+    /**
      * The language editors see first: the first enabled language, never the structure layer.
      * @todo Phase 3b: prefer the backend user's editing language.
      */

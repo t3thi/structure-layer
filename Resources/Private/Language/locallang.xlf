@@ -6,6 +6,9 @@
       <trans-unit id="structureColumn.description" resname="structureColumn.description">
         <source>Shared structure of all languages</source>
       </trans-unit>
+      <trans-unit id="editingLanguage.toolbar" resname="editingLanguage.toolbar">
+        <source>Editing language</source>
+      </trans-unit>
       <trans-unit id="structureColumn.toggle" resname="structureColumn.toggle">
         <source>Show structure layer</source>
       </trans-unit>

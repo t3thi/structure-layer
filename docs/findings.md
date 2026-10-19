@@ -536,6 +536,12 @@ Deleting the disabled en translation makes the de fallback reappear
   - comparison view = Editing Language first, then the other selected languages;
   - a changed Editing Language reloads the page tree, whose titles follow it
     (`EventListener/RefreshPageTreeOnEditingLanguageChange`, `typo3:pagetree:refresh`).
+  - **top bar** (`Backend/ToolbarItems/EditingLanguageToolbarItem`, AJAX route
+    `structure_layer_editing_language`, `toolbar/editing-language-menu.js`, 2026-10-19): the
+    Editing Language can be switched in every module and view (the Layout module selector only
+    sets it in the Layout view). Flag + title of the language, one section per structure-layer
+    site if there are several. Switching reloads the page tree and the module, without an explicit
+    `languages` selection in the module URL.
 - **Preview of shadow pages** (`EventListener/ResolveShadowPagePreviewLanguage`,
   `BeforePagePreviewUriGeneratedEvent`): "View" on a page-tree item (= the shadow) would open the
   disabled `/_structure/`; it previews the Editing Language instead, or the first translation in
@@ -650,6 +656,11 @@ DataHandler request is covered by the Phase 2 move tests and the walkthrough.
   shadows by their translated titles (Core's `searchInTranslatedPages`). Icon and overlay
   (hidden, start/end time, nav_hide, …) come from that same translation (2026-10-19): the shadow is
   never hidden (I5), so the tree showed every page as visible.
+- **New root pages** (`DataHandling/NewSiteMigrationHook`, 2026-10-19): Core's
+  `CreateSiteConfiguration` writes a basic site with a visible language 0, and the page stays a
+  plain language-0 record (no site yet when `DataHandlerHook` runs). After the run the new site is
+  migrated with the Phase 4 `Migrator`: language 0 → "Structure", "English" → language 1, the page →
+  shadow + translation.
 - **Page tree context menu "Enable" / "Disable"** (`Backend/ContextMenu/ShadowPageVisibilityItemProvider`,
   `context-menu-actions.js`, 2026-10-19): Core's `PageProvider` reads the shadow, so it only ever
   offered "Disable", and that sent `hidden` for the shadow = "hide in all languages". The items now

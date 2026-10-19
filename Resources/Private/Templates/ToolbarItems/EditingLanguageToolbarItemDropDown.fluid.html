@@ -1,0 +1,22 @@
+<html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
+<p class="dropdown-headline"><f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:editingLanguage.toolbar" /></p>
+<f:for each="{sites}" as="site">
+    <f:if condition="{multipleSites}">
+        <p class="dropdown-header">{site.title}</p>
+    </f:if>
+    <ul class="dropdown-list">
+        <f:for each="{site.languages}" as="language">
+            <li>
+                <button type="button" class="dropdown-item t3js-structure-layer-editing-language{f:if(condition: language.active, then: ' active')}" aria-pressed="{f:if(condition: language.active, then: 'true', else: 'false')}" data-site="{site.identifier}" data-language-id="{language.id}">
+                    <span class="dropdown-item-columns">
+                        <span class="dropdown-item-column dropdown-item-column-icon">
+                            <core:icon identifier="{language.flag}" size="small" />
+                        </span>
+                        <span class="dropdown-item-column dropdown-item-column-text">{language.title}</span>
+                    </span>
+                </button>
+            </li>
+        </f:for>
+    </ul>
+</f:for>
+</html>

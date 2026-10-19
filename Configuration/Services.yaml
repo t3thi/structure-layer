@@ -11,6 +11,9 @@ services:
   T3thi\StructureLayer\DataHandling\DataHandlerHook:
     public: true
 
+  T3thi\StructureLayer\DataHandling\NewSiteMigrationHook:
+    public: true
+
   # Used directly in functional tests.
   T3thi\StructureLayer\Integrity\InvariantChecker:
     public: true
