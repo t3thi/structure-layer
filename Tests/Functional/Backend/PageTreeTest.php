@@ -78,6 +78,28 @@ final class PageTreeTest extends AbstractStructureLayerTestCase
         self::assertStringContainsString('Deutsch', $items[20]['tooltip']);
     }
 
+    /**
+     * Shadows are never hidden (I5): the state shown is the one of the translation the title
+     * comes from - the Editing Language, or the fallback shown instead.
+     */
+    #[Test]
+    public function hiddenStateComesFromTheShownTranslation(): void
+    {
+        $connection = $this->getConnectionPool()->getConnectionForTable('pages');
+        $connection->update('pages', ['hidden' => 1], ['uid' => 32]);
+        $connection->update('pages', ['hidden' => 1], ['uid' => 21]);
+
+        $items = $this->fetchPageTree();
+        self::assertSame('', $items[30]['overlayIcon'], 'de shown, visible');
+        self::assertSame('overlay-hidden', $items[20]['overlayIcon'], 'de shown, hidden');
+
+        $this->setEditingLanguage(2);
+        $items = $this->fetchPageTree();
+        self::assertSame('overlay-hidden', $items[30]['overlayIcon'], 'en shown, hidden');
+        self::assertSame('overlay-hidden', $items[20]['overlayIcon'], 'fallback de shown, hidden');
+        self::assertSame('', $items[1]['overlayIcon']);
+    }
+
     #[Test]
     public function noStructurePageShowsAnEmptyTitle(): void
     {

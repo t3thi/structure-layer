@@ -62,7 +62,6 @@ final class DataHandlerHook
     private bool $structureOperation = false;
 
     public function __construct(
-        private readonly StructureLayer $structureLayer,
         private readonly SiteFinder $siteFinder,
         private readonly ConnectionPool $connectionPool,
         private readonly TcaSchemaFactory $tcaSchemaFactory,
@@ -508,11 +507,14 @@ final class DataHandlerHook
      */
     private function resolveTranslationLanguageId(string $table, mixed $pid, DataHandler $dataHandler): ?int
     {
-        $primaryLanguageId = $this->resolvePrimaryLanguageId($table, $pid);
-        if ($primaryLanguageId === null || !$this->structureAuthority->isRestricted($dataHandler->BE_USER)) {
-            return $primaryLanguageId;
+        if (!MathUtility::canBeInterpretedAsInteger($pid)) {
+            return null;
         }
-        $site = $this->siteFinder->getSiteByPageId($this->resolvePageId($table, (int)$pid));
+        try {
+            $site = $this->siteFinder->getSiteByPageId($this->resolvePageId($table, (int)$pid));
+        } catch (SiteNotFoundException) {
+            return null;
+        }
         $candidates = [$this->editingLanguage->get($dataHandler->BE_USER, $site), ...array_keys($site->getAllLanguages())];
         foreach ($candidates as $languageId) {
             if ($languageId !== null && $languageId > 0 && $dataHandler->BE_USER->checkLanguageAccess($languageId)) {
@@ -525,23 +527,6 @@ final class DataHandlerHook
     private function resolvePageId(string $table, int $pid): int
     {
         return $pid < 0 ? (int)(BackendUtility::getRecord($table, abs($pid), 'pid')['pid'] ?? 0) : $pid;
-    }
-
-    private function resolvePrimaryLanguageId(string $table, mixed $pid): ?int
-    {
-        if (!MathUtility::canBeInterpretedAsInteger($pid)) {
-            return null;
-        }
-        $pageId = (int)$pid;
-        if ($pageId < 0) {
-            $pageId = (int)(BackendUtility::getRecord($table, abs($pageId), 'pid')['pid'] ?? 0);
-        }
-        try {
-            $site = $this->siteFinder->getSiteByPageId($pageId);
-        } catch (SiteNotFoundException) {
-            return null;
-        }
-        return $this->structureLayer->getPrimaryLanguage($site)?->getLanguageId();
     }
 
     /**

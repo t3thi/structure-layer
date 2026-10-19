@@ -17,6 +17,8 @@ use TYPO3\CMS\Backend\View\PageViewMode;
  */
 final class EditingLanguageTest extends AbstractPageModuleTestCase
 {
+    private const string PAGE_TREE_REFRESH = 'typo3:pagetree:refresh';
+
     #[Test]
     public function layoutViewShowsThePrimaryLanguageByDefault(): void
     {
@@ -56,6 +58,19 @@ final class EditingLanguageTest extends AbstractPageModuleTestCase
 
         $html = $this->renderPageModule(1, PageViewMode::LayoutView);
         self::assertSame([102, 112, 126, 130, 142], $this->renderedContentUids($html));
+    }
+
+    #[Test]
+    public function changingTheEditingLanguageRefreshesThePageTree(): void
+    {
+        // The page tree shows titles in the Editing Language (Phase 4).
+        self::assertStringNotContainsString(self::PAGE_TREE_REFRESH, $this->renderPageModule(1, PageViewMode::LayoutView));
+        self::assertStringNotContainsString(self::PAGE_TREE_REFRESH, $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [1]]));
+
+        self::assertStringContainsString(self::PAGE_TREE_REFRESH, $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]));
+
+        self::assertStringNotContainsString(self::PAGE_TREE_REFRESH, $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]));
+        self::assertStringNotContainsString(self::PAGE_TREE_REFRESH, $this->renderPageModule(20, PageViewMode::LayoutView));
     }
 
     #[Test]

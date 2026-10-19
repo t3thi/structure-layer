@@ -35,15 +35,20 @@ final readonly class EditingLanguage
         return $this->structureLayer->getPrimaryLanguage($site)?->getLanguageId();
     }
 
-    public function set(BackendUserAuthentication $backendUser, Site $site, int $languageId): void
+    /**
+     * @return bool whether the effective Editing Language changed
+     */
+    public function set(BackendUserAuthentication $backendUser, Site $site, int $languageId): bool
     {
         if ($languageId <= 0 || !isset($site->getAllLanguages()[$languageId])) {
-            return;
+            return false;
         }
         if ((int)($backendUser->uc[self::UC_KEY][$site->getIdentifier()] ?? 0) === $languageId) {
-            return;
+            return false;
         }
+        $previous = $this->get($backendUser, $site);
         $backendUser->uc[self::UC_KEY][$site->getIdentifier()] = $languageId;
         $backendUser->writeUC();
+        return $previous !== $languageId;
     }
 }

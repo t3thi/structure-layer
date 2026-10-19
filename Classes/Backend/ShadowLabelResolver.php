@@ -30,7 +30,7 @@ final readonly class ShadowLabelResolver
 
     /**
      * @param int $pageId the page the shadow lives on (for pages: the shadow page itself)
-     * @return array{label: string, language: SiteLanguage, uid: int}|null
+     * @return array{label: string, language: SiteLanguage, uid: int, record: array<string, mixed>}|null
      */
     public function resolve(string $table, int $shadowUid, int $pageId, ?int $preferredLanguageId = null, int $workspaceId = 0): ?array
     {
@@ -50,6 +50,7 @@ final readonly class ShadowLabelResolver
                     'label' => BackendUtility::getRecordTitle($table, $translations[$languageId]),
                     'language' => $language,
                     'uid' => (int)$translations[$languageId]['uid'],
+                    'record' => $translations[$languageId],
                 ];
             }
         }

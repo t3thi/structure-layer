@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace T3thi\StructureLayer\Tests\Functional\DataHandling;
 
 use PHPUnit\Framework\Attributes\Test;
+use T3thi\StructureLayer\Backend\EditingLanguage;
+use TYPO3\CMS\Core\Site\SiteFinder;
 
 /**
  * Phase 2, scenarios 1 and 2 (component B): every new record ends up as shadow + connected translation.
@@ -139,6 +141,48 @@ final class ShadowCreationTest extends AbstractDataHandlingTestCase
         self::assertSame(1, $translations[1]['nav_hide']);
         self::assertSame(1, $translations[1]['pid']);
         $this->assertInvariantsHold();
+    }
+
+    #[Test]
+    public function pageCreatedInThePageTreeIsTranslatedInTheEditingLanguage(): void
+    {
+        $this->setEditingLanguage(2);
+
+        $dataHandler = $this->processDatamap([
+            'pages' => [
+                'NEW1' => ['pid' => 1, 'doktype' => 1, 'title' => 'English only'],
+            ],
+        ]);
+        $shadowUid = $dataHandler->substNEWwithIDs['NEW1'];
+        self::assertSame('', $this->fetchRecord('pages', $shadowUid)['title']);
+        $translations = $this->fetchTranslations('pages', $shadowUid);
+        self::assertSame([2], array_keys($translations));
+        self::assertSame('English only', $translations[2]['title']);
+        $this->assertInvariantsHold();
+    }
+
+    #[Test]
+    public function contentCreatedInTheStructureLanguageIsTranslatedInTheEditingLanguage(): void
+    {
+        $this->setEditingLanguage(2);
+
+        $dataHandler = $this->processDatamap([
+            'tt_content' => [
+                'NEW1' => ['pid' => -110, 'sys_language_uid' => 0, 'CType' => 'text', 'colPos' => 0, 'header' => 'Created in structure column'],
+            ],
+        ]);
+        $translations = $this->fetchTranslations('tt_content', $dataHandler->substNEWwithIDs['NEW1']);
+        self::assertSame([2], array_keys($translations));
+        $this->assertInvariantsHold();
+    }
+
+    private function setEditingLanguage(int $languageId): void
+    {
+        $this->get(EditingLanguage::class)->set(
+            $GLOBALS['BE_USER'],
+            $this->get(SiteFinder::class)->getSiteByIdentifier(self::SITE_IDENTIFIER),
+            $languageId
+        );
     }
 
     #[Test]

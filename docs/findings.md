@@ -512,7 +512,9 @@ Deleting the disabled en translation makes the de fallback reappear
     language column, no "inconsistent" warnings;
   - `mod.web_layout.localization.enableCopy = 0`: "copy" creates unconnected records (I2);
   - `mod.web_layout.structureLayer.showStructureColumn = 0|1`: structure column hidden (3b,
-    default) or visible (3a);
+    default) or visible (3a); a backend user's choice in the "View" menu ("Show structure
+    layer", comparison view only, stored in `uc`) overrides it
+    (`Backend/StructureColumnVisibility`, `EventListener/AddStructureColumnToggle`);
   - backend template overrides (`Resources/Private/TemplateOverrides/Backend`).
 - **Template overrides** (EXT:backend, via `templates.typo3/cms-backend`):
   - `Partials/PageLayout/LanguageColumns`: rows always driven by the shadows; no
@@ -531,7 +533,13 @@ Deleting the disabled en translation makes the de fallback reappear
   - an explicit selection sets the Editing Language (Core's single-select selector *is* the
     Editing Language selector);
   - single-language view = the Editing Language, also on pages without it (→ empty state);
-  - comparison view = Editing Language first, then the other selected languages.
+  - comparison view = Editing Language first, then the other selected languages;
+  - a changed Editing Language reloads the page tree, whose titles follow it
+    (`EventListener/RefreshPageTreeOnEditingLanguageChange`, `typo3:pagetree:refresh`).
+- **Preview of shadow pages** (`EventListener/ResolveShadowPagePreviewLanguage`,
+  `BeforePagePreviewUriGeneratedEvent`): "View" on a page-tree item (= the shadow) would open the
+  disabled `/_structure/`; it previews the Editing Language instead, or the first translation in
+  site-language order (the language the tree title comes from). An explicit language is kept.
 - **Shadow labels**: `Backend/ShadowLabelResolver` (preferred language, then site-language
   order), used by the `PageContentPreviewRenderingEvent` listener `RenderShadowPreview`
   (compact structure cell: flag + label of a translation). Phase 4 reuses it for the page tree.
@@ -639,7 +647,14 @@ DataHandler request is covered by the Phase 2 move tests and the walkthrough.
   available translation in site-language order (the Phase 3 `ShadowLabelResolver`). A title from
   another language gets that language's flag as status information ("Not available in English,
   title from Deutsch") and the same text in the tooltip. The page tree search already finds
-  shadows by their translated titles (Core's `searchInTranslatedPages`).
+  shadows by their translated titles (Core's `searchInTranslatedPages`). Icon and overlay
+  (hidden, start/end time, nav_hide, …) come from that same translation (2026-10-19): the shadow is
+  never hidden (I5), so the tree showed every page as visible.
+- **Page tree context menu "Enable" / "Disable"** (`Backend/ContextMenu/ShadowPageVisibilityItemProvider`,
+  `context-menu-actions.js`, 2026-10-19): Core's `PageProvider` reads the shadow, so it only ever
+  offered "Disable", and that sent `hidden` for the shadow = "hide in all languages". The items now
+  toggle the translation the tree shows ("Disable (Deutsch)"); "hide / show in all languages" stays
+  in the Layout module.
 - **Inline renaming in the page tree** sends the new title for the item's uid, i.e. the shadow.
   The DataHandler hook writes label fields (`label`, `label_alt`, for pages also `nav_title`)
   submitted for a shadow to the translation the backend shows for it (I1).
@@ -782,7 +797,9 @@ Unchanged (Phase 3, 6 patches). Phase 4 needed no Core patch.
     - the editor's own requests for languages they may not edit are dropped beforehand, so the
       structure grant only covers what follows from the structure operation;
     - a record created in language 0 (page tree) gets its first translation in the Editing Language,
-      or else in the first language the editor may edit (not in the primary language).
+      or else in the first language the editor may edit (not in the primary language). Fixed
+      2026-10-19: this applied to restricted editors only; admins got the primary language, so a
+      page created while editing English became a German translation (`ShadowCreationTest`).
   - `RestrictedEditorTest` (14 tests).
 - **Move disambiguation** (Option B, 2026-05-29):
   - `Backend/HiddenPositions` + listener `AddMoveDisambiguation` (`ModifyPageLayoutContentEvent`)

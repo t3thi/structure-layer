@@ -10,6 +10,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use T3thi\StructureLayer\Backend\EditingLanguage;
+use T3thi\StructureLayer\Backend\StructureColumnVisibility;
 use TYPO3\CMS\Backend\Context\PageContext;
 use TYPO3\CMS\Backend\Domain\Model\Language\LanguageItem;
 use TYPO3\CMS\Backend\Domain\Model\Language\PageLanguageInformation;
@@ -27,15 +28,23 @@ use TYPO3\CMS\Core\Site\Entity\Site;
  * - an explicit selection ("languages" parameter) sets the Editing Language;
  * - single-language view: exactly the Editing Language, even if the page lacks it (the
  *   template then shows the "missing page" empty state);
- * - comparison view: the Editing Language first, then the other selected languages.
+ * - comparison view: the Editing Language first, then the other selected languages;
+ * - the structure column of the comparison view follows the user's "View" menu choice
+ *   ("showStructure" parameter), written into page TSconfig for the template.
+ *
+ * A changed Editing Language is flagged in the request attribute CHANGED_ATTRIBUTE; the page
+ * tree shows titles in it and is refreshed (RefreshPageTreeOnEditingLanguageChange).
  *
  * Core's PageContextFactory has no event for this; a middleware is the extension point.
  */
 #[Autoconfigure(public: true)]
 final readonly class EditingLanguageInitialization implements MiddlewareInterface
 {
+    public const string CHANGED_ATTRIBUTE = 'structureLayer.editingLanguageChanged';
+
     public function __construct(
         private EditingLanguage $editingLanguage,
+        private StructureColumnVisibility $structureColumnVisibility,
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -61,7 +70,13 @@ final readonly class EditingLanguageInitialization implements MiddlewareInterfac
             if ($editingLanguageId === null || !in_array($editingLanguageId, $requested, true)) {
                 $editingLanguageId = $requested[0];
             }
-            $this->editingLanguage->set($backendUser, $site, $editingLanguageId);
+            if ($this->editingLanguage->set($backendUser, $site, $editingLanguageId)) {
+                $request = $request->withAttribute(self::CHANGED_ATTRIBUTE, true);
+            }
+        }
+        $showStructure = $request->getQueryParams()[StructureColumnVisibility::PARAMETER] ?? null;
+        if (is_scalar($showStructure)) {
+            $this->structureColumnVisibility->setVisible($backendUser, (bool)$showStructure);
         }
         if ($editingLanguageId === null) {
             return $handler->handle($request);
@@ -82,7 +97,7 @@ final readonly class EditingLanguageInitialization implements MiddlewareInterfac
             pageRecord: $pageContext->pageRecord,
             site: $site,
             rootLine: $pageContext->rootLine,
-            pageTsConfig: $pageContext->pageTsConfig,
+            pageTsConfig: $this->structureColumnVisibility->applyTo($backendUser, $pageContext->pageTsConfig),
             selectedLanguageIds: $selected,
             languageInformation: $this->withoutStructureLayerItem($pageContext->languageInformation),
             pagePermissions: $pageContext->pagePermissions,

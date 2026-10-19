@@ -3,6 +3,7 @@ mod.web_layout.allowInconsistentLanguageHandling = 1
 # "Copy" creates unconnected records (free mode); only "translate" keeps them connected (I2).
 mod.web_layout.localization.enableCopy = 0
 # 1 = show the structure column (language 0) in the comparison view (Phase 3a); hidden by default (3b).
+# Default only: the "View" menu toggle ("Show structure layer") stores a per-user choice that wins.
 mod.web_layout.structureLayer.showStructureColumn = 0
 
 templates.typo3/cms-backend.1730 = t3thi/structure-layer:Resources/Private/TemplateOverrides/Backend

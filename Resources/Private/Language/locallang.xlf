@@ -6,6 +6,9 @@
       <trans-unit id="structureColumn.description" resname="structureColumn.description">
         <source>Shared structure of all languages</source>
       </trans-unit>
+      <trans-unit id="structureColumn.toggle" resname="structureColumn.toggle">
+        <source>Show structure layer</source>
+      </trans-unit>
       <trans-unit id="siteLanguage.fallbackType.description" resname="siteLanguage.fallbackType.description">
         <source>Ignored by the structure layer: without fallback languages only this language is rendered, with fallback languages missing content falls back along the chain.</source>
       </trans-unit>
