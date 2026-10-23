@@ -10,12 +10,20 @@
       language is connected, so there is no free/mixed branch and no language mode badge.
     - The structure column itself is only shown with mod.web_layout.structureLayer.showStructureColumn = 1.
     - A "-1" record is one row spanning all visible language columns.
+    - The Editing Language comes first (EditingLanguageInitialization). Core drops it if the page
+      does not exist in it; it is shown anyway, as an empty column with "Translate page".
 </f:comment>
 <f:variable name="showStructure" value="{context.pageContext.pageTsConfig.mod.web_layout.structureLayer.showStructureColumn}" />
+<f:variable name="editingLanguageId" value="{context.pageContext.selectedLanguageIds.0}" />
+<f:variable name="missingEditingLanguage" value="0" />
+<f:if condition="{editingLanguageId} && !{context.languageInformation.existingTranslations.{editingLanguageId}}">
+    <f:variable name="missingEditingLanguage" value="1" />
+</f:if>
 <f:variable name="columnCount" value="{languageColumns -> f:count()}" />
 <f:if condition="!{showStructure}">
     <f:variable name="columnCount" value="{columnCount - 1}" />
 </f:if>
+<f:variable name="columnCount" value="{columnCount + missingEditingLanguage}" />
 
 <f:asset.module identifier="@typo3/backend/layout-module/sticky-language-header.js"/>
 <div class="t3-grid-container{f:if(condition: context.backendLayout.identifierCleaned, then: ' t3-grid-container-{context.backendLayout.identifierCleaned}')}" data-multi-languages="{f:if(condition: context.multiLanguages, then: '1', else: '0')}">
@@ -27,8 +35,13 @@
                         <f:then>
                             <f:render section="languageHeader" arguments="{_all}" />
                         </f:then>
-                        <f:else if="{showStructure}">
-                            <f:render section="structureHeader" arguments="{_all}" />
+                        <f:else>
+                            <f:if condition="{showStructure}">
+                                <f:render section="structureHeader" arguments="{_all}" />
+                            </f:if>
+                            <f:if condition="{missingEditingLanguage}">
+                                <f:render section="missingPageHeader" arguments="{_all}" />
+                            </f:if>
                         </f:else>
                     </f:if>
                 </f:for>
@@ -47,6 +60,9 @@
                                             <f:render partial="PageLayout/Grid/ColumnHeader" arguments="{_all}" />
                                         </f:alias>
                                     </td>
+                                </f:if>
+                                <f:if condition="!{languageColumn.context.siteLanguage.languageId} && {missingEditingLanguage}">
+                                    <td valign="top" class="t3-grid-cell t3-page-column structure-layer-missing-page-column"></td>
                                 </f:if>
                             </f:for>
                         </tr>
@@ -68,6 +84,9 @@
                                                 <f:variable name="item" value="{gridItem}" />
                                                 <f:render partial="PageLayout/Record" arguments="{_all}" />
                                             </td>
+                                        </f:if>
+                                        <f:if condition="{missingEditingLanguage}">
+                                            <td class="t3-grid-cell structure-layer-missing-page-column" valign="top"></td>
                                         </f:if>
                                         <f:for each="{languageColumns}" as="languageColumn">
                                             <f:if condition="{languageColumn.context.siteLanguage.languageId} > 0">
@@ -129,6 +148,15 @@
         <div class="mt-2 text-body-secondary">
             <f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:structureColumn.description" />
         </div>
+    </td>
+</f:section>
+
+<f:section name="missingPageHeader">
+    <td valign="top"
+        class="t3-page-column t3-page-column-lang-name structure-layer-missing-page-column"
+        data-language-uid="{editingLanguageId}"
+    >
+        <f:render partial="StructureLayer/MissingPage" arguments="{_all}" />
     </td>
 </f:section>
 

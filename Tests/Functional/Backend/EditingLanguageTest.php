@@ -173,6 +173,26 @@ final class EditingLanguageTest extends AbstractPageModuleTestCase
     }
 
     #[Test]
+    public function comparisonViewShowsTheMissingEditingLanguageAsAnEmptyColumn(): void
+    {
+        // Page 20 exists in de only; Core drops columns without a page translation.
+        $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
+
+        $html = $this->renderPageModule(20, PageViewMode::LanguageComparisonView, ['languages' => [2, 1]]);
+
+        self::assertSame(['2', '1'], $this->headerLanguageIds($html));
+        $header = $this->headerCell('2', $html);
+        self::assertStringContainsString('structure-layer-missing-page', $header);
+        self::assertMatchesRegularExpression(
+            '#<typo3-backend-localization-button[^>]*record-type="pages"[^>]*record-uid="20"[^>]*target-language="2"#s',
+            $header
+        );
+        // An empty cell per row, no placeholders: there is no page to put content on
+        self::assertSame([[[], [211]]], $this->contentRows($html));
+        self::assertStringNotContainsString('structure-layer-placeholder', $html);
+    }
+
+    #[Test]
     public function emptyCellsShowWhereTheElementExists(): void
     {
         $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);

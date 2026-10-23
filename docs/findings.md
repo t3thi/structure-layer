@@ -539,7 +539,9 @@ Deleting the disabled en translation makes the de fallback reappear
     Core's counts ("Languages (n)", "Check all (n)") assume language 0 is always shown and every
     translation selectable; the listener corrects them to the shown columns / selectable languages;
   - single-language view = the Editing Language, also on pages without it (→ empty state);
-  - comparison view = Editing Language first, then the other selected languages;
+  - comparison view = Editing Language first, then the other selected languages. If the page
+    does not exist in the Editing Language, Core drops its column; the `LanguageColumns` override
+    shows it anyway, empty, with the "not available / Translate page" state (2026-10-23);
   - a changed Editing Language reloads the page tree, whose titles follow it, and the top bar item
     (`EventListener/RefreshOnEditingLanguageChange`, `typo3:pagetree:refresh` and
     `structure-layer:editing-language:changed` → AJAX `structure_layer_editing_language_menu`).
