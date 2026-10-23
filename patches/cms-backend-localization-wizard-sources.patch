@@ -1,5 +1,5 @@
---- a/Classes/Controller/Wizard/LocalizationController.php	2026-10-14 17:27:16
-+++ b/Classes/Controller/Wizard/LocalizationController.php	2026-10-14 17:27:16
+--- a/Classes/Controller/Wizard/LocalizationController.php
++++ b/Classes/Controller/Wizard/LocalizationController.php
 @@ -315,7 +315,8 @@
          // Find all existing translations of the record
          $record = BackendUtility::getRecord($recordType, $recordUid);
@@ -10,9 +10,9 @@
  
              // Check each system language to see if a translation exists
              foreach (array_keys($systemLanguages) as $languageUid) {
---- a/Classes/Localization/ManualLocalizationHandler.php	2026-10-14 17:27:16
-+++ b/Classes/Localization/ManualLocalizationHandler.php	2026-10-14 17:27:16
-@@ -76,7 +76,7 @@
+--- a/Classes/Localization/ManualLocalizationHandler.php
++++ b/Classes/Localization/ManualLocalizationHandler.php
+@@ -76,11 +76,11 @@
      {
          // Handle pages with optional content selection
          if ($instructions->mainRecordType === 'pages') {
@@ -21,7 +21,50 @@
          }
  
          // Handle single record localization for other record types
-@@ -157,7 +157,8 @@
+-        return $this->processSingleRecordLocalization($instructions->mode, $instructions->mainRecordType, $instructions->recordUid, $instructions->targetLanguageId);
++        return $this->processSingleRecordLocalization($instructions->mode, $instructions->mainRecordType, $instructions->recordUid, $instructions->targetLanguageId, $instructions->sourceLanguageId);
+     }
+ 
+     /**
+@@ -90,7 +90,8 @@
+         LocalizationMode $mode,
+         string $type,
+         int $uid,
+-        int $targetLanguage
++        int $targetLanguage,
++        int $sourceLanguage = 0
+     ): LocalizationResult {
+         // Validate that the record exists
+         $record = BackendUtility::getRecord($type, $uid);
+@@ -115,9 +116,17 @@
+             );
+         }
+ 
++        // The record is translated from its translation in the source language, if there is one
++        // (structure layer: the record in language 0 is an empty shadow).
++        $sourceUid = $uid;
++        if ($sourceLanguage > 0) {
++            $sourceTranslation = $this->localizationRepository->getRecordTranslation($type, $record, $sourceLanguage, $this->getBackendUser()->workspace);
++            $sourceUid = $sourceTranslation?->getUid() ?? $uid;
++        }
++
+         $cmd = [
+             $type => [
+-                $uid => [
++                $sourceUid => [
+                     $mode->getDataHandlerCommand() => $targetLanguage,
+                 ],
+             ],
+@@ -132,7 +141,7 @@
+         }
+ 
+         // Get the newly created record UID from DataHandler's copy mapping
+-        $newUid = $dataHandler->copyMappingArray_merged[$type][$uid] ?? null;
++        $newUid = $dataHandler->copyMappingArray_merged[$type][$sourceUid] ?? null;
+ 
+         // If no UID was found in copy mapping, try to find the translated record
+         if ($newUid === null) {
+@@ -157,7 +166,8 @@
          LocalizationMode $mode,
          int $pageUid,
          int $targetLanguage,
@@ -31,7 +74,7 @@
      ): LocalizationResult {
          // Get selected content elements from additionalData
          $selectedContent = $additionalData['selectedRecordUids'] ?? [];
-@@ -170,8 +171,15 @@
+@@ -170,8 +180,15 @@
              // Page translation doesn't exist - create it
              // Always use 'localize' command for pages (even for copy mode)
              // as we need to create a proper page translation/overlay

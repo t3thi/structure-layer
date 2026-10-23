@@ -2,6 +2,7 @@
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
     xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
     xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:sl="http://typo3.org/ns/T3thi/StructureLayer/ViewHelpers"
     data-namespace-typo3-fluid="true"
 >
 <f:comment>
@@ -10,6 +11,8 @@
       language is connected, so there is no free/mixed branch and no language mode badge.
     - The structure column itself is only shown with mod.web_layout.structureLayer.showStructureColumn = 1.
     - A "-1" record is one row spanning all visible language columns.
+    - A gap (element missing in a column's language) offers "Translate" for the element if the
+      wizard has a source language for it (sl:canTranslate).
     - The Editing Language comes first (EditingLanguageInitialization). Core drops it if the page
       does not exist in it; it is shown anyway, as an empty column with "Translate page".
 </f:comment>
@@ -26,6 +29,7 @@
 <f:variable name="columnCount" value="{columnCount + missingEditingLanguage}" />
 
 <f:asset.module identifier="@typo3/backend/layout-module/sticky-language-header.js"/>
+<f:asset.module identifier="@typo3/backend/localization/localization-button.js"/>
 <div class="t3-grid-container{f:if(condition: context.backendLayout.identifierCleaned, then: ' t3-grid-container-{context.backendLayout.identifierCleaned}')}" data-multi-languages="{f:if(condition: context.multiLanguages, then: '1', else: '0')}">
     <div class="t3-grid-container-inner">
         <table class="t3-page-columns t3-grid-table t3js-page-columns">
@@ -98,9 +102,22 @@
                                                             <f:variable name="item" value="{gridItem.translations.{languageId}}" />
                                                             <f:render partial="PageLayout/Record" arguments="{_all}" />
                                                         </f:then>
-                                                        <f:else if="!{showStructure}">
-                                                            <f:comment>Without the structure column, show where the element exists (resolved shadow label).</f:comment>
-                                                            <div class="structure-layer-placeholder t3-page-ce">{gridItem.preview -> f:format.raw()}</div>
+                                                        <f:else>
+                                                            <f:variable name="canTranslate" value="{sl:canTranslate(item: gridItem, languageId: languageId)}" />
+                                                            <f:if condition="!{showStructure}">
+                                                                <f:then>
+                                                                    <f:comment>Without the structure column, show where the element exists (resolved shadow label).</f:comment>
+                                                                    <div class="structure-layer-placeholder t3-page-ce">
+                                                                        {gridItem.preview -> f:format.raw()}
+                                                                        <f:if condition="{canTranslate}">
+                                                                            <f:render section="translateElement" arguments="{_all}" />
+                                                                        </f:if>
+                                                                    </div>
+                                                                </f:then>
+                                                                <f:else if="{canTranslate}">
+                                                                    <div class="structure-layer-gap"><f:render section="translateElement" arguments="{_all}" /></div>
+                                                                </f:else>
+                                                            </f:if>
                                                         </f:else>
                                                     </f:if>
                                                 </td>
@@ -149,6 +166,21 @@
             <f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:structureColumn.description" />
         </div>
     </td>
+</f:section>
+
+<f:section name="translateElement">
+    <div class="mt-2">
+        <typo3-backend-localization-button
+            class="btn btn-default btn-sm"
+            title="{f:translate(key: 'LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:localize.wizard.button.translate')}"
+            record-type="tt_content"
+            record-uid="{gridItem.record.uid}"
+            target-language="{languageId}"
+        >
+            <core:icon identifier="actions-localize" />
+            <f:translate key="LLL:EXT:backend/Resources/Private/Language/locallang_layout.xlf:localize.wizard.button.translate" />
+        </typo3-backend-localization-button>
+    </div>
 </f:section>
 
 <f:section name="missingPageHeader">

@@ -1,0 +1,204 @@
+--- a/Classes/Controller/Wizard/LocalizationController.php
++++ b/Classes/Controller/Wizard/LocalizationController.php
+@@ -335,9 +335,10 @@
+             }
+ 
+             // For pages with existing translations in the target language, we need to restrict source languages
+-            // to prevent mixed translation origins (e.g., some content from language A, some from language B)
+-            if ($recordType === 'pages') {
+-                $availableLanguages = $this->filterSourceLanguagesForPage($recordUid, $targetLanguage, $availableLanguages);
++            // to prevent mixed translation origins (e.g., some content from language A, some from language B).
++            // The same applies to a single content element of such a page.
++            if ($recordType === 'pages' || $recordType === 'tt_content') {
++                $availableLanguages = $this->filterSourceLanguagesForPage($page, $targetLanguage, $availableLanguages);
+             }
+         }
+ 
+@@ -602,6 +603,8 @@
+      * For pages, when translations already exist in the target language with content assigned,
+      * we need to ensure that new content is only translated from the same source language(s)
+      * as the existing content to avoid creating mixed translations in terms of language origin.
++     * Page TSconfig (or user TSconfig "page.") mod.web_layout.localization.enforceSourceLanguage = 0
++     * allows any source language.
+      *
+      * @param int $pageUid The page UID being translated
+      * @param int $targetLanguage The target language ID
+@@ -610,6 +613,11 @@
+      */
+     private function filterSourceLanguagesForPage(int $pageUid, int $targetLanguage, array $availableLanguages): array
+     {
++        $localizationTsConfig = BackendUtility::getPagesTSconfig($pageUid)['mod.']['web_layout.']['localization.'] ?? [];
++        if (!(bool)($localizationTsConfig['enforceSourceLanguage'] ?? true)) {
++            return $availableLanguages;
++        }
++
+         // Check if a page translation exists in the target language
+         $pageTranslation = $this->localizationRepository->getPageTranslations($pageUid, [$targetLanguage], $this->getBackendUser()->workspace);
+         if ($pageTranslation === []) {
+@@ -618,7 +626,10 @@
+ 
+         // Get source languages used by existing content in the target language
+         // Note: Content elements are stored on the original page with sys_language_uid set to the target language
+-        $usedSourceLanguages = $this->getUsedSourceLanguagesForPage($pageUid, $targetLanguage);
++        $usedSourceLanguages = array_fill_keys(
++            $this->localizationRepository->getUsedSourceLanguages($pageUid, $targetLanguage, $this->getBackendUser()->workspace),
++            true
++        );
+ 
+         if (empty($usedSourceLanguages)) {
+             return $availableLanguages;
+@@ -629,91 +640,6 @@
+             $availableLanguages,
+             static fn(array $language): bool => isset($usedSourceLanguages[(int)$language['uid']])
+         );
+-    }
+-
+-    /**
+-     * Get the source languages used by existing content on a page
+-     *
+-     * @param int $pageUid The page UID
+-     * @param int $targetLanguage The target language ID
+-     * @return array<int, true> Map of source language UIDs that are in use
+-     */
+-    private function getUsedSourceLanguagesForPage(int $pageUid, int $targetLanguage): array
+-    {
+-        $schema = $this->schemaFactory->get('tt_content');
+-        $languageCapability = $schema->getCapability(TcaSchemaCapability::Language);
+-
+-        if (!$languageCapability->hasTranslationSourceField()) {
+-            return [];
+-        }
+-
+-        $languageField = $languageCapability->getLanguageField()->getName();
+-        $translationSourceField = $languageCapability->getTranslationSourceField()->getName();
+-
+-        // Get all l10n_source UIDs from translated content
+-        $queryBuilder = $this->connectionPool
+-            ->getQueryBuilderForTable('tt_content');
+-        $queryBuilder->getRestrictions()
+-            ->removeAll()
+-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
+-            ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, $this->getBackendUser()->workspace));
+-
+-        $result = $queryBuilder
+-            ->select($translationSourceField)
+-            ->from('tt_content')
+-            ->where(
+-                $queryBuilder->expr()->eq(
+-                    'pid',
+-                    $queryBuilder->createNamedParameter($pageUid, Connection::PARAM_INT)
+-                ),
+-                $queryBuilder->expr()->eq(
+-                    $languageField,
+-                    $queryBuilder->createNamedParameter($targetLanguage, Connection::PARAM_INT)
+-                ),
+-                $queryBuilder->expr()->gt(
+-                    $translationSourceField,
+-                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
+-                )
+-            )
+-            ->executeQuery();
+-
+-        // Collect unique source UIDs
+-        $sourceUids = [];
+-        while ($row = $result->fetchAssociative()) {
+-            $sourceUid = (int)$row[$translationSourceField];
+-            $sourceUids[$sourceUid] = $sourceUid;
+-        }
+-
+-        if (empty($sourceUids)) {
+-            return [];
+-        }
+-
+-        // Get the language of all source records
+-        $sourceQueryBuilder = $this->connectionPool
+-            ->getQueryBuilderForTable('tt_content');
+-        $sourceQueryBuilder->getRestrictions()
+-            ->removeAll()
+-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+-
+-        $sourceResult = $sourceQueryBuilder
+-            ->select($languageField)
+-            ->from('tt_content')
+-            ->where(
+-                $sourceQueryBuilder->expr()->in(
+-                    'uid',
+-                    $sourceQueryBuilder->createNamedParameter($sourceUids, Connection::PARAM_INT_ARRAY)
+-                )
+-            )
+-            ->groupBy($languageField)
+-            ->executeQuery();
+-
+-        $usedSourceLanguages = [];
+-        while ($row = $sourceResult->fetchAssociative()) {
+-            $sourceLanguageUid = (int)$row[$languageField];
+-            $usedSourceLanguages[$sourceLanguageUid] = true;
+-        }
+-
+-        return $usedSourceLanguages;
+     }
+ 
+     /**
+--- a/Classes/Domain/Repository/Localization/LocalizationRepository.php
++++ b/Classes/Domain/Repository/Localization/LocalizationRepository.php
+@@ -130,6 +130,60 @@
+         }
+ 
+         return $queryBuilder->executeQuery();
++    }
++
++    /**
++     * The languages content of a page translation was translated from: the languages of the
++     * l10n_source records of the content in the target language.
++     *
++     * @return list<int>
++     */
++    public function getUsedSourceLanguages(int $pageId, int $targetLanguage, int $workspaceId = 0): array
++    {
++        $schema = $this->tcaSchemaFactory->get('tt_content');
++        $languageCapability = $schema->getCapability(TcaSchemaCapability::Language);
++        if (!$languageCapability->hasTranslationSourceField()) {
++            return [];
++        }
++        $languageField = $languageCapability->getLanguageField()->getName();
++        $translationSourceField = $languageCapability->getTranslationSourceField()->getName();
++
++        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
++        $queryBuilder->getRestrictions()
++            ->removeAll()
++            ->add(new DeletedRestriction())
++            ->add(new WorkspaceRestriction($workspaceId));
++        $sourceUids = $queryBuilder
++            ->select($translationSourceField)
++            ->from('tt_content')
++            ->where(
++                $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pageId, Connection::PARAM_INT)),
++                $queryBuilder->expr()->eq($languageField, $queryBuilder->createNamedParameter($targetLanguage, Connection::PARAM_INT)),
++                $queryBuilder->expr()->gt($translationSourceField, $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
++            )
++            ->executeQuery()
++            ->fetchFirstColumn();
++        if ($sourceUids === []) {
++            return [];
++        }
++
++        $sourceQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
++        $sourceQueryBuilder->getRestrictions()
++            ->removeAll()
++            ->add(new DeletedRestriction());
++        $languages = $sourceQueryBuilder
++            ->select($languageField)
++            ->from('tt_content')
++            ->where(
++                $sourceQueryBuilder->expr()->in(
++                    'uid',
++                    $sourceQueryBuilder->createNamedParameter(array_map(intval(...), array_unique($sourceUids)), Connection::PARAM_INT_ARRAY)
++                )
++            )
++            ->groupBy($languageField)
++            ->executeQuery()
++            ->fetchFirstColumn();
++        return array_values(array_map(intval(...), $languages));
+     }
+ 
+     /**

@@ -75,7 +75,8 @@
 			"typo3/cms-backend": {
 				"Page module: connected translations are draggable": "patches/cms-backend-drag-and-drop-translations.patch",
 				"Localization lookups by structural identity (l10n_parent), not only by l10n_source": "patches/cms-backend-localization-repository-structural-identity.patch",
-				"Translation wizard: no language 0 source, pages translated from the source language": "patches/cms-backend-localization-wizard-sources.patch"
+				"Translation wizard: no language 0 source, pages and records translated from the source language": "patches/cms-backend-localization-wizard-sources.patch",
+				"Translation wizard: source language enforcement configurable, also for content elements": "patches/cms-backend-localization-source-language-enforcement.patch"
 			}
 		}
 	}

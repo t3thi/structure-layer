@@ -578,6 +578,22 @@ Deleting the disabled en translation makes the de fallback reappear
     - `ManualLocalizationHandler`: a page is translated from the *source language's* page
       translation (Core always localized the default-language page, i.e. the empty shadow).
       Upstream candidate on its own: the chosen source language was ignored for pages.
+      Since 2026-10-23 the same for single records: a record is translated from its
+      translation in the chosen source language (Core localized the record itself, the shadow).
+  - `cms-backend-localization-source-language-enforcement.patch` (2026-10-23, upstream
+    candidate): Core offers only the source languages a page translation's content already
+    comes from. Page TSconfig `mod.web_layout.localization.enforceSourceLanguage` (default 1 =
+    Core behaviour; user TSconfig overrides it via `page.`) switches that off; it also applies
+    to the wizard of a single content element. The lookup moved into the public
+    `LocalizationRepository::getUsedSourceLanguages()`. The extension sets it to 0: filling gaps
+    from different languages is the common case on the structure layer. Core's test suites
+    were not re-run for it (Phase 6 numbers predate it).
+- **"Translate" in gaps** (2026-10-23): a comparison view cell where an element is missing
+  offers "Translate" (`LanguageColumns` override, `sl:canTranslate`, `Backend/ElementTranslation`).
+  It opens Core's wizard for the shadow with the column's language as target: sources are the
+  languages the element exists in, only this element is translated. With enforcement on, gaps
+  without an allowed source language have no button. Not verified in a browser yet; the
+  wizard's title shows the shadow, which has no title of its own ("[No title]").
 - **Demo**: `ddev demo` writes the structure-layer site configuration and runs
   `structure-layer:demo` (DataHandler seeding: gate start state, plus a German-only subpage).
 - Tests: `Tests/Functional/Backend/` (25 tests, data `Fixtures/PageModule.csv`). The module is

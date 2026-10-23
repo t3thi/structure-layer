@@ -2,6 +2,9 @@
 mod.web_layout.allowInconsistentLanguageHandling = 1
 # "Copy" creates unconnected records (free mode); only "translate" keeps them connected (I2).
 mod.web_layout.localization.enableCopy = 0
+# Gaps may be filled from any language: no single source language per page translation
+# (cms-backend patch; Core default 1). Users or groups can enforce it: page.mod.web_layout... in user TSconfig.
+mod.web_layout.localization.enforceSourceLanguage = 0
 # 1 = show the structure column (language 0) in the comparison view (Phase 3a); hidden by default (3b).
 # Default only: the "View" menu toggle ("Show structure layer") stores a per-user choice that wins.
 mod.web_layout.structureLayer.showStructureColumn = 0
