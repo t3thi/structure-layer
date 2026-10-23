@@ -22,7 +22,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  *
  * Core's PageProvider reads the shadow, which is never hidden (I5), so it only offers "Disable",
  * and "hidden" on a shadow means "in all languages" (DataHandlerHook). This provider runs after
- * it and replaces both items; "hide / show in all languages" stays in the Layout module.
+ * it and replaces both items. Pages offer no "hide in all languages" in the backend UI.
  */
 final class ShadowPageVisibilityItemProvider implements ProviderInterface
 {

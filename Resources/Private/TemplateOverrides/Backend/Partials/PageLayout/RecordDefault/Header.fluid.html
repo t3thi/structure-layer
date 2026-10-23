@@ -6,10 +6,9 @@
 >
 <f:comment>
     Structure layer override of EXT:backend Partials/PageLayout/RecordDefault/Header (plan §4 H):
-    translations get "hide / show in all languages" next to Core's per-language toggle, and a
-    derived "hidden in all languages" badge.
+    translations get a derived "hidden in all languages" badge. "Hide / show in all languages" is
+    in the context menu (AllLanguagesVisibilityItemProvider).
 </f:comment>
-<f:variable name="allLanguages" value="{sl:allLanguagesVisibility(item: item)}" />
 <div class="t3-page-ce-header t3js-page-ce-header" {f:if(condition: '{allowEditContent} && {item.dragAndDropAllowed}', then: 'draggable="true"')}>
     <div class="t3-page-ce-header-left">
         {item.icons -> f:format.raw()}
@@ -22,7 +21,7 @@
     </div>
     <div class="t3-page-ce-header-title">
         {item.contentTypeLabel}
-        <f:if condition="{allLanguages.hiddenEverywhere}">
+        <f:if condition="{sl:hiddenInAllLanguages(item: item)}">
             <span class="badge badge-warning structure-layer-hidden-everywhere">{f:translate(key: 'LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:allLanguages.hiddenEverywhere')}</span>
         </f:if>
     </div>
@@ -46,14 +45,6 @@
                             title="{item.visibilityToggleTitle}">
                             <typo3-backend-icon identifier="actions-edit-{item.visibilityToggleIconName}" size="small"></typo3-backend-icon>
                         </button>
-                    </f:if>
-                    <f:if condition="{allLanguages} && {item.visibilityToggling}">
-                        <a class="btn btn-sm btn-default btn-borderless structure-layer-toggle-all-languages"
-                            href="{allLanguages.url}"
-                            title="{allLanguages.title}">
-                            <core:icon identifier="{allLanguages.icon}" overlay="flags-multiple" size="small" />
-                            <span class="visually-hidden">{allLanguages.title}</span>
-                        </a>
                     </f:if>
                     <f:if condition="{item.delible}">
                         <a class="btn btn-default btn-borderless t3js-modal-trigger"

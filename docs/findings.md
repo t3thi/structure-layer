@@ -524,8 +524,8 @@ Deleting the disabled en translation makes the de fallback reappear
   - `Templates/PageLayout/PageLayout`: single-language view of a page missing in the Editing
     Language → empty state "not available in …", links to the existing languages, "Translate
     page" (Core wizard).
-  - `Partials/PageLayout/RecordDefault/Header`: "hide / show in all languages" next to Core's
-    per-language toggle, derived badge "Hidden in all languages".
+  - `Partials/PageLayout/RecordDefault/Header`: derived badge "Hidden in all languages"
+    (the toggle moved into the context menu, 2026-10-23).
 - **Editing Language** (3b): `Backend/EditingLanguage` (BE user `uc`, per site; default =
   primary language) and the middleware `Backend/Middleware/EditingLanguageInitialization`
   (after Core's `page-context`, `web_layout` only). It rewrites the `PageContext`:
@@ -549,10 +549,12 @@ Deleting the disabled en translation makes the de fallback reappear
 - **Shadow labels**: `Backend/ShadowLabelResolver` (preferred language, then site-language
   order), used by the `PageContentPreviewRenderingEvent` listener `RenderShadowPreview`
   (compact structure cell: flag + label of a translation). Phase 4 reuses it for the page tree.
-- **Hide / show in all languages**: `Backend/AllLanguagesVisibility`, ViewHelper
-  `sl:allLanguagesVisibility`, page toggle via `ModifyPageLayoutContentEvent`
-  (`AddPageVisibilityToggle`). The toggle sends `hidden` for the shadow; the Phase 2 hook
-  writes it on every translation.
+- **Hide / show in all languages**: `Backend/AllLanguagesVisibility` (derived state), ViewHelper
+  `sl:hiddenInAllLanguages` (badge). The toggle of a translation is a record context menu item
+  after Core's "Disable" / "Enable" (`ContextMenu/AllLanguagesVisibilityItemProvider`,
+  2026-10-23); it sends `hidden` for the shadow, the Phase 2 hook writes it on every translation.
+  Pages: no toggle in the backend UI any more (testing feedback 2026-10-23), the Layout module
+  only shows "This page is hidden in all languages" (`MarkPageHiddenInAllLanguages`).
 - **Sites module**: `fallbackType` read-only with an explanation; `fallbacks` no longer offers
   the structure layer (`Backend/SiteConfiguration/FallbackLanguageItems`).
 - **Core patches** (`cms-backend`, test-first, all red before):

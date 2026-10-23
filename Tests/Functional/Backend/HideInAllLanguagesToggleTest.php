@@ -6,51 +6,63 @@ namespace T3thi\StructureLayer\Tests\Functional\Backend;
 
 use PHPUnit\Framework\Attributes\Test;
 use T3thi\StructureLayer\Integrity\InvariantChecker;
+use TYPO3\CMS\Backend\ContextMenu\ContextMenu;
 use TYPO3\CMS\Backend\View\PageViewMode;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Phase 3b (plan §4 H, decision 3): every element and the page get "hide / show in all
- * languages" next to Core's per-language toggle. The toggle sends "hidden" for the shadow;
- * the DataHandler hook (Phase 2) writes it on every translation. "Hidden in all languages"
- * is derived (all existing translations hidden), there is no stored flag.
+ * Phase 3b (plan §4 H, decision 3): every element gets "hide / show in all languages" in its
+ * context menu, next to Core's per-language "Disable" / "Enable". The item sends "hidden" for
+ * the shadow; the DataHandler hook (Phase 2) writes it on every translation. "Hidden in all
+ * languages" is derived (all existing translations hidden), there is no stored flag. Pages have
+ * no such toggle in the Layout module; they only show the derived state.
  */
 final class HideInAllLanguagesToggleTest extends AbstractPageModuleTestCase
 {
     #[Test]
-    public function translationOffersHideInAllLanguagesForItsShadow(): void
+    public function translationContextMenuOffersHideInAllLanguagesForItsShadow(): void
     {
-        $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
+        $items = $this->contextMenu(102);
 
-        self::assertSame(['tt_content' => [100 => ['hidden' => '1']]], $this->toggleData($this->recordElement(102, $html)));
-        self::assertStringNotContainsString('structure-layer-hidden-everywhere', $this->recordElement(102, $html));
+        self::assertArrayNotHasKey('enableInAllLanguages', $items);
+        self::assertSame(['tt_content' => [100 => ['hidden' => '1']]], $this->toggleData($items['disableInAllLanguages']));
+        // Right after Core's per-language toggle
+        $keys = array_keys($items);
+        self::assertSame('disableInAllLanguages', $keys[array_search('disable', $keys, true) + 1]);
     }
 
     #[Test]
     public function elementHiddenInAllLanguagesIsMarkedAndOffersShowInAllLanguages(): void
     {
         $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
+        self::assertStringContainsString('structure-layer-hidden-everywhere', $this->recordElement(142, $html));
+        self::assertStringNotContainsString('structure-layer-hidden-everywhere', $this->recordElement(102, $html));
 
-        $element = $this->recordElement(142, $html);
-        self::assertStringContainsString('structure-layer-hidden-everywhere', $element);
-        self::assertSame(['tt_content' => [140 => ['hidden' => '0']]], $this->toggleData($element));
+        $items = $this->contextMenu(142);
+        self::assertArrayNotHasKey('disableInAllLanguages', $items);
+        self::assertSame(['tt_content' => [140 => ['hidden' => '0']]], $this->toggleData($items['enableInAllLanguages']));
     }
 
     #[Test]
-    public function allLanguagesRecordHasNoExtraToggle(): void
+    public function elementHeaderHasNoAllLanguagesButton(): void
     {
         $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
 
-        self::assertNull($this->toggleData($this->recordElement(130, $html)));
+        self::assertStringNotContainsString('structure-layer-toggle-all-languages', $this->recordElement(102, $html));
+    }
+
+    #[Test]
+    public function allLanguagesRecordAndShadowHaveNoExtraItem(): void
+    {
+        self::assertArrayNotHasKey('disableInAllLanguages', $this->contextMenu(130));
+        self::assertArrayNotHasKey('disableInAllLanguages', $this->contextMenu(100));
     }
 
     #[Test]
     public function toggleHidesEveryTranslationAndKeepsTheShadowVisible(): void
     {
-        $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
-        $data = $this->toggleData($this->recordElement(102, $html));
-        self::assertIsArray($data);
+        $data = $this->toggleData($this->contextMenu(102)['disableInAllLanguages']);
 
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         $dataHandler->start($data, []);
@@ -65,30 +77,46 @@ final class HideInAllLanguagesToggleTest extends AbstractPageModuleTestCase
 
         $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
         self::assertStringContainsString('structure-layer-hidden-everywhere', $this->recordElement(102, $html));
+        self::assertArrayHasKey('enableInAllLanguages', $this->contextMenu(102));
     }
 
     #[Test]
-    public function pageOffersHideInAllLanguages(): void
+    public function pageHasNoHideInAllLanguagesButton(): void
     {
         $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
 
-        $start = strpos($html, 'structure-layer-page-visibility');
-        self::assertNotFalse($start);
-        self::assertSame(['pages' => [1 => ['hidden' => '1']]], $this->toggleData(substr($html, $start, 3000)));
+        self::assertStringNotContainsString('structure-layer-toggle-all-languages', $html);
+    }
+
+    #[Test]
+    public function pageHiddenInAllLanguagesIsMarked(): void
+    {
+        $this->getConnectionPool()->getConnectionForTable('pages')->update('pages', ['hidden' => 1], ['l10n_parent' => 1]);
+
+        $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
+
+        self::assertStringContainsString('structure-layer-hidden-everywhere', $html);
     }
 
     /**
-     * The datamap of the first "all languages" toggle in the markup.
-     *
-     * @return array<string, mixed>|null
+     * @return array<string, array<string, mixed>>
      */
-    private function toggleData(string $markup): ?array
+    private function contextMenu(int $uid): array
     {
-        if (!preg_match('#class="[^"]*structure-layer-toggle-all-languages[^"]*"[^>]*href="([^"]*)"|href="([^"]*)"[^>]*class="[^"]*structure-layer-toggle-all-languages#', $markup, $match)) {
-            return null;
-        }
-        $url = html_entity_decode($match[1] !== '' ? $match[1] : ($match[2] ?? ''));
-        parse_str((string)parse_url($url, PHP_URL_QUERY), $query);
-        return is_array($query['data'] ?? null) ? $query['data'] : null;
+        return $this->get(ContextMenu::class)->getItems('tt_content', (string)$uid);
+    }
+
+    /**
+     * The datamap the context menu item sends (context-menu-actions.js).
+     *
+     * @param array<string, mixed> $item
+     * @return array<string, mixed>
+     */
+    private function toggleData(array $item): array
+    {
+        self::assertSame('@t3thi/structure-layer/context-menu-actions', $item['additionalAttributes']['data-callback-module']);
+        self::assertSame('setHiddenInAllLanguages', $item['callbackAction']);
+        $attributes = $item['additionalAttributes'];
+        return ['tt_content' => [(int)$attributes['data-shadow-uid'] => [$attributes['data-disable-field'] => $attributes['data-hidden']]]];
     }
 }

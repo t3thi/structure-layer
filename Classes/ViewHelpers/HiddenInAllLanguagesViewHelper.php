@@ -11,13 +11,14 @@ use TYPO3\CMS\Core\Domain\Record;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * The "hide / show in all languages" toggle of a translation in the page module, or null for
- * shadows and "-1" records (their own "hidden" already applies to all languages).
+ * Whether a translation in the page module is hidden in all languages (all translations of its
+ * shadow are hidden). Always false for shadows and "-1" records (their own "hidden" already
+ * applies to all languages).
  *
- * <sl:allLanguagesVisibility item="{item}" />
+ * <sl:hiddenInAllLanguages item="{item}" />
  */
 #[Autoconfigure(public: true)]
-final class AllLanguagesVisibilityViewHelper extends AbstractViewHelper
+final class HiddenInAllLanguagesViewHelper extends AbstractViewHelper
 {
     public function __construct(
         private readonly AllLanguagesVisibility $allLanguagesVisibility,
@@ -28,27 +29,23 @@ final class AllLanguagesVisibilityViewHelper extends AbstractViewHelper
         $this->registerArgument('item', GridColumnItem::class, 'Page module grid item', true);
     }
 
-    /**
-     * @return array{hiddenEverywhere: bool, url: string, title: string, icon: string}|null
-     */
-    public function render(): ?array
+    public function render(): bool
     {
         /** @var GridColumnItem $item */
         $item = $this->arguments['item'];
         $record = $item->getRecord();
         if (!$record instanceof Record || (int)$record->getLanguageId() <= 0) {
-            return null;
+            return false;
         }
         $shadowUid = (int)$record->getLanguageInfo()?->getTranslationParent();
         if ($shadowUid <= 0) {
-            return null;
+            return false;
         }
-        $context = $item->getContext();
-        return $this->allLanguagesVisibility->getToggle(
+        $state = $this->allLanguagesVisibility->getState(
             $item->getTable(),
             $shadowUid,
-            $context->getReturnUrl() . '#element-' . $item->getTable() . '-' . $record->getUid(),
-            $context->getBackendUser()->workspace
+            $item->getContext()->getBackendUser()->workspace
         );
+        return $state['hiddenEverywhere'] ?? false;
     }
 }
