@@ -11,8 +11,8 @@
       language is connected, so there is no free/mixed branch and no language mode badge.
     - The structure column itself is only shown with mod.web_layout.structureLayer.showStructureColumn = 1.
     - A "-1" record is one row spanning all visible language columns.
-    - A gap (element missing in a column's language) offers "Translate" for the element if the
-      wizard has a source language for it (sl:canTranslate).
+    - A gap (element missing in a column's language) lists the languages the element exists in
+      and offers "Translate" if the wizard has a source language for it (sl:missingTranslation).
     - The Editing Language comes first (EditingLanguageInitialization). Core drops it if the page
       does not exist in it; it is shown anyway, as an empty column with "Translate page".
 </f:comment>
@@ -103,19 +103,17 @@
                                                             <f:render partial="PageLayout/Record" arguments="{_all}" />
                                                         </f:then>
                                                         <f:else>
-                                                            <f:variable name="canTranslate" value="{sl:canTranslate(item: gridItem, languageId: languageId)}" />
+                                                            <f:variable name="gap" value="{sl:missingTranslation(item: gridItem, languageId: languageId)}" />
                                                             <f:if condition="!{showStructure}">
                                                                 <f:then>
-                                                                    <f:comment>Without the structure column, show where the element exists (resolved shadow label).</f:comment>
+                                                                    <f:comment>Without the structure column, show which element is missing (resolved shadow label).</f:comment>
                                                                     <div class="structure-layer-placeholder t3-page-ce">
-                                                                        {gridItem.preview -> f:format.raw()}
-                                                                        <f:if condition="{canTranslate}">
-                                                                            <f:render section="translateElement" arguments="{_all}" />
-                                                                        </f:if>
+                                                                        <div class="structure-layer-shadow text-body-secondary">{gap.label}</div>
+                                                                        <f:render section="gap" arguments="{_all}" />
                                                                     </div>
                                                                 </f:then>
-                                                                <f:else if="{canTranslate}">
-                                                                    <div class="structure-layer-gap"><f:render section="translateElement" arguments="{_all}" /></div>
+                                                                <f:else>
+                                                                    <div class="structure-layer-gap"><f:render section="gap" arguments="{_all}" /></div>
                                                                 </f:else>
                                                             </f:if>
                                                         </f:else>
@@ -166,6 +164,20 @@
             <f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:structureColumn.description" />
         </div>
     </td>
+</f:section>
+
+<f:section name="gap">
+    <f:if condition="{gap.languages}">
+        <p class="mt-1 mb-0 small">
+            <f:translate key="LLL:EXT:structure_layer/Resources/Private/Language/locallang.xlf:missingPage.availableIn" />
+            <f:for each="{gap.languages}" as="language" iteration="iterator">
+                <core:icon identifier="{language.flagIdentifier}" /> {language.title}{f:if(condition: iterator.isLast, else: ', ')}
+            </f:for>
+        </p>
+    </f:if>
+    <f:if condition="{gap.translatable}">
+        <f:render section="translateElement" arguments="{_all}" />
+    </f:if>
 </f:section>
 
 <f:section name="translateElement">

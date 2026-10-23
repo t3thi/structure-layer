@@ -37,8 +37,7 @@ final readonly class ElementTranslation
         if (!$backendUser->check('tables_modify', 'tt_content') || !$backendUser->checkLanguageAccess($targetLanguage)) {
             return [];
         }
-        $languages = $this->getElementLanguages($pageContext->pageId, $backendUser->workspace)[$shadowUid] ?? [];
-        $languages = array_values(array_diff($languages, [$targetLanguage]));
+        $languages = array_values(array_diff($this->getLanguageIds($shadowUid, $pageContext->pageId, $backendUser->workspace), [$targetLanguage]));
         if ($languages === [] || !$this->isSourceLanguageEnforced($pageContext)
             || !isset($pageContext->languageInformation->existingTranslations[$targetLanguage])
         ) {
@@ -46,6 +45,14 @@ final readonly class ElementTranslation
         }
         $used = $this->localizationRepository->getUsedSourceLanguages($pageContext->pageId, $targetLanguage, $backendUser->workspace);
         return $used === [] ? $languages : array_values(array_intersect($languages, $used));
+    }
+
+    /**
+     * @return list<int> languages the element (shadow) has a translation in
+     */
+    public function getLanguageIds(int $shadowUid, int $pageId, int $workspaceId): array
+    {
+        return $this->getElementLanguages($pageId, $workspaceId)[$shadowUid] ?? [];
     }
 
     private function isSourceLanguageEnforced(PageContext $pageContext): bool

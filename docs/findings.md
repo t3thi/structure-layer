@@ -589,7 +589,9 @@ Deleting the disabled en translation makes the de fallback reappear
     from different languages is the common case on the structure layer. Core's test suites
     were not re-run for it (Phase 6 numbers predate it).
 - **"Translate" in gaps** (2026-10-23): a comparison view cell where an element is missing
-  offers "Translate" (`LanguageColumns` override, `sl:canTranslate`, `Backend/ElementTranslation`).
+  offers "Translate" (`LanguageColumns` override, `sl:missingTranslation`, `Backend/ElementTranslation`).
+  The gap lists every language the element exists in ("Available in other languages: …", site
+  order) instead of one resolved source flag, which suggested there was no other source.
   It opens Core's wizard for the shadow with the column's language as target: sources are the
   languages the element exists in, only this element is translated. With enforcement on, gaps
   without an allowed source language have no button. Not verified in a browser yet; the

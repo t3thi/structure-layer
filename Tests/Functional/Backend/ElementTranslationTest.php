@@ -57,6 +57,18 @@ final class ElementTranslationTest extends AbstractPageModuleTestCase
     }
 
     #[Test]
+    public function gapsListTheLanguagesTheElementExistsIn(): void
+    {
+        $html = $this->renderComparison();
+
+        // Element 120 in the en column: de and en-GB, in site-language order, no single source flag
+        $cell = $this->gapCell('id="element-tt_content-121"', 1, $html);
+        self::assertStringContainsString('Element 3 (de only)', strip_tags($cell));
+        self::assertStringContainsString('Available in other languages:', $cell);
+        self::assertSame(['flags-de', 'flags-gb'], $this->flags($cell));
+    }
+
+    #[Test]
     public function wizardOffersTheLanguagesTheElementExistsIn(): void
     {
         self::assertSame([1, 3], $this->sourceLanguageIds(120, 2));
@@ -103,6 +115,24 @@ final class ElementTranslationTest extends AbstractPageModuleTestCase
         self::assertSame(151, (int)$translation['l10n_source']);
         self::assertStringContainsString('Element 7', (string)$translation['header']);
         self::assertSame([], array_map(strval(...), $this->get(InvariantChecker::class)->check()));
+    }
+
+    /**
+     * The n-th cell (0-based) of the row containing $needle.
+     */
+    private function gapCell(string $needle, int $index, string $html): string
+    {
+        preg_match_all('#<td\b[^>]*>(.*?)</td>#s', $this->tableRowContaining($needle, $html), $cells);
+        return $cells[1][$index] ?? '';
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function flags(string $markup): array
+    {
+        preg_match_all('#data-identifier="(flags-[a-z-]+)"#', $markup, $matches);
+        return $matches[1];
     }
 
     private function renderComparison(): string
