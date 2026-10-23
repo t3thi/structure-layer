@@ -127,7 +127,7 @@ final readonly class Migrator
                     'enabled' => false,
                     'base' => '/_structure/',
                     'locale' => $language['locale'] ?? 'en_US.UTF-8',
-                    'flag' => 'global',
+                    'flag' => 'black',
                 ];
                 $migrated[] = $primary;
                 $report->siteChanges[] = 'language 0 "' . ($language['title'] ?? '') . '" becomes language ' . $newLanguageId . ', language 0 becomes the structure layer';

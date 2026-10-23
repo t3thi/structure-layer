@@ -38,7 +38,7 @@ languages:
     enabled: false
     base: /_structure/
     locale: en_US.UTF-8
-    flag: global
+    flag: black
   - languageId: 1
     title: Deutsch
     navigationTitle: Deutsch

@@ -60,7 +60,7 @@ final class MigrationTest extends AbstractStructureLayerTestCase
         self::assertSame(3, $report->newLanguageId);
         self::assertSame([0, 3, 1, 2], array_column($configuration['languages'], 'languageId'));
         self::assertSame(
-            ['languageId' => 0, 'title' => 'Structure', 'enabled' => false, 'base' => '/_structure/', 'locale' => 'en_US.UTF-8', 'flag' => 'global'],
+            ['languageId' => 0, 'title' => 'Structure', 'enabled' => false, 'base' => '/_structure/', 'locale' => 'en_US.UTF-8', 'flag' => 'black'],
             $configuration['languages'][0]
         );
         // The old default language keeps title, base and locale: the same URLs show the same content

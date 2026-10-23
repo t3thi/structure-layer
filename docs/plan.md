@@ -117,7 +117,7 @@ languages:
     enabled: false
     base: /_structure/        # must not share "/" (see 2.3)
     locale: en_US.UTF-8       # irrelevant, but required
-    flag: global
+    flag: black
   - languageId: 1             # former default content, now a normal language
     title: Deutsch
     base: /
