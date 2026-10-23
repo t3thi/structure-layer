@@ -50,6 +50,8 @@ final class DemoCommand extends Command
 
         // A subpage that exists in German only (empty state in the Layout module, page fallback for en).
         $this->process(['pages' => ['NEWpage' => ['pid' => 1, 'sys_language_uid' => 1, 'title' => 'Nur auf Deutsch', 'hidden' => 0]]]);
+        // And one in English only (page tree title from en while de is the Editing Language).
+        $this->process(['pages' => ['NEWenglishPage' => ['pid' => 1, 'sys_language_uid' => 2, 'title' => 'English only', 'hidden' => 0]]]);
 
         // Gate start state: five German elements, all translated to English.
         $previous = 1;
