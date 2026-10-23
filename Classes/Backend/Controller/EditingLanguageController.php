@@ -16,8 +16,8 @@ use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Site\SiteFinder;
 
 /**
- * AJAX: sets the Editing Language of a site (top bar, EditingLanguageToolbarItem) and returns the
- * re-rendered toolbar item.
+ * AJAX for the top bar item (EditingLanguageToolbarItem): sets the Editing Language of a site, and
+ * re-renders the item after the Editing Language changed elsewhere.
  */
 #[AsController]
 final readonly class EditingLanguageController
@@ -49,12 +49,23 @@ final readonly class EditingLanguageController
             return new JsonResponse(['success' => false], 400);
         }
         $changed = $this->editingLanguage->set($backendUser, $site, $languageId);
+        return new JsonResponse(['success' => true, 'changed' => $changed] + $this->renderToolbarItem($request));
+    }
+
+    public function menuAction(ServerRequestInterface $request): ResponseInterface
+    {
+        return new JsonResponse($this->renderToolbarItem($request));
+    }
+
+    /**
+     * @return array{item: string, dropDown: string}
+     */
+    private function renderToolbarItem(ServerRequestInterface $request): array
+    {
         $this->toolbarItem->setRequest($request);
-        return new JsonResponse([
-            'success' => true,
-            'changed' => $changed,
+        return [
             'item' => $this->toolbarItem->getItem(),
             'dropDown' => $this->toolbarItem->getDropDown(),
-        ]);
+        ];
     }
 }

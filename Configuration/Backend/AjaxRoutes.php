@@ -10,4 +10,9 @@ return [
         'target' => EditingLanguageController::class . '::setAction',
         'methods' => ['POST'],
     ],
+    'structure_layer_editing_language_menu' => [
+        'path' => '/structure-layer/editing-language/menu',
+        'target' => EditingLanguageController::class . '::menuAction',
+        'methods' => ['GET'],
+    ],
 ];

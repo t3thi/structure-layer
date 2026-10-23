@@ -65,7 +65,8 @@ final class EditingLanguageToolbarItem implements ToolbarItemInterface, RequestA
         foreach ($this->getSites() as $site) {
             $sites[] = [
                 'identifier' => $site->getIdentifier(),
-                'title' => $site->getConfiguration()['websiteTitle'] ?? $site->getIdentifier(),
+                // The Sites module saves an empty website title
+                'title' => trim((string)($site->getConfiguration()['websiteTitle'] ?? '')) ?: $site->getIdentifier(),
                 'languages' => $this->getLanguages($site),
             ];
         }

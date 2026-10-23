@@ -530,16 +530,23 @@ Deleting the disabled en translation makes the de fallback reappear
   primary language) and the middleware `Backend/Middleware/EditingLanguageInitialization`
   (after Core's `page-context`, `web_layout` only). It rewrites the `PageContext`:
   - language 0 is never selected and removed from the docheader language selector;
-  - an explicit selection sets the Editing Language (Core's single-select selector *is* the
-    Editing Language selector);
+  - an explicit selection (`languages`, e.g. the empty state's "available in" links) sets the
+    Editing Language;
+  - the Layout view has **no language selector** (`EventListener/AdjustLanguageSelector`,
+    `ModifyPageLayoutContentEvent` runs after the selector is built; 2026-10-23): it duplicated
+    the top bar. The comparison view's selector no longer offers the Editing Language either; it
+    is always shown, the selector only adds languages ("create" stays if the page lacks it).
+    Core's counts ("Languages (n)", "Check all (n)") assume language 0 is always shown and every
+    translation selectable; the listener corrects them to the shown columns / selectable languages;
   - single-language view = the Editing Language, also on pages without it (→ empty state);
   - comparison view = Editing Language first, then the other selected languages;
-  - a changed Editing Language reloads the page tree, whose titles follow it
-    (`EventListener/RefreshPageTreeOnEditingLanguageChange`, `typo3:pagetree:refresh`).
+  - a changed Editing Language reloads the page tree, whose titles follow it, and the top bar item
+    (`EventListener/RefreshOnEditingLanguageChange`, `typo3:pagetree:refresh` and
+    `structure-layer:editing-language:changed` → AJAX `structure_layer_editing_language_menu`).
   - **top bar** (`Backend/ToolbarItems/EditingLanguageToolbarItem`, AJAX route
     `structure_layer_editing_language`, `toolbar/editing-language-menu.js`, 2026-10-19): the
-    Editing Language can be switched in every module and view (the Layout module selector only
-    sets it in the Layout view). Flag + title of the language, one section per structure-layer
+    Editing Language can be switched in every module and view; it is the only switch since
+    2026-10-23. Flag + title of the language, one section per structure-layer
     site if there are several. Switching reloads the page tree and the module, without an explicit
     `languages` selection in the module URL.
 - **Preview of shadow pages** (`EventListener/ResolveShadowPagePreviewLanguage`,

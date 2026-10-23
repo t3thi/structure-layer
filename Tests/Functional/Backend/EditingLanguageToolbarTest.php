@@ -12,15 +12,17 @@ use T3thi\StructureLayer\Tests\Functional\AbstractStructureLayerTestCase;
 use TYPO3\CMS\Backend\Routing\Route;
 use TYPO3\CMS\Backend\Routing\Router;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Top bar: the Editing Language can be switched from everywhere in the backend (the Layout
- * module's language selector is single-select only in the Layout view).
+ * Top bar: the Editing Language can be switched from everywhere in the backend; the Layout
+ * view has no language selector of its own.
  */
 final class EditingLanguageToolbarTest extends AbstractStructureLayerTestCase
 {
@@ -93,6 +95,42 @@ final class EditingLanguageToolbarTest extends AbstractStructureLayerTestCase
 
         self::assertNotNull($route);
         self::assertSame(['POST'], $route->getMethods());
+    }
+
+    #[Test]
+    public function menuReflectsAnEditingLanguageChangedElsewhere(): void
+    {
+        // e.g. in the Layout module; toolbar/editing-language-menu.js reloads the item on
+        // "structure-layer:editing-language:changed"
+        $site = $this->get(SiteFinder::class)->getSiteByIdentifier(self::SITE_IDENTIFIER);
+        $this->get(EditingLanguage::class)->set($this->backendUser, $site, 2);
+
+        $response = $this->get(EditingLanguageController::class)->menuAction($this->request());
+
+        self::assertSame(200, $response->getStatusCode());
+        $payload = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        self::assertStringContainsString('English', $payload['item']);
+        self::assertMatchesRegularExpression('#<button[^>]*active[^>]*data-language-id="2"#s', $payload['dropDown']);
+        self::assertSame(['GET'], $this->get(Router::class)->getRoute('ajax_structure_layer_editing_language_menu')?->getMethods());
+    }
+
+    #[Test]
+    public function everySiteHasAHeadingIfThereAreSeveral(): void
+    {
+        // A second structure-layer site with an empty website title (as the Sites module saves it)
+        $config = (string)file_get_contents(__DIR__ . '/../Fixtures/Sites/structure-site/config.yaml');
+        $targetPath = Environment::getConfigPath() . '/sites/second';
+        GeneralUtility::mkdir_deep($targetPath);
+        file_put_contents($targetPath . '/config.yaml', "websiteTitle: ''\n" . str_replace(
+            ['rootPageId: 1', 'https://structure.localhost/'],
+            ['rootPageId: 20', 'https://second.localhost/'],
+            $config
+        ));
+        $this->get(SiteFinder::class)->getAllSites(false);
+
+        preg_match_all('#<p class="dropdown-header">(.*?)</p>#s', $this->toolbarItem()->getDropDown(), $matches);
+
+        self::assertSame(['second', self::SITE_IDENTIFIER], array_map(trim(...), $matches[1]));
     }
 
     private function toolbarItem(): EditingLanguageToolbarItem

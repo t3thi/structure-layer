@@ -10,17 +10,21 @@ use TYPO3\CMS\Backend\Domain\Model\Element\ImmediateActionElement;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 
 /**
- * Layout module: the page tree resolves titles in the Editing Language (Phase 4), so it is
- * reloaded once the Editing Language changed.
+ * Layout module: once the Editing Language changed here (e.g. via the comparison view or
+ * "available in" links), the page tree, which resolves titles in it (Phase 4), and the top bar
+ * item showing it (toolbar/editing-language-menu.js) are reloaded.
  */
-#[AsEventListener('structure-layer/refresh-page-tree')]
-final readonly class RefreshPageTreeOnEditingLanguageChange
+#[AsEventListener('structure-layer/refresh-on-editing-language-change')]
+final readonly class RefreshOnEditingLanguageChange
 {
+    public const string EVENT = 'structure-layer:editing-language:changed';
+
     public function __invoke(ModifyPageLayoutContentEvent $event): void
     {
         if ($event->getRequest()->getAttribute(EditingLanguageInitialization::CHANGED_ATTRIBUTE) !== true) {
             return;
         }
         $event->addHeaderContent((string)ImmediateActionElement::dispatchCustomEvent('typo3:pagetree:refresh', null, true));
+        $event->addHeaderContent((string)ImmediateActionElement::dispatchCustomEvent(self::EVENT, null, true));
     }
 }

@@ -25,6 +25,8 @@ use TYPO3\CMS\Core\Site\Entity\Site;
  * (plan §4 H, 3b). Runs after Core's page-context middleware and rewrites the PageContext:
  *
  * - the structure layer is never selected, and not offered in the language selector;
+ * - the Editing Language is not offered either: it is always shown, the comparison view's
+ *   selector only adds languages (unless its page translation is missing: "create" stays);
  * - an explicit selection ("languages" parameter) sets the Editing Language;
  * - single-language view: exactly the Editing Language, even if the page lacks it (the
  *   template then shows the "missing page" empty state);
@@ -33,7 +35,7 @@ use TYPO3\CMS\Core\Site\Entity\Site;
  *   ("showStructure" parameter), written into page TSconfig for the template.
  *
  * A changed Editing Language is flagged in the request attribute CHANGED_ATTRIBUTE; the page
- * tree shows titles in it and is refreshed (RefreshPageTreeOnEditingLanguageChange).
+ * tree and the top bar show it and are refreshed (RefreshOnEditingLanguageChange).
  *
  * Core's PageContextFactory has no event for this; a middleware is the extension point.
  */
@@ -99,7 +101,7 @@ final readonly class EditingLanguageInitialization implements MiddlewareInterfac
             rootLine: $pageContext->rootLine,
             pageTsConfig: $this->structureColumnVisibility->applyTo($backendUser, $pageContext->pageTsConfig),
             selectedLanguageIds: $selected,
-            languageInformation: $this->withoutStructureLayerItem($pageContext->languageInformation),
+            languageInformation: $this->withSelectableLanguageItems($pageContext->languageInformation, $editingLanguageId),
             pagePermissions: $pageContext->pagePermissions,
         )));
     }
@@ -135,7 +137,10 @@ final readonly class EditingLanguageInitialization implements MiddlewareInterfac
         return PageViewMode::tryFrom((int)$viewMode) === PageViewMode::LanguageComparisonView;
     }
 
-    private function withoutStructureLayerItem(PageLanguageInformation $information): PageLanguageInformation
+    /**
+     * Language selector items without the structure layer and the existing Editing Language.
+     */
+    private function withSelectableLanguageItems(PageLanguageInformation $information, int $editingLanguageId): PageLanguageInformation
     {
         return new PageLanguageInformation(
             pageId: $information->pageId,
@@ -147,6 +152,7 @@ final readonly class EditingLanguageInitialization implements MiddlewareInterfac
             languageItems: array_values(array_filter(
                 $information->languageItems,
                 static fn(LanguageItem $item): bool => $item->getLanguageId() !== 0
+                    && ($item->getLanguageId() !== $editingLanguageId || $item->isCreatable())
             )),
         );
     }
