@@ -30,12 +30,6 @@
       <trans-unit id="allLanguages.show" resname="allLanguages.show">
         <source>Show in all languages</source>
       </trans-unit>
-      <trans-unit id="allLanguages.hiddenEverywhere" resname="allLanguages.hiddenEverywhere">
-        <source>Hidden in all languages</source>
-      </trans-unit>
-      <trans-unit id="allLanguages.page.hiddenEverywhere" resname="allLanguages.page.hiddenEverywhere">
-        <source>This page is hidden in all languages</source>
-      </trans-unit>
       <trans-unit id="pageTree.otherLanguage" resname="pageTree.otherLanguage">
         <source>Not available in %s, title from %s</source>
       </trans-unit>

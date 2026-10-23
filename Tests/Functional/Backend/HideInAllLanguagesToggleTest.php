@@ -15,8 +15,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Phase 3b (plan §4 H, decision 3): every element gets "hide / show in all languages" in its
  * context menu, next to Core's per-language "Disable" / "Enable". The item sends "hidden" for
  * the shadow; the DataHandler hook (Phase 2) writes it on every translation. "Hidden in all
- * languages" is derived (all existing translations hidden), there is no stored flag. Pages have
- * no such toggle in the Layout module; they only show the derived state.
+ * languages" is derived (all existing translations hidden), there is no stored flag and no label
+ * for it. Pages have no such toggle in the Layout module.
  */
 final class HideInAllLanguagesToggleTest extends AbstractPageModuleTestCase
 {
@@ -33,12 +33,8 @@ final class HideInAllLanguagesToggleTest extends AbstractPageModuleTestCase
     }
 
     #[Test]
-    public function elementHiddenInAllLanguagesIsMarkedAndOffersShowInAllLanguages(): void
+    public function elementHiddenInAllLanguagesOffersShowInAllLanguages(): void
     {
-        $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
-        self::assertStringContainsString('structure-layer-hidden-everywhere', $this->recordElement(142, $html));
-        self::assertStringNotContainsString('structure-layer-hidden-everywhere', $this->recordElement(102, $html));
-
         $items = $this->contextMenu(142);
         self::assertArrayNotHasKey('disableInAllLanguages', $items);
         self::assertSame(['tt_content' => [140 => ['hidden' => '0']]], $this->toggleData($items['enableInAllLanguages']));
@@ -75,8 +71,6 @@ final class HideInAllLanguagesToggleTest extends AbstractPageModuleTestCase
         self::assertSame([100 => 0, 101 => 1, 102 => 1], array_map(intval(...), $hidden));
         self::assertSame([], array_map(strval(...), $this->get(InvariantChecker::class)->check()));
 
-        $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
-        self::assertStringContainsString('structure-layer-hidden-everywhere', $this->recordElement(102, $html));
         self::assertArrayHasKey('enableInAllLanguages', $this->contextMenu(102));
     }
 
@@ -89,13 +83,15 @@ final class HideInAllLanguagesToggleTest extends AbstractPageModuleTestCase
     }
 
     #[Test]
-    public function pageHiddenInAllLanguagesIsMarked(): void
+    public function hiddenInAllLanguagesIsNotLabelled(): void
     {
+        // Every translation shows its own hidden state; a label would repeat it.
         $this->getConnectionPool()->getConnectionForTable('pages')->update('pages', ['hidden' => 1], ['l10n_parent' => 1]);
 
         $html = $this->renderPageModule(1, PageViewMode::LayoutView, ['languages' => [2]]);
 
-        self::assertStringContainsString('structure-layer-hidden-everywhere', $html);
+        self::assertStringNotContainsString('structure-layer-hidden-everywhere', $html);
+        self::assertStringNotContainsString('hidden in all languages', strtolower(strip_tags($html)));
     }
 
     /**

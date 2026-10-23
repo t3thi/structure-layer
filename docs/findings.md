@@ -524,8 +524,6 @@ Deleting the disabled en translation makes the de fallback reappear
   - `Templates/PageLayout/PageLayout`: single-language view of a page missing in the Editing
     Language → empty state "not available in …", links to the existing languages, "Translate
     page" (Core wizard).
-  - `Partials/PageLayout/RecordDefault/Header`: derived badge "Hidden in all languages"
-    (the toggle moved into the context menu, 2026-10-23).
 - **Editing Language** (3b): `Backend/EditingLanguage` (BE user `uc`, per site; default =
   primary language) and the middleware `Backend/Middleware/EditingLanguageInitialization`
   (after Core's `page-context`, `web_layout` only). It rewrites the `PageContext`:
@@ -558,12 +556,12 @@ Deleting the disabled en translation makes the de fallback reappear
 - **Shadow labels**: `Backend/ShadowLabelResolver` (preferred language, then site-language
   order), used by the `PageContentPreviewRenderingEvent` listener `RenderShadowPreview`
   (compact structure cell: flag + label of a translation). Phase 4 reuses it for the page tree.
-- **Hide / show in all languages**: `Backend/AllLanguagesVisibility` (derived state), ViewHelper
-  `sl:hiddenInAllLanguages` (badge). The toggle of a translation is a record context menu item
-  after Core's "Disable" / "Enable" (`ContextMenu/AllLanguagesVisibilityItemProvider`,
-  2026-10-23); it sends `hidden` for the shadow, the Phase 2 hook writes it on every translation.
-  Pages: no toggle in the backend UI any more (testing feedback 2026-10-23), the Layout module
-  only shows "This page is hidden in all languages" (`MarkPageHiddenInAllLanguages`).
+- **Hide / show in all languages**: `Backend/AllLanguagesVisibility` (derived state). The toggle
+  of a translation is a record context menu item after Core's "Disable" / "Enable"
+  (`ContextMenu/AllLanguagesVisibilityItemProvider`, 2026-10-23); it sends `hidden` for the
+  shadow, the Phase 2 hook writes it on every translation. Pages: no toggle in the backend UI
+  any more. No "hidden in all languages" label either (testing feedback 2026-10-23): every
+  translation shows its own hidden state.
 - **Sites module**: `fallbackType` read-only with an explanation; `fallbacks` no longer offers
   the structure layer (`Backend/SiteConfiguration/FallbackLanguageItems`).
 - **Core patches** (`cms-backend`, test-first, all red before):
@@ -635,11 +633,12 @@ DataHandler request is covered by the Phase 2 move tests and the walkthrough.
 - **Runtime-cache pitfall in tests.** `ContentFetcher` and page TSconfig are cached per
   request in `cache.runtime`; several module renders in one test must flush it, or the second
   render reuses the first one's records.
-- **UX gaps (not fixed):** the long "Hidden in all languages" badge widens the record header
-  and pushes the second column out of the viewport; there is no per-element "translate"
-  action in the comparison view (Core only has the page-level wizard).
+- **UX gaps:** the long "Hidden in all languages" badge widened the record header and pushed
+  the second column out of the viewport (badge removed 2026-10-23); there is no per-element
+  "translate" action in the comparison view (Core only has the page-level wizard; not fixed).
 - **Cost (SCALE-1, counted from the code):** per rendered shadow, 1 query for the label; per
-  rendered translation, 1 query for the all-languages state.
+  rendered translation, 1 query for the all-languages state (since 2026-10-23 only when its
+  context menu opens).
 
 ### Patch list after Phase 3
 
